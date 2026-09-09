@@ -1,0 +1,170 @@
+/* ==========================================================================
+   ADMIN LOGIN - CLEAN, AUTHORITATIVE & PRODUCTION-READY
+   ========================================================================== */
+
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: var(--admin-bg);
+  position: relative;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-xl);
+  padding: 36px 32px;
+  box-shadow: var(--shadow-elevated);
+  position: relative;
+  z-index: 10;
+}
+
+.login-brand-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-badge-shield {
+  width: 48px;
+  height: 48px;
+  background: var(--admin-surface-elevated);
+  border: 1px solid rgba(245, 196, 0, 0.3);
+  border-radius: var(--radius-md);
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--admin-primary);
+  font-size: 1.5rem;
+}
+
+.login-brand-header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.login-brand-header p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon svg {
+  position: absolute;
+  left: 12px;
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  pointer-events: none;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-left: 38px;
+  background: #0B1120;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+}
+
+.input-with-icon input:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 1px var(--admin-primary);
+}
+
+.credentials-hint {
+  margin-top: 20px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--admin-surface-elevated);
+  border: 1px solid var(--admin-border);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.credentials-hint strong {
+  color: var(--admin-primary);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 540px) {
+  .admin-login-page {
+    padding: 16px;
+  }
+
+  .admin-login-card {
+    padding: 28px 20px;
+  }
+
+  .login-brand-header {
+    margin-bottom: 22px;
+  }
+
+  .login-brand-header h1 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .admin-login-page {
+    padding: 8px 4px;
+  }
+
+  .admin-login-card {
+    padding: 20px 12px;
+  }
+
+  .login-badge-shield {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+
+  .login-brand-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .input-with-icon svg {
+    left: 10px;
+    font-size: 0.95rem;
+  }
+
+  .input-with-icon input {
+    padding-left: 32px;
+    font-size: 0.82rem;
+  }
+}

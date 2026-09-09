@@ -1,0 +1,318 @@
+/* =========================================================
+   Footer Styling - VVIP Psychics Expert
+   Rich deep navy theme, sleek typography, micro-interactions
+   ========================================================= */
+
+.astro-footer {
+  background: radial-gradient(circle at 50% 0%, #081a3e 0%, #041639 50%, #030d22 100%);
+  color: #e2e8f0;
+  padding: 70px 0 25px 0;
+  margin-top: 60px;
+  border-top: 2px solid rgba(251, 191, 36, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.astro-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.5) 50%, transparent 100%);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 45px;
+  margin-bottom: 45px;
+}
+
+/* Brand Column */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-logo-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.footer-logo-link:hover {
+  transform: scale(1.02);
+}
+
+.footer-logo-img {
+  height: 54px;
+  max-width: 280px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.footer-brand-desc {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.7;
+  max-width: 360px;
+  margin-bottom: 22px;
+}
+
+.footer-trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.footer-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #10b981;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.footer-trust-item.gold {
+  color: #fbbf24;
+}
+
+.footer-social-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-social-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-social-btn:hover {
+  background: #fbbf24;
+  color: #041639;
+  border-color: #fbbf24;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35);
+}
+
+/* Nav Columns */
+.footer-col h4 {
+  color: #ffffff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.footer-col h4::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 28px;
+  height: 2.5px;
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  border-radius: 2px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+  padding-left: 6px;
+}
+
+.footer-links a:hover svg {
+  color: #fbbf24;
+}
+
+/* Bottom Bar */
+.footer-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-bottom-copy {
+  color: #94a3b8;
+}
+
+.footer-bottom-features {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #cbd5e1;
+  font-size: 12.5px;
+}
+
+.footer-feature-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-feature-chip svg {
+  color: #fbbf24;
+}
+
+/* Responsive */
+@media (max-width: 1040px) {
+  .footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 850px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+  }
+}
+
+@media (max-width: 600px) {
+  .astro-footer {
+    padding: 45px 0 20px 0;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  .footer-bottom-features {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-logo-img {
+    height: 44px;
+    max-width: 220px;
+  }
+  .footer-brand-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .footer-trust-badges {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .footer-trust-item {
+    font-size: 12px;
+  }
+  .footer-col h4 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+  .footer-col ul li a {
+    font-size: 13px;
+    padding: 3px 0;
+  }
+  .footer-social-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .footer-bottom {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .astro-footer {
+    padding: 35px 0 16px 0;
+  }
+  .footer-logo-img {
+    height: 36px;
+    max-width: 170px;
+  }
+  .footer-brand-desc {
+    font-size: 12px;
+  }
+  .footer-grid {
+    gap: 22px;
+    margin-bottom: 25px;
+  }
+  .footer-trust-item {
+    font-size: 11.5px;
+    gap: 5px;
+  }
+  .footer-col h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .footer-col ul li a {
+    font-size: 12px;
+  }
+  .footer-feature-chip {
+    font-size: 11px;
+    gap: 4px;
+  }
+  .footer-bottom-copy {
+    font-size: 11.5px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .footer-grid,
+  .footer-bottom {
+    max-width: 1360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

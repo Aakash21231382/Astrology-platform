@@ -1,0 +1,147 @@
+/* =========================================================
+   Offers Page Stylesheet
+   Theme: VVIP Psychics Promotional Vouchers
+   Breakpoints: 250px to 1920px+
+   ========================================================= */
+
+.offers-page {
+  padding: 60px 0 100px 0;
+}
+
+.offers-subtitle {
+  color: #64748b;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.offer-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+}
+
+.offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-violet);
+}
+
+.offer-tag {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+}
+
+.offer-title {
+  font-size: 18px;
+  color: #130a2a;
+  font-weight: 700;
+  margin: 14px 0 10px 0;
+  line-height: 1.35;
+}
+
+.offer-desc {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.offer-code-box {
+  background: #f8fafc;
+  border: 1.5px dashed #7c3aed;
+  padding: 10px 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.offer-code-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.offer-code-val {
+  color: #7c3aed;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.offer-apply-btn {
+  width: 100%;
+  padding: 11px;
+  font-size: 14px;
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+  .offers-page {
+    padding: 45px 0 80px 0;
+  }
+  .offer-card {
+    padding: 24px 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .offers-page {
+    padding: 35px 0 60px 0;
+  }
+  .offer-card {
+    padding: 20px 16px;
+  }
+  .offer-title {
+    font-size: 16.5px;
+  }
+  .offer-desc {
+    font-size: 13.5px;
+    margin-bottom: 16px;
+  }
+  .offer-code-box {
+    padding: 8px 12px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .offers-page {
+    padding: 25px 0 45px 0;
+  }
+  .offer-card {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+  .offer-title {
+    font-size: 15px;
+  }
+  .offer-desc {
+    font-size: 13px;
+  }
+  .offer-code-val {
+    font-size: 13.5px;
+  }
+  .offers-subtitle {
+    font-size: 13px;
+  }
+}

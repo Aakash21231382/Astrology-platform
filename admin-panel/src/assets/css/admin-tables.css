@@ -1,0 +1,458 @@
+/* ==========================================================================
+   ADMIN TABLES - PRODUCTION READY, CLEAN & READABLE
+   ========================================================================== */
+
+.table-container {
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+/* Toolbar */
+.table-toolbar {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--admin-border);
+  background: var(--admin-card-bg);
+  flex-wrap: wrap;
+}
+
+.table-toolbar h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.table-search-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #0B1120;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  width: 280px;
+  max-width: 100%;
+  transition: var(--transition);
+}
+
+.table-search-box:focus-within {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 1px var(--admin-primary);
+}
+
+.table-search-box svg {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.table-search-box input {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  font-size: 0.86rem;
+  color: var(--text-main);
+  outline: none;
+  box-shadow: none !important;
+}
+
+.table-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-select {
+  padding: 8px 12px;
+  font-size: 0.84rem;
+  background: #0B1120;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+}
+
+/* Responsive Table Wrapper with Subtle Scrollbar */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #0B1120;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: var(--admin-border);
+  border-radius: var(--radius-full);
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #3B4B68;
+}
+
+/* Production Custom Table */
+.custom-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.custom-table th {
+  background: #0B1120;
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--admin-border);
+  white-space: nowrap;
+}
+
+.custom-table td {
+  padding: 13px 18px;
+  border-bottom: 1px solid rgba(39, 50, 71, 0.5);
+  vertical-align: middle;
+  color: var(--text-main);
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.custom-table tr:hover td {
+  background: var(--admin-surface-elevated);
+}
+
+/* User / Expert Avatar Cell */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+  background: #151D2D;
+  flex-shrink: 0;
+}
+
+.user-cell-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-cell-meta .name {
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 0.88rem;
+}
+
+.user-cell-meta .sub {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+/* Action Icons & Controls */
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  background: var(--admin-surface-elevated);
+  color: var(--text-muted);
+  border: 1px solid var(--admin-border);
+  transition: var(--transition);
+}
+
+.btn-icon:hover {
+  background: #1B2438;
+  color: #FFFFFF;
+  border-color: #384660;
+}
+
+.btn-icon.approve:hover {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.btn-icon.reject:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Delete Button - Restrained red */
+.btn-delete-expert {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-delete-expert:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+  border-color: #EF4444;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2.2rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.empty-state p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   BANNER SLIDER PREVIEW CARD
+   ========================================================================== */
+.banner-preview-card {
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  background: var(--admin-card-bg);
+}
+
+.banner-preview-box {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  max-height: 320px;
+  border: 1px solid var(--admin-border);
+  background: #080C16;
+}
+
+.banner-preview-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(8, 12, 22, 0.9) 0%, rgba(8, 12, 22, 0.4) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px;
+}
+
+.banner-preview-overlay h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  max-width: 580px;
+  margin-bottom: 6px;
+}
+
+.banner-preview-overlay p {
+  font-size: 0.88rem;
+  color: #CBD5E1;
+  max-width: 480px;
+  margin-bottom: 14px;
+}
+
+/* Settings Cards */
+.settings-card {
+  padding: 20px 24px;
+}
+
+/* ==========================================================================
+   TABLE RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .table-toolbar {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .table-search-box {
+    width: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 14px;
+    gap: 10px;
+  }
+
+  .table-toolbar form {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .table-search-box {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .table-filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .table-select {
+    flex: 1 1 130px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .custom-table th {
+    padding: 10px 14px;
+    font-size: 0.7rem;
+  }
+
+  .custom-table td {
+    padding: 11px 14px;
+    font-size: 0.84rem;
+  }
+
+  .banner-preview-card {
+    padding: 16px;
+  }
+
+  .banner-preview-box {
+    max-height: 240px;
+  }
+
+  .banner-preview-img {
+    height: 230px;
+  }
+
+  .banner-preview-overlay {
+    padding: 16px;
+  }
+
+  .banner-preview-overlay h2 {
+    font-size: 1.15rem;
+  }
+
+  .banner-preview-overlay p {
+    font-size: 0.78rem;
+  }
+
+  .settings-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .table-toolbar form {
+    flex-direction: column;
+  }
+
+  .table-toolbar form button,
+  .table-toolbar > button,
+  .table-toolbar > a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .table-select {
+    flex: 1 1 100%;
+  }
+
+  .table-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .banner-preview-box {
+    max-height: 190px;
+  }
+
+  .banner-preview-img {
+    height: 180px;
+  }
+
+  .banner-preview-overlay {
+    padding: 12px;
+  }
+
+  .banner-preview-overlay h2 {
+    font-size: 0.95rem;
+  }
+
+  .banner-preview-overlay p {
+    display: none;
+  }
+
+  .settings-card {
+    padding: 14px 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .table-toolbar {
+    padding: 10px 10px;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 9px 10px;
+  }
+}

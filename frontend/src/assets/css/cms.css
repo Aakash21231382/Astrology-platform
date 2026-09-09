@@ -1,0 +1,101 @@
+/* =========================================================
+   CMS Policy & Editorial Pages Stylesheet
+   Theme: Terms, Privacy, Refund, Disclaimer
+   Breakpoints: 250px to 1920px+
+   ========================================================= */
+
+.cms-page-wrapper {
+  padding: 60px 0 100px 0;
+}
+
+.cms-page-container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.cms-loading-text {
+  text-align: center;
+  color: #7c3aed;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 40px 0;
+}
+
+.cms-content-card {
+  background: #ffffff;
+  padding: 48px;
+  border-radius: 18px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.cms-page-title {
+  font-size: 30px;
+  font-family: var(--font-heading);
+  color: #130a2a;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+  line-height: 1.25;
+}
+
+.cms-page-body {
+  font-size: 15.5px;
+  color: #334155;
+  line-height: 1.8;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .cms-page-wrapper {
+    padding: 40px 0 70px 0;
+  }
+  .cms-content-card {
+    padding: 30px 22px;
+  }
+  .cms-page-title {
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+  .cms-page-body {
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .cms-page-wrapper {
+    padding: 28px 0 50px 0;
+  }
+  .cms-content-card {
+    padding: 22px 16px;
+    border-radius: 14px;
+  }
+  .cms-page-title {
+    font-size: 21px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+  }
+  .cms-page-body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cms-page-wrapper {
+    padding: 20px 0 35px 0;
+  }
+  .cms-content-card {
+    padding: 16px 12px;
+    border-radius: 10px;
+  }
+  .cms-page-title {
+    font-size: 18px;
+  }
+  .cms-page-body {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}

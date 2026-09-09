@@ -1,0 +1,29 @@
+{
+  "name": "astrology-consultation-backend",
+  "version": "1.0.0",
+  "description": "Astrology & Psychic Consultation Platform Backend with MS SQL Server Stored Procedures",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:migrate": "node database/runMigrations.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "form-data": "^4.0.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "msnodesqlv8": "^4.2.3",
+    "mssql": "^11.0.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.10.0",
+    "razorpay": "^2.9.5",
+    "socket.io": "^4.8.1"
+  }
+}

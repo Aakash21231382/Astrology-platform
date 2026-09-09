@@ -1,0 +1,14 @@
+/* Reset default Vite styles to allow 100% full-screen responsive admin dashboard */
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
