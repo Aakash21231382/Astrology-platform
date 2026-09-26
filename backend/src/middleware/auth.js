@@ -18,7 +18,7 @@ function authenticateToken(req, res, next) {
         req.user = decoded; // { id, email, role, status }
         next();
     } catch (err) {
-        return res.status(403).json({
+        return res.status(401).json({
             success: false,
             message: 'Invalid or expired token.'
         });

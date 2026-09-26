@@ -8,6 +8,7 @@ import {
   MdClose,
   MdPayment
 } from 'react-icons/md';
+import ExportDropdown from '../components/ExportDropdown';
 import '../assets/css/admin-tables.css';
 import '../assets/css/admin-modals.css';
 
@@ -44,16 +45,71 @@ export default function Withdrawals() {
     }
   };
 
+  const pendingCount = withdrawals.filter(w => (w.status || '').toUpperCase() === 'PENDING').length;
+  const paidCount = withdrawals.filter(w => (w.status || '').toUpperCase() === 'PAID').length;
+  const totalPaidAmount = withdrawals
+    .filter(w => (w.status || '').toUpperCase() === 'PAID')
+    .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+
   return (
     <div className="withdrawals-page">
+      {/* Subpage Stat Banner */}
+      <div className="subpage-stats-grid" style={{ marginBottom: '20px' }}>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdPayment />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Pending Payouts</span>
+            <span className="subpage-stat-value" style={{ color: '#EA580C' }}>{pendingCount}</span>
+          </div>
+        </div>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdCheckCircle />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Processed (Paid)</span>
+            <span className="subpage-stat-value">{paidCount}</span>
+          </div>
+        </div>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdAccountBalanceWallet />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Total Disbursed</span>
+            <span className="subpage-stat-value">₹{totalPaidAmount.toLocaleString('en-IN')}</span>
+          </div>
+        </div>
+      </div>
+
       <div className="table-container">
         <div className="table-toolbar">
-          <h2 style={{ fontSize: '1.1rem', color: '#fff' }}>Expert Payout & Withdrawal Requests</h2>
-          <button className="btn-secondary" onClick={fetchWithdrawals}>Refresh</button>
+          <h2 style={{ fontSize: '1.1rem', color: '#0F172A', fontWeight: 700 }}>Expert Payout & Withdrawal Requests</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <ExportDropdown
+              data={withdrawals.map((w) => ({
+                'Request ID': `#${w.id}`,
+                'Expert Name': w.expertName || 'N/A',
+                'Expert Email': w.expertEmail || 'N/A',
+                'Requested Amount (INR)': `₹${parseFloat(w.amount || 0).toFixed(2)}`,
+                'Payout Method': w.payoutMethod || 'Bank Transfer',
+                'Bank / UPI Details': w.payoutDetails || 'Details on file',
+                'Request Date': w.createdAt ? new Date(w.createdAt).toLocaleDateString('en-IN') : 'N/A',
+                'Status': w.status || 'PENDING'
+              }))}
+              fileName="Aakash_Expert_Payouts"
+              sheetName="Payouts"
+              title="Expert Payout & Withdrawal Requests"
+              subtitle={`Total Requests: ${withdrawals.length} | Paid Disbursed: ₹${totalPaidAmount.toLocaleString('en-IN')}`}
+            />
+            <button className="btn-secondary" onClick={fetchWithdrawals}>Refresh</button>
+          </div>
         </div>
 
         {loading ? (
-          <div style={{ color: '#fff', padding: 40, textAlign: 'center' }}>Loading withdrawal requests...</div>
+          <div style={{ color: '#64748B', padding: 40, textAlign: 'center', fontWeight: 500 }}>Loading withdrawal requests...</div>
         ) : withdrawals.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><MdAccountBalanceWallet /></div>
@@ -77,22 +133,22 @@ export default function Withdrawals() {
                 {withdrawals.map((w) => (
                   <tr key={w.id}>
                     <td>
-                      <div style={{ fontWeight: 600, color: '#fff' }}>{w.expertName}</div>
-                      <div style={{ fontSize: '0.8rem', color: '#9ca3af' }}>{w.expertEmail}</div>
+                      <div style={{ fontWeight: 600, color: '#0F172A' }}>{w.expertName}</div>
+                      <div style={{ fontSize: '0.8rem', color: '#64748B' }}>{w.expertEmail}</div>
                     </td>
 
                     <td>
-                      <span style={{ fontWeight: 600, color: 'var(--admin-success)', fontSize: '1rem' }}>
+                      <span style={{ fontWeight: 700, color: '#059669', fontSize: '1rem' }}>
                         ₹{parseFloat(w.amount).toFixed(2)}
                       </span>
                     </td>
 
                     <td>
-                      <div style={{ fontSize: '0.85rem', color: 'var(--admin-primary)' }}>{w.payoutMethod || 'Bank Transfer'}</div>
+                      <div style={{ fontSize: '0.85rem', color: 'var(--admin-primary)', fontWeight: 600 }}>{w.payoutMethod || 'Bank Transfer'}</div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>{w.payoutDetails || 'Details on file'}</div>
                     </td>
 
-                    <td style={{ fontSize: '0.84rem', color: '#9ca3af' }}>
+                    <td style={{ fontSize: '0.84rem', color: '#64748B' }}>
                       {new Date(w.createdAt).toLocaleDateString()}
                     </td>
 
@@ -129,7 +185,7 @@ export default function Withdrawals() {
                           </button>
                         </div>
                       ) : (
-                        <span style={{ fontSize: '0.78rem', color: '#6b7280' }}>Processed</span>
+                        <span style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: 500 }}>Processed</span>
                       )}
                     </td>
                   </tr>
@@ -153,10 +209,10 @@ export default function Withdrawals() {
 
             <form onSubmit={handleProcessSubmit}>
               <div className="modal-body">
-                <div style={{ background: 'rgba(255,255,255,0.03)', padding: 14, borderRadius: 8 }}>
-                  <div style={{ fontSize: '0.84rem', color: '#9ca3af' }}>Paying Expert:</div>
-                  <div style={{ fontWeight: 700, color: '#fff', fontSize: '1rem' }}>{processModal.item.expertName}</div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#34d399', marginTop: 4 }}>
+                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: 16, borderRadius: 8 }}>
+                  <div style={{ fontSize: '0.84rem', color: '#64748B' }}>Paying Expert:</div>
+                  <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '1rem' }}>{processModal.item.expertName}</div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#059669', marginTop: 4 }}>
                     ₹{parseFloat(processModal.item.amount).toFixed(2)}
                   </div>
                 </div>
@@ -176,7 +232,7 @@ export default function Withdrawals() {
                   <label>Transaction UTR / Notes</label>
                   <textarea
                     rows="3"
-                    placeholder="e.g. Bank IMPS Ref: 4892849281, Paid on GPay..."
+                    placeholder="Enter transaction reference or notes"
                     value={processModal.notes}
                     onChange={(e) => setProcessModal({ ...processModal, notes: e.target.value })}
                   />

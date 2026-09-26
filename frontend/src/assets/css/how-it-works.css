@@ -1,15 +1,22 @@
 /* =========================================================
-   How It Works Page Stylesheet
-   Theme: VVIP Psychics Consultation Workflow
+   How It Works Page Stylesheet - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
    Breakpoints: 250px to 1920px+
    ========================================================= */
 
 .how-it-works-page {
   padding: 60px 0 100px 0;
+  background: #FFFFFF;
+  min-height: calc(100vh - 140px);
+  color: #0F172A;
 }
 
 .how-it-works-subtitle {
-  color: #64748b;
+  color: #64748B;
   margin-top: 10px;
   font-size: 15px;
 }
@@ -22,10 +29,10 @@
   background: #ffffff;
   padding: 36px 28px;
   border-radius: 16px;
-  border: 1px solid var(--border-light);
+  border: 1.5px solid #E2E8F0;
   text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,8 +40,8 @@
 
 .step-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-violet);
+  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.12);
+  border-color: #FF6B00;
 }
 
 .step-badge-num {
@@ -47,34 +54,36 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px auto;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.1);
 }
 
 .step-badge-num.step-1 {
-  background: #f3e8ff;
-  color: #7c3aed;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border: 1.5px solid #E2E8F0;
 }
 
 .step-badge-num.step-2 {
-  background: #fef3c7;
-  color: #d97706;
+  background: #FFF7ED;
+  color: #3b502d;
+  border: 1.5px solid #FED7AA;
 }
 
 .step-badge-num.step-3 {
-  background: #ecfdf5;
-  color: #059669;
+  background: #FF6B00;
+  color: #ffffff;
 }
 
 .step-card-title {
   font-size: 19px;
-  color: var(--primary-deep);
+  color: #0F172A;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .step-card-desc {
   font-size: 14px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.65;
   margin: 0;
 }
@@ -86,17 +95,25 @@
 .how-it-works-cta-btn {
   padding: 14px 34px;
   font-size: 16px;
+  font-weight: 700;
   border-radius: 30px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+  background: #FF6B00;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.25);
   transition: all 0.25s ease;
+  text-decoration: none;
 }
 
 .how-it-works-cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.45);
+  background: #445734;
+  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.35);
+  color: #ffffff;
 }
 
 /* Responsive Media Queries */

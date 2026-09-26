@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { adminApi } from '../services/api';
 import { toast } from 'react-toastify';
 import { MdSearch, MdPeople, MdBlock, MdCheckCircle } from 'react-icons/md';
+import ExportDropdown from '../components/ExportDropdown';
 import '../assets/css/admin-tables.css';
 
 export default function Users() {
@@ -52,21 +53,58 @@ export default function Users() {
     fetchUsers();
   };
 
+  const activeUsers = users.filter((u) => u.status === 'ACTIVE').length;
+  const customersCount = users.filter((u) => u.role === 'CUSTOMER').length;
+  const walletSum = users.reduce((acc, u) => acc + (parseFloat(u.walletBalance) || 0), 0);
+
   return (
     <div className="users-page">
+      {/* Top Stat Banner Grid */}
+      <div className="subpage-stats-grid">
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon" style={{ background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)', color: '#EA580C', border: '1.5px solid #FED7AA' }}>
+            <MdPeople />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Total Users</span>
+            <span className="subpage-stat-value">{users.length}</span>
+          </div>
+        </div>
+
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)', color: '#059669', border: '1.5px solid #A7F3D0' }}>
+            <MdCheckCircle />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Active Users</span>
+            <span className="subpage-stat-value" style={{ color: '#059669' }}>{activeUsers}</span>
+          </div>
+        </div>
+
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon" style={{ background: 'linear-gradient(135deg, #FF6B00 0%, #F97316 100%)', color: '#FFFFFF' }}>
+            <MdPeople />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">User Wallet Balances</span>
+            <span className="subpage-stat-value" style={{ color: '#C2410C' }}>₹{walletSum.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+
       <div className="table-container">
         <div className="table-toolbar">
-          <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: 10 }}>
+          <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: 10, flex: 1, flexWrap: 'wrap' }}>
             <div className="table-search-box">
               <MdSearch />
               <input
                 type="text"
-                placeholder="Search by name, email..."
+                placeholder="Search users..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn-secondary">Search</button>
+            <button type="submit" className="btn-filter-apply">Search</button>
           </form>
 
           <div className="table-filters">
@@ -90,11 +128,28 @@ export default function Users() {
               <option value="ACTIVE">Active</option>
               <option value="BLOCKED">Blocked</option>
             </select>
+
+            <ExportDropdown
+              data={users.map((u) => ({
+                'User ID': u.id,
+                'Full Name': u.fullName || 'N/A',
+                'Email Address': u.email || 'N/A',
+                'Phone Number': u.phoneNumber || 'N/A',
+                'Role': u.role || 'CUSTOMER',
+                'Account Status': u.status || 'ACTIVE',
+                'Wallet Balance (INR)': parseFloat(u.walletBalance || 0).toFixed(2),
+                'Registered Date': u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN') : 'N/A'
+              }))}
+              fileName="Aakash_Users_Directory"
+              sheetName="Users"
+              title="Registered Users Directory"
+              subtitle={`Total Users: ${users.length} | Active: ${activeUsers} | Customers: ${customersCount}`}
+            />
           </div>
         </div>
 
         {loading ? (
-          <div style={{ color: '#fff', padding: 40, textAlign: 'center' }}>Loading users directory...</div>
+          <div style={{ color: '#64748B', padding: 40, textAlign: 'center', fontWeight: 500 }}>Loading users directory...</div>
         ) : users.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><MdPeople /></div>
@@ -155,12 +210,12 @@ export default function Users() {
                     </td>
 
                     <td>
-                      <span style={{ fontWeight: 700, color: '#34d399', fontSize: '0.96rem' }}>
+                      <span style={{ fontWeight: 700, color: '#059669', fontSize: '0.96rem' }}>
                         ₹{u.walletBalance ? parseFloat(u.walletBalance).toFixed(2) : '0.00'}
                       </span>
                     </td>
 
-                    <td style={{ fontSize: '0.84rem', color: '#9ca3af' }}>
+                    <td style={{ fontSize: '0.84rem', color: '#64748B' }}>
                       {new Date(u.createdAt).toLocaleDateString()}
                     </td>
 

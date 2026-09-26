@@ -13,6 +13,7 @@ import {
   MdChevronRight,
   MdCheckCircle
 } from 'react-icons/md';
+import ExportDropdown from '../components/ExportDropdown';
 import '../assets/css/admin-tables.css';
 import '../assets/css/admin-modals.css';
 
@@ -113,19 +114,59 @@ export default function Banners() {
 
   return (
     <div className="banners-page">
-      {/* Live Carousel Showcase on Admin Panel */}
+      {/* Subpage Stat Banner */}
+      <div className="subpage-stats-grid" style={{ marginBottom: '20px' }}>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdImage />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Total Banners</span>
+            <span className="subpage-stat-value">{banners.length}</span>
+          </div>
+        </div>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdCheckCircle />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Live on Website</span>
+            <span className="subpage-stat-value" style={{ color: '#EA580C' }}>{activeBanners.length}</span>
+          </div>
+        </div>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdVisibility />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Active Slider Placement</span>
+            <span className="subpage-stat-value">Homepage</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Live Carousel Showcase on Admin Panel (Compact & Responsive) */}
       {activeBanners.length > 0 && (
-        <div className="table-container banner-preview-card">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+        <div className="table-container banner-preview-card" style={{ padding: '18px 24px', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, flexWrap: 'wrap', gap: 10 }}>
             <div>
-              <h3 style={{ fontSize: '1.15rem', color: '#fff' }}>Live Homepage Banner Slider Preview</h3>
-              <p style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
-                How banners currently look and automatically rotate on the user-facing website
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <h3 style={{ fontSize: '1.05rem', color: '#0F172A', fontWeight: 800, margin: 0 }}>
+                  Live Homepage Banner Slider Preview
+                </h3>
+                <span style={{ background: '#ECFDF5', color: '#059669', border: '1px solid #A7F3D0', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: 700 }}>
+                  Slide {activePreviewSlide + 1} of {activeBanners.length}
+                </span>
+              </div>
+              <p style={{ fontSize: '0.78rem', color: '#64748B', margin: '3px 0 0' }}>
+                How banners currently look and rotate on the user-facing website
               </p>
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <button
+                type="button"
                 className="btn-icon"
+                title="Previous Slide"
                 onClick={() =>
                   setActivePreviewSlide((prev) => (prev - 1 + activeBanners.length) % activeBanners.length)
                 }
@@ -133,7 +174,9 @@ export default function Banners() {
                 <MdChevronLeft />
               </button>
               <button
+                type="button"
                 className="btn-icon"
+                title="Next Slide"
                 onClick={() => setActivePreviewSlide((prev) => (prev + 1) % activeBanners.length)}
               >
                 <MdChevronRight />
@@ -141,31 +184,65 @@ export default function Banners() {
             </div>
           </div>
 
-          <div className="banner-preview-box">
+          <div
+            className="banner-preview-box"
+            style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '780px',
+              height: '200px',
+              maxHeight: '220px',
+              margin: '0 auto',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              backgroundColor: '#0f172a',
+              boxShadow: '0 6px 20px -3px rgba(0, 0, 0, 0.2)',
+              border: '1.5px solid #E2E8F0'
+            }}
+          >
             {currentPreviewBanner && (
               <>
                 <img
                   src={currentPreviewBanner.imageUrl}
                   alt={currentPreviewBanner.title || 'Banner'}
                   className="banner-preview-img"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block'
+                  }}
                 />
 
                 {currentPreviewBanner.title ? (
-                  <div className="banner-preview-overlay">
-                    <span className="badge badge-purple" style={{ alignSelf: 'flex-start', marginBottom: 10 }}>
+                  <div
+                    className="banner-preview-overlay"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.45) 55%, transparent 100%)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      padding: '18px 28px',
+                      color: '#ffffff'
+                    }}
+                  >
+                    <span className="badge badge-purple" style={{ alignSelf: 'flex-start', marginBottom: 6, fontSize: '11px', padding: '2px 8px' }}>
                       TEXT OVERLAY MODE
                     </span>
-                    <h2>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '0 0 4px', color: '#ffffff', textShadow: '0 2px 4px rgba(0, 0, 0, 0.6)' }}>
                       {currentPreviewBanner.title}
                     </h2>
                     {currentPreviewBanner.subtitle && (
-                      <p>
+                      <p style={{ fontSize: '0.82rem', margin: '0 0 10px', color: '#E2E8F0', maxWidth: '440px', lineHeight: 1.4 }}>
                         {currentPreviewBanner.subtitle}
                       </p>
                     )}
                     {currentPreviewBanner.ctaText && (
                       <div style={{ alignSelf: 'flex-start' }}>
-                        <span className="btn-primary" style={{ padding: '8px 18px', fontSize: '0.86rem' }}>
+                        <span className="btn-primary" style={{ padding: '6px 14px', fontSize: '0.8rem', borderRadius: '6px' }}>
                           {currentPreviewBanner.ctaText}
                         </span>
                       </div>
@@ -175,20 +252,55 @@ export default function Banners() {
                   <div
                     style={{
                       position: 'absolute',
-                      bottom: 12,
-                      right: 14,
-                      background: 'rgba(0,0,0,0.7)',
+                      bottom: 10,
+                      right: 12,
+                      background: 'rgba(0,0,0,0.75)',
                       color: '#34d399',
-                      padding: '4px 10px',
-                      borderRadius: 20,
-                      fontSize: '0.78rem',
+                      padding: '3px 9px',
+                      borderRadius: 16,
+                      fontSize: '0.74rem',
                       fontWeight: 600,
-                      backdropFilter: 'blur(6px)'
+                      backdropFilter: 'blur(6px)',
+                      border: '1px solid rgba(255,255,255,0.1)'
                     }}
                   >
-                    Full Image Banner (No Text Overlay)
+                    Full Artwork Banner (No Text Overlay)
                   </div>
                 )}
+
+                {/* Dot Pagination */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 8,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  display: 'flex',
+                  gap: '6px',
+                  background: 'rgba(0,0,0,0.45)',
+                  padding: '4px 8px',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(4px)',
+                  zIndex: 2
+                }}>
+                  {activeBanners.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActivePreviewSlide(idx)}
+                      style={{
+                        width: idx === activePreviewSlide ? '16px' : '6px',
+                        height: '6px',
+                        borderRadius: '3px',
+                        backgroundColor: idx === activePreviewSlide ? '#F97316' : 'rgba(255,255,255,0.5)',
+                        border: 'none',
+                        padding: 0,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                      title={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
               </>
             )}
           </div>
@@ -198,21 +310,39 @@ export default function Banners() {
       {/* Main Table Container */}
       <div className="table-container">
         <div className="table-toolbar">
-          <h2 style={{ fontSize: '1.1rem', color: '#fff' }}>All Promotional Banners ({banners.length})</h2>
-          <button
-            className="btn-primary"
-            onClick={() => {
-              setForm(initialForm);
-              setModalOpen(true);
-            }}
-          >
-            <MdAdd />
-            <span>Add New Banner</span>
-          </button>
+          <h2 style={{ fontSize: '1.1rem', color: '#0F172A', fontWeight: 700 }}>All Promotional Banners ({banners.length})</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <ExportDropdown
+              data={banners.map((b) => ({
+                'Banner ID': `#${b.id}`,
+                'Title': b.title || 'Full Artwork Image',
+                'Subtitle': b.subtitle || 'N/A',
+                'Placement': b.targetPlacement || 'HOMEPAGE',
+                'CTA Text': b.ctaText || 'N/A',
+                'CTA URL': b.ctaUrl || 'N/A',
+                'Display Order': b.sortOrder || 0,
+                'Status': b.isActive ? 'Active' : 'Inactive',
+                'Image URL': b.imageUrl
+              }))}
+              fileName="Aakash_Promotional_Banners"
+              sheetName="Banners"
+              title="Promotional Banners List"
+              subtitle={`Total Banners: ${banners.length} | Active Live: ${activeBanners.length}`}
+            />
+            <button
+              className="btn-primary"
+              onClick={() => {
+                setForm(initialForm);
+                setModalOpen(true);
+              }}
+            >
+              <MdAdd /> Add New Banner
+            </button>
+          </div>
         </div>
 
         {loading ? (
-          <div style={{ color: '#fff', padding: 40, textAlign: 'center' }}>Loading banners...</div>
+          <div style={{ color: '#64748B', padding: 40, textAlign: 'center', fontWeight: 500 }}>Loading banners...</div>
         ) : banners.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><MdImage /></div>
@@ -402,7 +532,7 @@ export default function Banners() {
                     type="text"
                     value={form.title || ''}
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    placeholder="Leave empty if banner already contains text"
+                    placeholder="Enter banner title"
                   />
                 </div>
 
@@ -412,7 +542,7 @@ export default function Banners() {
                     type="text"
                     value={form.subtitle || ''}
                     onChange={(e) => setForm({ ...form, subtitle: e.target.value })}
-                    placeholder="Optional description / subtext"
+                    placeholder="Enter subtitle"
                   />
                 </div>
 
@@ -423,7 +553,7 @@ export default function Banners() {
                       type="text"
                       value={form.ctaText || ''}
                       onChange={(e) => setForm({ ...form, ctaText: e.target.value })}
-                      placeholder="e.g. Consult Now / View Offers"
+                      placeholder="Enter button text"
                     />
                   </div>
 
@@ -433,7 +563,7 @@ export default function Banners() {
                       type="text"
                       value={form.ctaUrl || ''}
                       onChange={(e) => setForm({ ...form, ctaUrl: e.target.value })}
-                      placeholder="/experts or /offers"
+                      placeholder="Enter target URL"
                     />
                   </div>
                 </div>
@@ -470,7 +600,7 @@ export default function Banners() {
                     />
                     <span className="slider"></span>
                   </label>
-                  <span style={{ fontSize: '0.88rem', color: '#fff' }}>Banner is Active and Visible in Slider</span>
+                  <span style={{ fontSize: '0.88rem', color: '#0F172A', fontWeight: 600 }}>Banner is Active and Visible in Slider</span>
                 </div>
               </div>
 

@@ -5,6 +5,7 @@ const { sendOtpEmail } = require('../services/emailService');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'astrology_jwt_secret_key_super_secure_2026';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'astrology_refresh_jwt_secret_key_2026';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
 function generateTokens(user) {
     const payload = {
@@ -14,8 +15,8 @@ function generateTokens(user) {
         status: user.status
     };
 
-    const accessToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
-    const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
+    const accessToken = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '30d' });
 
     return { accessToken, refreshToken };
 }
@@ -512,6 +513,76 @@ async function resetPassword(req, res, next) {
     }
 }
 
+/**
+ * Change Password (for authenticated users & experts)
+ * POST /api/auth/change-password
+ */
+async function changePassword(req, res, next) {
+    try {
+        const { currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({
+                success: false,
+                message: 'Current password and new password are required.'
+            });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: 'New password must be at least 6 characters long.'
+            });
+        }
+
+        if (currentPassword === newPassword) {
+            return res.status(400).json({
+                success: false,
+                message: 'New password cannot be the same as your current password.'
+            });
+        }
+
+        // Fetch user from DB to verify current password
+        const userRes = await executeProcedure('dbo.sp_GetUserByEmail', {
+            Email: req.user.email
+        });
+
+        const user = userRes.recordset[0];
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User account not found.'
+            });
+        }
+
+        // Verify current password hash
+        const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
+        if (!isMatch) {
+            return res.status(400).json({
+                success: false,
+                message: 'Current password is incorrect. Please try again.'
+            });
+        }
+
+        // Hash new password
+        const salt = await bcrypt.genSalt(10);
+        const newPasswordHash = await bcrypt.hash(newPassword, salt);
+
+        // Update password in database
+        await executeProcedure('dbo.sp_ResetUserPassword', {
+            Email: user.email,
+            PasswordHash: newPasswordHash
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Password changed successfully!'
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     register,
     registerExpert,
@@ -519,5 +590,6 @@ module.exports = {
     sendOtp,
     verifyOtp,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    changePassword
 };

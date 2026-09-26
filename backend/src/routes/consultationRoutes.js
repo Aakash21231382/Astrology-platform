@@ -14,11 +14,11 @@ const router = express.Router();
 
 router.use(authenticateToken);
 
-router.post('/request', requireRole('CUSTOMER'), requestConsultation);
+router.post('/request', requireRole('CUSTOMER', 'EXPERT'), requestConsultation);
 router.get('/history', getHistory);
 router.get('/active-for-expert', requireRole('EXPERT'), getActiveForExpert);
 router.get('/:id', getConsultation);
 router.get('/:id/messages', getMessages);
-router.post('/reviews', requireRole('CUSTOMER'), submitReview);
+router.post('/reviews', requireRole('CUSTOMER', 'EXPERT'), submitReview);
 
 module.exports = router;

@@ -1,21 +1,27 @@
 /* =========================================================
-   About Us Page Styling - Authentic Brand Theme
-   Matches VVIP Psychics Expert light & navy visual language
+   About Us Page Styling - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
+   Breakpoints: 250px to 1920px+
    ========================================================= */
 
 .about-page-container {
   width: 100%;
-  background: #f8fafc;
-  color: #1e293b;
+  background: #FFFFFF;
+  color: #0F172A;
   min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* 1. Hero Header Banner */
 .about-hero-banner {
-  background: linear-gradient(180deg, #f1e4fc 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
   padding: 60px 0 50px 0;
   text-align: center;
-  border-bottom: 1px solid #e9d5ff;
+  border-bottom: 1px solid #E2E8F0;
   position: relative;
 }
 
@@ -28,15 +34,15 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: #ecdcfc;
-  color: #6b21a8;
+  background: #FFF7ED;
+  color: #3b502d;
   font-size: 12.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   padding: 5px 16px;
   border-radius: 20px;
-  border: 1px solid #d8b4fe;
+  border: 1px solid #FED7AA;
   margin-bottom: 18px;
 }
 
@@ -44,7 +50,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 38px;
   font-weight: 900;
-  color: #041639;
+  color: #0F172A;
   line-height: 1.25;
   margin-bottom: 18px;
   letter-spacing: -0.4px;
@@ -52,7 +58,7 @@
 
 .about-lead-text {
   font-size: 16.5px;
-  color: #475569;
+  color: #64748B;
   line-height: 1.75;
   margin-bottom: 35px;
 }
@@ -70,28 +76,28 @@
   background: #ffffff;
   padding: 20px 16px;
   border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 12px rgba(4, 22, 57, 0.04);
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.05);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .about-stat-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(4, 22, 57, 0.08);
-  border-color: #cbd5e1;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(255, 107, 0, 0.12);
+  border-color: #FF6B00;
 }
 
 .about-stat-val {
   font-size: 28px;
   font-weight: 900;
-  color: #041639;
+  color: #FF6B00;
   margin-bottom: 4px;
 }
 
 .about-stat-desc {
   font-size: 12.5px;
-  color: #64748b;
+  color: #64748B;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -100,7 +106,7 @@
 .about-story-block {
   padding: 70px 0;
   background: #ffffff;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .about-story-columns {
@@ -113,32 +119,32 @@
 .about-story-text h2 {
   font-size: 30px;
   font-weight: 800;
-  color: #041639;
+  color: #0F172A;
   margin-bottom: 18px;
   line-height: 1.3;
 }
 
 .about-story-text p {
   font-size: 15.5px;
-  color: #475569;
+  color: #64748B;
   line-height: 1.8;
   margin-bottom: 16px;
 }
 
 .about-commitments-card {
-  background: #faf5ff;
-  border: 1.5px solid #e9d5ff;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
   border-radius: 18px;
   padding: 32px 28px;
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.05);
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.06);
 }
 
 .about-card-head {
   font-size: 19px;
   font-weight: 800;
-  color: #041639;
+  color: #0F172A;
   margin-bottom: 18px;
-  border-bottom: 1px solid #e9d5ff;
+  border-bottom: 1px solid #E2E8F0;
   padding-bottom: 12px;
 }
 
@@ -155,7 +161,7 @@
 }
 
 .about-check-icon {
-  color: #7c3aed;
+  color: #FF6B00;
   font-size: 20px;
   margin-top: 2px;
   flex-shrink: 0;
@@ -164,13 +170,13 @@
 .about-commitment-item h4 {
   font-size: 15px;
   font-weight: 700;
-  color: #041639;
+  color: #0F172A;
   margin-bottom: 2px;
 }
 
 .about-commitment-item p {
   font-size: 13.5px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.5;
   margin: 0;
 }
@@ -178,7 +184,7 @@
 /* 3. Core Values & Pillars */
 .about-pillars-block {
   padding: 70px 0;
-  background: #f8fafc;
+  background: #FFFFFF;
 }
 
 .about-block-header {
@@ -190,14 +196,14 @@
 .about-block-header h2 {
   font-size: 30px;
   font-weight: 800;
-  color: #041639;
+  color: #0F172A;
   margin-top: 6px;
   margin-bottom: 10px;
 }
 
 .about-block-header p {
   font-size: 15px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.6;
 }
 
@@ -209,19 +215,19 @@
 
 .about-pillar-white-card {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1.5px solid #E2E8F0;
   border-radius: 16px;
   padding: 28px 22px;
-  box-shadow: 0 4px 12px rgba(4, 22, 57, 0.03);
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 
 .about-pillar-white-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(4, 22, 57, 0.08);
-  border-color: #cbd5e1;
+  box-shadow: 0 10px 24px rgba(255, 107, 0, 0.12);
+  border-color: #FF6B00;
 }
 
 .about-pillar-icon {
@@ -233,38 +239,30 @@
   justify-content: center;
   font-size: 22px;
   margin-bottom: 18px;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border: 1px solid #E2E8F0;
 }
 
-.about-pillar-icon.purple {
-  background: #f3e8ff;
-  color: #7c3aed;
-}
-
-.about-pillar-icon.gold {
-  background: #fef3c7;
-  color: #d97706;
-}
-
-.about-pillar-icon.blue {
-  background: #e0f2fe;
-  color: #0284c7;
-}
-
+.about-pillar-icon.purple,
+.about-pillar-icon.gold,
+.about-pillar-icon.blue,
 .about-pillar-icon.rose {
-  background: #ffe4e6;
-  color: #e11d48;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border: 1px solid #E2E8F0;
 }
 
 .about-pillar-white-card h3 {
   font-size: 17px;
   font-weight: 700;
-  color: #041639;
+  color: #0F172A;
   margin-bottom: 10px;
 }
 
 .about-pillar-white-card p {
   font-size: 13.5px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.6;
   margin: 0;
 }
@@ -273,8 +271,8 @@
 .about-vetting-block {
   padding: 70px 0;
   background: #ffffff;
-  border-top: 1px solid #f1f5f9;
-  border-bottom: 1px solid #f1f5f9;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .about-vetting-steps {
@@ -284,57 +282,62 @@
 }
 
 .about-vet-step {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
   border-radius: 14px;
   padding: 24px 18px;
   position: relative;
   text-align: center;
+  transition: transform 0.25s ease;
+}
+
+.about-vet-step:hover {
+  transform: translateY(-3px);
 }
 
 .about-step-badge {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #041639;
-  color: #ffd700;
+  background: #FF6B00;
+  color: #ffffff;
   font-weight: 800;
   font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 14px auto;
-  border: 2px solid #ffd700;
+  border: 2px solid #E2E8F0;
 }
 
 .about-vet-step h4 {
   font-size: 15px;
   font-weight: 700;
-  color: #041639;
+  color: #0F172A;
   margin-bottom: 8px;
 }
 
 .about-vet-step p {
   font-size: 13px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.55;
   margin: 0;
 }
 
-/* 5. CTA Section (Navy Theme to ground the footer) */
+/* 5. CTA Section */
 .about-cta-navy-section {
   padding: 60px 0 80px 0;
-  background: #f8fafc;
+  background: #FFFFFF;
 }
 
 .about-cta-navy-box {
-  background: #041639;
+  background: #FF6B00;
   border-radius: 20px;
   padding: 50px 30px;
   text-align: center;
   color: #ffffff;
-  box-shadow: 0 16px 36px rgba(4, 22, 57, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 36px rgba(255, 107, 0, 0.25);
+  border: 1px solid #E2E8F0;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -348,7 +351,7 @@
 
 .about-cta-navy-box p {
   font-size: 15.5px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 248, 236, 0.9);
   max-width: 580px;
   margin: 0 auto 28px auto;
   line-height: 1.7;
@@ -363,8 +366,8 @@
 }
 
 .about-btn-gold {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: #ffffff;
+  background: #FFFFFF;
+  color: #FF6B00;
   padding: 12px 26px;
   border-radius: 24px;
   font-weight: 700;
@@ -373,21 +376,22 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 .about-btn-gold:hover {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  color: #041639;
+  background: #ffffff;
+  color: #445734;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
 .about-btn-white-outline {
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
-  color: #ffffff;
+  border: 1.5px solid rgba(255, 248, 236, 0.8);
+  color: #FFFFFF;
   padding: 11px 24px;
   border-radius: 24px;
   font-weight: 700;
@@ -400,9 +404,9 @@
 }
 
 .about-btn-white-outline:hover {
-  background: #ffffff;
-  color: #041639;
-  border-color: #ffffff;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border-color: #FFFFFF;
   transform: translateY(-2px);
 }
 

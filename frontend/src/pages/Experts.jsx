@@ -107,7 +107,7 @@ export default function Experts() {
             <IoSearch />
             <input
               type="text"
-              placeholder="Search by name, skills or title..."
+              placeholder="Search astrologers..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />

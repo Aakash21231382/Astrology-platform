@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ADMIN LOGIN - CLEAN, AUTHORITATIVE & PRODUCTION-READY
+   ADMIN LOGIN - EXECUTIVE ORANGE & SUNSET GRADIENT
    ========================================================================== */
 
 .admin-login-page {
@@ -8,70 +8,74 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background-color: var(--admin-bg);
+  background: linear-gradient(135deg, #FFFDF9 0%, #FFF7ED 50%, #FFEDD5 100%);
   position: relative;
 }
 
 .admin-login-card {
   width: 100%;
-  max-width: 400px;
-  background: var(--admin-card-bg);
-  border: 1px solid var(--admin-border);
-  border-radius: var(--radius-xl);
-  padding: 36px 32px;
-  box-shadow: var(--shadow-elevated);
+  max-width: 420px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--admin-border, #FED7AA);
+  border-radius: var(--radius-xl, 20px);
+  padding: 42px 36px;
+  box-shadow: 0 24px 48px -10px rgba(249, 115, 22, 0.15), 0 2px 6px rgba(0, 0, 0, 0.04);
   position: relative;
   z-index: 10;
 }
 
 .login-brand-header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 }
 
 .login-badge-shield {
-  width: 48px;
-  height: 48px;
-  background: var(--admin-surface-elevated);
-  border: 1px solid rgba(245, 196, 0, 0.3);
-  border-radius: var(--radius-md);
-  margin: 0 auto 14px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #FF6B00 0%, #F97316 100%);
+  border: 2px solid #FFFFFF;
+  border-radius: var(--radius-md, 14px);
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--admin-primary);
-  font-size: 1.5rem;
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.35);
 }
 
 .login-brand-header h1 {
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 1.55rem;
+  font-weight: 900;
   letter-spacing: -0.3px;
-  color: var(--text-main);
+  background: linear-gradient(135deg, #EA580C 0%, #F97316 60%, #FB923C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 4px;
 }
 
 .login-brand-header p {
-  font-size: 0.82rem;
-  color: var(--text-dim);
+  font-size: 0.84rem;
+  color: #64748B;
+  font-weight: 600;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .form-group label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #334155;
 }
 
 .input-with-icon {
@@ -82,39 +86,43 @@
 
 .input-with-icon svg {
   position: absolute;
-  left: 12px;
-  color: var(--text-dim);
-  font-size: 1.05rem;
+  left: 14px;
+  color: #FB923C;
+  font-size: 1.2rem;
   pointer-events: none;
 }
 
 .input-with-icon input {
   width: 100%;
-  padding-left: 38px;
-  background: #0B1120;
-  border: 1px solid var(--admin-border);
-  border-radius: var(--radius-md);
-  color: var(--text-main);
+  padding-left: 44px;
+  background: #FFFFFF;
+  border: 1.5px solid #FED7AA;
+  border-radius: var(--radius-md, 10px);
+  color: #0F172A;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .input-with-icon input:focus {
-  border-color: var(--admin-primary);
-  box-shadow: 0 0 0 1px var(--admin-primary);
+  border-color: #F97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
 }
 
 .credentials-hint {
-  margin-top: 20px;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  background: var(--admin-surface-elevated);
-  border: 1px solid var(--admin-border);
-  font-size: 0.76rem;
-  color: var(--text-muted);
+  margin-top: 24px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md, 10px);
+  background: #FFF7ED;
+  border: 1.5px solid #FED7AA;
+  font-size: 0.8rem;
+  color: #9A3412;
   text-align: center;
+  line-height: 1.45;
+  font-weight: 600;
 }
 
 .credentials-hint strong {
-  color: var(--admin-primary);
+  color: #C2410C;
 }
 
 /* ==========================================================================
@@ -126,45 +134,14 @@
   }
 
   .admin-login-card {
-    padding: 28px 20px;
+    padding: 30px 22px;
   }
 
   .login-brand-header {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
   }
 
   .login-brand-header h1 {
-    font-size: 1.25rem;
-  }
-}
-
-@media (max-width: 340px) {
-  .admin-login-page {
-    padding: 8px 4px;
-  }
-
-  .admin-login-card {
-    padding: 20px 12px;
-  }
-
-  .login-badge-shield {
-    width: 40px;
-    height: 40px;
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-  }
-
-  .login-brand-header h1 {
-    font-size: 1.1rem;
-  }
-
-  .input-with-icon svg {
-    left: 10px;
-    font-size: 0.95rem;
-  }
-
-  .input-with-icon input {
-    padding-left: 32px;
-    font-size: 0.82rem;
+    font-size: 1.35rem;
   }
 }

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { MdTrendingUp, MdPieChart, MdBarChart } from 'react-icons/md';
+import { MdTrendingUp, MdPieChart } from 'react-icons/md';
 
 export default function DashboardCharts({ stats }) {
   const [timeframe, setTimeframe] = useState('7d');
   const [hoveredPoint, setHoveredPoint] = useState(null);
-  const [hoveredBar, setHoveredBar] = useState(null);
 
   // Dynamic sample data based on real stats
   const revenueData = [
@@ -18,9 +17,9 @@ export default function DashboardCharts({ stats }) {
   ];
 
   const categoryData = [
-    { name: 'Vedic Astrology', count: 45, color: '#F5C400' },
-    { name: 'Tarot Reading', count: 25, color: '#8B5CF6' },
-    { name: 'Numerology', count: 18, color: '#3B82F6' },
+    { name: 'Vedic Astrology', count: 45, color: '#FF6B00' },
+    { name: 'Tarot Reading', count: 25, color: '#F97316' },
+    { name: 'Numerology', count: 18, color: '#F59E0B' },
     { name: 'Palmistry & Vastu', count: 12, color: '#10B981' }
   ];
 
@@ -51,31 +50,34 @@ export default function DashboardCharts({ stats }) {
       <div className="table-container chart-card">
         <div className="chart-header">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <MdTrendingUp style={{ color: '#F5C400', fontSize: '1.25rem' }} />
-              <h3 style={{ fontSize: '0.98rem', color: '#F8FAFC', fontWeight: 600 }}>Revenue & Volume Analytics</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)', border: '1.5px solid #FED7AA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MdTrendingUp style={{ color: '#EA580C', fontSize: '1.4rem' }} />
+              </div>
+              <h3 style={{ fontSize: '1.12rem', color: '#0F172A', fontWeight: 800 }}>Revenue & Volume Analytics</h3>
             </div>
-            <p style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '2px' }}>
+            <p style={{ fontSize: '0.82rem', color: '#64748B', marginTop: '3px' }}>
               Platform consultation earnings over time
             </p>
           </div>
 
           {/* Clean Segmented Control */}
-          <div style={{ display: 'flex', background: '#0B1120', padding: '3px', borderRadius: '6px', border: '1px solid #273247' }}>
+          <div style={{ display: 'flex', background: '#FFF7ED', padding: '4px', borderRadius: '10px', border: '1.5px solid #FED7AA' }}>
             {['7d', '30d', 'ytd'].map((t) => (
               <button
                 key={t}
                 onClick={() => setTimeframe(t)}
                 style={{
-                  padding: '4px 10px',
-                  fontSize: '0.72rem',
-                  fontWeight: timeframe === t ? '600' : '500',
-                  color: timeframe === t ? '#080C16' : '#94A3B8',
-                  background: timeframe === t ? '#F5C400' : 'transparent',
-                  borderRadius: '4px',
+                  padding: '6px 14px',
+                  fontSize: '0.78rem',
+                  fontWeight: timeframe === t ? '800' : '600',
+                  color: timeframe === t ? '#FFFFFF' : '#9A3412',
+                  background: timeframe === t ? 'linear-gradient(135deg, #FF6B00 0%, #F97316 100%)' : 'transparent',
+                  borderRadius: '8px',
                   cursor: 'pointer',
                   border: 'none',
-                  transition: 'all 0.15s ease'
+                  boxShadow: timeframe === t ? '0 2px 8px rgba(249, 115, 22, 0.35)' : 'none',
+                  transition: 'all 0.18s ease'
                 }}
               >
                 {t.toUpperCase()}
@@ -89,8 +91,8 @@ export default function DashboardCharts({ stats }) {
           <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{ width: '100%', height: '100%', overflow: 'visible' }}>
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#F5C400" stopOpacity="0.14" />
-                <stop offset="100%" stopColor="#F5C400" stopOpacity="0.0" />
+                <stop offset="0%" stopColor="#F97316" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#FB923C" stopOpacity="0.0" />
               </linearGradient>
             </defs>
 
@@ -104,7 +106,7 @@ export default function DashboardCharts({ stats }) {
                   y1={yPos}
                   x2={svgWidth - paddingX}
                   y2={yPos}
-                  stroke="rgba(255, 255, 255, 0.05)"
+                  stroke="#FFEDD5"
                   strokeDasharray="4 4"
                 />
               );
@@ -113,12 +115,12 @@ export default function DashboardCharts({ stats }) {
             {/* Filled Area */}
             <path d={areaD} fill="url(#areaGradient)" />
 
-            {/* Clean Stroke Line - No neon blur */}
+            {/* Clean Stroke Line */}
             <path
               d={pathD}
               fill="none"
-              stroke="#F5C400"
-              strokeWidth="2"
+              stroke="#EA580C"
+              strokeWidth="3"
             />
 
             {/* Interactive Points */}
@@ -127,10 +129,10 @@ export default function DashboardCharts({ stats }) {
                 <circle
                   cx={p.x}
                   cy={p.y}
-                  r={hoveredPoint === idx ? 6 : 3.5}
-                  fill={hoveredPoint === idx ? '#F5C400' : '#080C16'}
-                  stroke="#F5C400"
-                  strokeWidth="2"
+                  r={hoveredPoint === idx ? 7 : 4.5}
+                  fill={hoveredPoint === idx ? '#EA580C' : '#FFFFFF'}
+                  stroke="#EA580C"
+                  strokeWidth="3"
                   style={{ cursor: 'pointer', transition: 'all 0.15s ease' }}
                   onMouseEnter={() => setHoveredPoint(idx)}
                   onMouseLeave={() => setHoveredPoint(null)}
@@ -140,10 +142,11 @@ export default function DashboardCharts({ stats }) {
                 <text
                   x={p.x}
                   y={svgHeight - 8}
-                  fill="#64748B"
+                  fill="#9A3412"
                   fontSize="11"
+                  fontWeight="700"
                   textAnchor="middle"
-                  fontFamily="Inter, sans-serif"
+                  fontFamily="Plus Jakarta Sans, sans-serif"
                 >
                   {p.day}
                 </text>
@@ -159,20 +162,20 @@ export default function DashboardCharts({ stats }) {
                 left: `${(points[hoveredPoint].x / svgWidth) * 100}%`,
                 top: `${(points[hoveredPoint].y / svgHeight) * 100 - 24}%`,
                 transform: 'translate(-50%, -100%)',
-                background: '#151D2D',
-                border: '1px solid #273247',
-                padding: '7px 11px',
-                borderRadius: '6px',
+                background: '#FFFFFF',
+                border: '1.5px solid #FDBA74',
+                padding: '8px 14px',
+                borderRadius: '10px',
                 pointerEvents: 'none',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                boxShadow: '0 8px 24px rgba(249, 115, 22, 0.18)',
                 zIndex: 20,
                 textAlign: 'center'
               }}
             >
-              <div style={{ color: '#F8FAFC', fontWeight: 600, fontSize: '0.88rem' }}>
+              <div style={{ color: '#EA580C', fontWeight: 800, fontSize: '0.95rem' }}>
                 ₹{points[hoveredPoint].revenue}
               </div>
-              <div style={{ color: '#94A3B8', fontSize: '0.72rem' }}>
+              <div style={{ color: '#64748B', fontSize: '0.76rem', fontWeight: 600 }}>
                 {points[hoveredPoint].consultations} sessions ({points[hoveredPoint].day})
               </div>
             </div>
@@ -182,28 +185,31 @@ export default function DashboardCharts({ stats }) {
 
       {/* 2. Category Distribution & Consultations Breakdown */}
       <div className="table-container chart-card">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-          <MdPieChart style={{ color: '#8B5CF6', fontSize: '1.25rem' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)', border: '1.5px solid #FED7AA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <MdPieChart style={{ color: '#EA580C', fontSize: '1.4rem' }} />
+          </div>
           <div>
-            <h3 style={{ fontSize: '0.98rem', color: '#F8FAFC', fontWeight: 600 }}>Category Share</h3>
-            <p style={{ fontSize: '0.78rem', color: '#64748B' }}>Consultations demand by category</p>
+            <h3 style={{ fontSize: '1.12rem', color: '#0F172A', fontWeight: 800 }}>Category Share</h3>
+            <p style={{ fontSize: '0.82rem', color: '#64748B' }}>Consultations demand by category</p>
           </div>
         </div>
 
         {/* Category Progress Bars */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '12px' }}>
           {categoryData.map((cat, i) => (
             <div key={i}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                <span style={{ fontSize: '0.82rem', color: '#94A3B8', fontWeight: 500 }}>{cat.name}</span>
-                <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#F8FAFC' }}>{cat.count}%</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <span style={{ fontSize: '0.86rem', color: '#475569', fontWeight: 700 }}>{cat.name}</span>
+                <span style={{ fontSize: '0.86rem', fontWeight: 800, color: '#C2410C' }}>{cat.count}%</span>
               </div>
               <div
                 style={{
                   width: '100%',
-                  height: '6px',
-                  background: '#0B1120',
-                  borderRadius: '4px',
+                  height: '9px',
+                  background: '#FFF7ED',
+                  borderRadius: '6px',
+                  border: '1px solid #FFEDD5',
                   overflow: 'hidden'
                 }}
               >
@@ -212,7 +218,7 @@ export default function DashboardCharts({ stats }) {
                     width: `${cat.count}%`,
                     height: '100%',
                     background: cat.color,
-                    borderRadius: '4px',
+                    borderRadius: '6px',
                     transition: 'width 0.4s ease'
                   }}
                 />
@@ -224,18 +230,18 @@ export default function DashboardCharts({ stats }) {
         {/* Quick Summary Pill */}
         <div
           style={{
-            marginTop: '22px',
-            padding: '10px 14px',
-            borderRadius: '6px',
-            background: '#151D2D',
-            border: '1px solid #273247',
+            marginTop: '24px',
+            padding: '12px 18px',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
+            border: '1.5px solid #FED7AA',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between'
           }}
         >
-          <span style={{ fontSize: '0.78rem', color: '#94A3B8' }}>Peak Demand Time:</span>
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#F8FAFC' }}>8:00 PM – 11:30 PM</span>
+          <span style={{ fontSize: '0.82rem', color: '#9A3412', fontWeight: 700 }}>Peak Demand Time:</span>
+          <span style={{ fontSize: '0.86rem', fontWeight: 800, color: '#C2410C' }}>8:00 PM – 11:30 PM</span>
         </div>
       </div>
     </div>

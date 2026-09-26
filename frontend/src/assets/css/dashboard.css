@@ -1,11 +1,19 @@
 /* =========================================================
-   Customer Dashboard & Wallet Styles
-   Theme: Royal Navy, Gold Accents, Clean White Surface Cards
+   Customer Dashboard & Wallet Styles - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
    Breakpoints: 250px to 1920px+
    ========================================================= */
 
 .dashboard-container {
   padding: 40px 0 80px 0;
+  background: #FFFFFF;
+  min-height: calc(100vh - 140px);
+  color: #0F172A;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .dashboard-header-bar {
@@ -19,12 +27,14 @@
 
 .dashboard-user-greeting h1 {
   font-size: 28px;
-  font-family: var(--font-heading);
-  color: var(--primary-deep);
+  font-family: var(--font-heading, 'Outfit', 'Inter', sans-serif);
+  color: #0F172A;
+  margin: 0;
+  font-weight: 800;
 }
 
 .dashboard-subtitle {
-  color: #64748b;
+  color: #64748B;
   font-size: 14px;
   margin-top: 4px;
 }
@@ -44,19 +54,20 @@
 
 .kpi-card {
   background: #ffffff;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
+  border: 1.5px solid #E2E8F0;
+  border-radius: var(--radius-lg, 16px);
   padding: 24px;
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .kpi-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(255, 107, 0, 0.12);
+  border-color: #FF6B00;
 }
 
 .kpi-icon-wrap {
@@ -68,43 +79,39 @@
   justify-content: center;
   font-size: 24px;
   flex-shrink: 0;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border: 1.5px solid #E2E8F0;
 }
 
-.kpi-icon-gold {
-  background: #fef3c7;
-  color: #d97706;
-}
-
-.kpi-icon-purple {
-  background: var(--primary-light);
-  color: var(--primary-purple);
-}
-
+.kpi-icon-gold,
+.kpi-icon-purple,
 .kpi-icon-green {
-  background: #ecfdf5;
-  color: #059669;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border: 1.5px solid #E2E8F0;
 }
 
 .kpi-val {
   font-size: 26px;
   font-weight: 800;
-  color: var(--primary-deep);
+  color: #0F172A;
   line-height: 1.2;
 }
 
 .kpi-label {
   font-size: 13px;
-  color: var(--text-muted);
+  color: #64748B;
   font-weight: 600;
   margin-top: 2px;
 }
 
 .dashboard-table-card {
   background: #ffffff;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
+  border: 1.5px solid #E2E8F0;
+  border-radius: var(--radius-lg, 16px);
   padding: 26px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.05);
 }
 
 .dashboard-table-header {
@@ -116,20 +123,22 @@
 
 .dashboard-table-title {
   font-size: 18px;
-  color: #130a2a;
+  color: #0F172A;
   font-weight: 700;
   margin: 0;
 }
 
 .dashboard-book-link {
-  color: #7c3aed;
-  font-weight: 600;
+  color: #FF6B00;
+  font-weight: 700;
   font-size: 13.5px;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .dashboard-book-link:hover {
-  color: #5b21b6;
+  color: #445734;
+  text-decoration: underline;
 }
 
 .table-responsive {
@@ -148,45 +157,48 @@
 
 .custom-data-table th {
   padding: 12px 16px;
-  background: #f8fafc;
-  color: #475569;
+  background: #FFFFFF;
+  color: #0F172A;
   font-weight: 700;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1.5px solid #E2E8F0;
   white-space: nowrap;
 }
 
 .custom-data-table td {
   padding: 14px 16px;
-  border-bottom: 1px solid var(--border-light);
-  color: #1e293b;
+  border-bottom: 1px solid #E2E8F0;
+  color: #0F172A;
   white-space: nowrap;
 }
 
 .custom-data-table tr:hover td {
-  background: #f8fafc;
+  background: #FFFFFF;
 }
 
 .status-tag {
   padding: 4px 10px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full, 9999px);
   font-size: 12px;
   font-weight: 700;
   display: inline-block;
 }
 
 .status-tag.success {
-  background: #ecfdf5;
-  color: #047857;
+  background: #FFF7ED;
+  color: #3b502d;
+  border: 1px solid #FED7AA;
 }
 
 .status-tag.pending {
-  background: #fffbeb;
-  color: #b45309;
+  background: #FFFFFF;
+  color: #FF6B00;
+  border: 1px solid #E2E8F0;
 }
 
 .status-tag.danger {
   background: #fef2f2;
   color: #b91c1c;
+  border: 1px solid #fecaca;
 }
 
 .dashboard-action-btn {
@@ -196,9 +208,15 @@
 }
 
 .dashboard-view-link {
-  color: #7c3aed;
-  font-weight: 600;
+  color: #FF6B00;
+  font-weight: 700;
   font-size: 13px;
+  text-decoration: none;
+}
+
+.dashboard-view-link:hover {
+  text-decoration: underline;
+  color: #445734;
 }
 
 .dashboard-empty-state {
@@ -207,7 +225,7 @@
 }
 
 .dashboard-empty-text {
-  color: #64748b;
+  color: #64748B;
   margin-bottom: 14px;
   font-size: 14.5px;
 }

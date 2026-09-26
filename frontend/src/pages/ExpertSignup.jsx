@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService, uploadService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-import LogoImg from '../assets/images/logo.png';
 import '../assets/css/expert-signup.css';
 
 // React Icons
@@ -148,9 +147,9 @@ export default function ExpertSignup() {
 
         {/* Clean Header */}
         <div className="expert-signup-header">
-          <Link to="/" title="VVIP Psychics Home">
+          <Link to="/" title="Aakash Home">
             <div className="signup-logo-wrapper">
-              <img src={LogoImg} alt="VVIP Psychics Expert" className="signup-logo-img" />
+              <span className="signup-brand-text">Aakash</span>
             </div>
           </Link>
           <h1 className="expert-signup-title">EXPERT REGISTRATION</h1>
@@ -218,7 +217,7 @@ export default function ExpertSignup() {
                     type="text"
                     name="firstName"
                     required
-                    placeholder="Enter First Name"
+                    placeholder="Enter first name"
                     className="signup-text-input"
                     value={formData.firstName}
                     onChange={handleInputChange}
@@ -233,7 +232,7 @@ export default function ExpertSignup() {
                   <input
                     type="text"
                     name="lastName"
-                    placeholder="Enter Last Name"
+                    placeholder="Enter last name"
                     className="signup-text-input"
                     value={formData.lastName}
                     onChange={handleInputChange}
@@ -254,7 +253,7 @@ export default function ExpertSignup() {
                     type="email"
                     name="email"
                     required
-                    placeholder="Enter email address"
+                    placeholder="Enter your email"
                     className="signup-text-input"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -293,7 +292,7 @@ export default function ExpertSignup() {
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     required
-                    placeholder="Enter password (min 6 chars)"
+                    placeholder="Enter your password"
                     className="signup-text-input"
                     value={formData.password}
                     onChange={handleInputChange}
@@ -320,7 +319,7 @@ export default function ExpertSignup() {
                     type="text"
                     name="title"
                     required
-                    placeholder="e.g. Vedic Astrologer & Tarot Reader"
+                    placeholder="Enter specialisation or title"
                     className="signup-text-input"
                     value={formData.title}
                     onChange={handleInputChange}
@@ -466,7 +465,7 @@ export default function ExpertSignup() {
                   <input
                     type="text"
                     name="zipCode"
-                    placeholder="Enter Zip Code"
+                    placeholder="Enter zip code"
                     className="signup-text-input"
                     value={formData.zipCode}
                     onChange={handleInputChange}
@@ -481,7 +480,7 @@ export default function ExpertSignup() {
                   <input
                     type="text"
                     name="fax"
-                    placeholder="Enter Fax"
+                    placeholder="Enter fax number"
                     className="signup-text-input"
                     value={formData.fax}
                     onChange={handleInputChange}

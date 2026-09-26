@@ -1,49 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Restrained Dark Color System */
-  --admin-bg: #080C16;
-  --admin-sidebar-bg: #0B1120;
-  --admin-card-bg: #111827;
-  --admin-card-hover: #151D2D;
-  --admin-surface-elevated: #151D2D;
-  --admin-header-bg: #080C16;
-  --admin-border: #273247;
-  --admin-border-subtle: rgba(39, 50, 71, 0.6);
-  --admin-border-focus: #F5C400;
+  /* Vibrant Executive Orange & Sunset Gradient System */
+  --admin-bg: #FFFDF9;
+  --admin-bg-alt: #FFF7ED;
+  --admin-sidebar-bg: #FFFFFF;
+  --admin-card-bg: #FFFFFF;
+  --admin-card-hover: #FFFDF7;
+  --admin-surface-elevated: #FFFFFF;
+  --admin-header-bg: #FFFFFF;
+  --admin-border: #FED7AA;
+  --admin-border-subtle: #FFEDD5;
+  --admin-border-focus: #F97316;
 
-  /* Primary Brand Accent (Subtle Gold/Yellow) */
-  --admin-primary: #F5C400;
-  --admin-primary-hover: #E5B800;
-  --admin-primary-soft: rgba(245, 196, 0, 0.1);
+  /* Primary Brand Accent (Vivid Orange & Warm Gradients) */
+  --admin-primary: #F97316;
+  --admin-primary-dark: #EA580C;
+  --admin-primary-deep: #C2410C;
+  --admin-primary-soft: rgba(249, 115, 22, 0.1);
+  --admin-primary-gradient: linear-gradient(135deg, #FF6B00 0%, #F97316 50%, #FB923C 100%);
+  --admin-primary-gradient-hover: linear-gradient(135deg, #EA580C 0%, #FF6B00 100%);
+  --admin-card-gradient: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 100%);
+  --admin-gold-gradient: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
 
-  /* Functional Accents (Restrained, used only for meaning) */
+  /* Functional Accents */
   --admin-success: #10B981;
   --admin-danger: #EF4444;
   --admin-warning: #F59E0B;
-  --admin-info: #3B82F6;
-  --admin-accent: #8B5CF6;
+  --admin-info: #0EA5E9;
+  --admin-purple: #8B5CF6;
 
-  /* Typography Colors */
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
-  --text-dim: #64748B;
+  /* Typography Colors (High Contrast) */
+  --text-main: #1E293B;
+  --text-heading: #0F172A;
+  --text-muted: #64748B;
+  --text-dim: #94A3B8;
 
   /* Fonts */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Border Radius (8px system) */
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 14px;
-  --radius-xl: 16px;
+  /* Border Radius */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
-  /* Micro-transitions */
-  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 4px 16px -2px rgba(0, 0, 0, 0.5);
+  /* Transitions & Shadows */
+  --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-card: 0 2px 12px -2px rgba(249, 115, 22, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-elevated: 0 12px 28px -4px rgba(249, 115, 22, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.03);
+  --shadow-modal: 0 24px 48px -8px rgba(194, 65, 12, 0.18), 0 8px 16px -4px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -61,30 +69,34 @@ html {
 body {
   font-family: var(--font-family);
   background-color: var(--admin-bg);
+  background-image: 
+    radial-gradient(at 100% 0%, rgba(254, 215, 170, 0.25) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 237, 213, 0.3) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--text-main);
   min-height: 100vh;
   width: 100%;
   max-width: 100vw;
   overflow-x: clip;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle, Restrained Scrollbar */
+/* Crisp Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--admin-bg);
+  background: #FFF7ED;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--admin-border);
+  background: #FDBA74;
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3B4B68;
+  background: #FB923C;
 }
 
 a {
@@ -104,114 +116,128 @@ button {
 input, select, textarea {
   font-family: inherit;
   color: var(--text-main);
-  background: #0B1120;
-  border: 1px solid var(--admin-border);
+  background: #FFFFFF;
+  border: 1.5px solid #FED7AA;
   border-radius: var(--radius-md);
-  padding: 9px 13px;
-  font-size: 0.88rem;
+  padding: 10px 14px;
+  font-size: 0.9rem;
   outline: none;
   transition: var(--transition);
   max-width: 100%;
+  box-shadow: 0 1px 2px rgba(249, 115, 22, 0.04);
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: var(--admin-primary);
-  box-shadow: 0 0 0 1px var(--admin-primary);
+  border-color: #F97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+  background: #FFFFFF;
 }
 
 input::placeholder, textarea::placeholder {
-  color: var(--text-dim);
+  color: #94A3B8;
 }
 
-/* Restrained Status Badges */
+/* Modern Status Badges */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
-  border-radius: var(--radius-xs);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.2px;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.badge-orange {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  color: #C2410C;
+  border: 1px solid #FDBA74;
 }
 
 .badge-success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
 .badge-warning {
-  background: rgba(245, 158, 11, 0.12);
-  color: #FBBF24;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  color: #B45309;
+  border: 1px solid #FDE68A;
 }
 
 .badge-danger {
-  background: rgba(239, 68, 68, 0.12);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+  color: #B91C1C;
+  border: 1px solid #FECACA;
 }
 
 .badge-info {
-  background: rgba(59, 130, 246, 0.12);
-  color: #60A5FA;
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
 }
 
 .badge-purple {
-  background: rgba(139, 92, 246, 0.12);
-  color: #A78BFA;
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+  color: #7E22CE;
+  border: 1px solid #E9D5FF;
 }
 
-/* Intentional, Hierarchy-Driven Buttons */
+/* Hierarchy-Driven Buttons with Linear Gradients */
 .btn-primary {
-  background: var(--admin-primary);
-  color: #080C16;
-  font-weight: 600;
-  font-size: 0.88rem;
-  padding: 9px 18px;
+  background: var(--admin-primary-gradient);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px 20px;
   border-radius: var(--radius-md);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
   transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+  border: none;
 }
 
 .btn-primary:hover {
-  background: var(--admin-primary-hover);
+  background: var(--admin-primary-gradient-hover);
   transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
+  color: #FFFFFF;
 }
 
 .btn-secondary {
-  background: var(--admin-surface-elevated);
-  color: var(--text-main);
-  font-weight: 500;
+  background: #FFFFFF;
+  color: #C2410C;
+  font-weight: 700;
   font-size: 0.88rem;
-  padding: 9px 16px;
+  padding: 9px 18px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--admin-border);
+  border: 1.5px solid #FED7AA;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
   transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(249, 115, 22, 0.05);
 }
 
 .btn-secondary:hover {
-  background: #1B2438;
-  border-color: #384660;
-  color: #FFFFFF;
+  background: #FFF7ED;
+  border-color: #FB923C;
+  color: #9A3412;
 }
 
 .btn-danger {
-  background: rgba(239, 68, 68, 0.12);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  font-weight: 500;
+  background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+  color: #B91C1C;
+  border: 1px solid #FCA5A5;
+  font-weight: 700;
   font-size: 0.84rem;
   padding: 8px 14px;
   border-radius: var(--radius-md);
@@ -229,10 +255,10 @@ input::placeholder, textarea::placeholder {
 }
 
 .btn-success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  font-weight: 500;
+  background: linear-gradient(135deg, #DCFCE7 0%, #BBF7D0 100%);
+  color: #15803D;
+  border: 1px solid #86EFAC;
+  font-weight: 700;
   font-size: 0.84rem;
   padding: 8px 14px;
   border-radius: var(--radius-md);
@@ -249,12 +275,12 @@ input::placeholder, textarea::placeholder {
   border-color: #10B981;
 }
 
-/* Restrained Toggle Switch */
+/* Modern Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 22px;
+  width: 44px;
+  height: 24px;
 }
 
 .switch input {
@@ -267,30 +293,30 @@ input::placeholder, textarea::placeholder {
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background-color: #1E293B;
-  border: 1px solid var(--admin-border);
-  transition: 0.2s ease;
-  border-radius: 22px;
+  background-color: #E2E8F0;
+  border: 1px solid #CBD5E1;
+  transition: 0.25s ease;
+  border-radius: 24px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 14px;
-  width: 14px;
+  height: 16px;
+  width: 16px;
   left: 3px;
   bottom: 3px;
-  background-color: #94A3B8;
-  transition: 0.2s ease;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: 0.25s ease;
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: #10B981;
-  border-color: #10B981;
+  background: var(--admin-primary-gradient);
+  border-color: #F97316;
 }
 
 input:checked + .slider:before {
-  background-color: #FFFFFF;
-  transform: translateX(18px);
+  transform: translateX(20px);
 }

@@ -99,25 +99,61 @@ export default function Categories() {
     }
   };
 
+  const activeCategoriesCount = categories.filter(c => c.isActive).length;
+
+  const handleOpenAdd = () => {
+    setForm(initialForm);
+    setModalOpen(true);
+  };
+
   return (
     <div className="categories-page">
+      {/* Subpage Stat Banner */}
+      <div className="subpage-stats-grid" style={{ marginBottom: '20px' }}>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdCategory />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Total Categories</span>
+            <span className="subpage-stat-value">{categories.length}</span>
+          </div>
+        </div>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdCategory />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Active on Platform</span>
+            <span className="subpage-stat-value" style={{ color: '#EA580C' }}>{activeCategoriesCount}</span>
+          </div>
+        </div>
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon">
+            <MdCategory />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Disabled</span>
+            <span className="subpage-stat-value">{categories.length - activeCategoriesCount}</span>
+          </div>
+        </div>
+      </div>
+
       <div className="table-container">
         <div className="table-toolbar">
-          <h2 style={{ fontSize: '1.1rem', color: '#fff' }}>Consultation Categories</h2>
-          <button
-            className="btn-primary"
-            onClick={() => {
-              setForm(initialForm);
-              setModalOpen(true);
-            }}
-          >
-            <MdAdd />
-            <span>Add New Category</span>
+          <div>
+            <h2 style={{ fontSize: '1.1rem', color: '#0F172A', fontWeight: 700 }}>Service & Astrology Categories</h2>
+            <p style={{ fontSize: '0.8rem', color: '#64748B' }}>
+              Define domains of expertise like Vedic Astrology, Tarot Reading, Numerology, etc.
+            </p>
+          </div>
+          <button className="btn-primary" onClick={handleOpenAdd}>
+            <MdAdd /> Add Category
           </button>
         </div>
 
         {loading ? (
-          <div style={{ color: '#fff', padding: 40, textAlign: 'center' }}>Loading categories...</div>
+          <div style={{ color: '#64748B', padding: 40, textAlign: 'center', fontWeight: 500 }}>Loading categories...</div>
         ) : categories.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><MdCategory /></div>
@@ -154,7 +190,7 @@ export default function Categories() {
                   </td>
 
                   <td>
-                    <span className="badge badge-purple">/{c.slug}</span>
+                    <span className="badge badge-orange">/{c.slug}</span>
                   </td>
 
                   <td style={{ fontWeight: 600, color: 'var(--text-main)' }}>{c.sortOrder || 0}</td>
@@ -235,7 +271,7 @@ export default function Categories() {
                     type="text"
                     value={form.name}
                     onChange={(e) => handleNameChange(e.target.value)}
-                    placeholder="e.g. Palmistry & Hand Reading"
+                    placeholder="Enter category name"
                     required
                   />
                 </div>
@@ -246,7 +282,7 @@ export default function Categories() {
                     type="text"
                     value={form.slug}
                     onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                    placeholder="e.g. palmistry"
+                    placeholder="Enter slug"
                     required
                   />
                 </div>
@@ -257,7 +293,7 @@ export default function Categories() {
                     rows="3"
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    placeholder="Brief description of the consultation category"
+                    placeholder="Enter category description"
                   />
                 </div>
 
@@ -280,7 +316,7 @@ export default function Categories() {
                       />
                       <span className="slider"></span>
                     </label>
-                    <span style={{ fontSize: '0.88rem', color: '#fff' }}>Active</span>
+                    <span style={{ fontSize: '0.88rem', color: '#0F172A', fontWeight: 600 }}>Active</span>
                   </div>
                 </div>
               </div>

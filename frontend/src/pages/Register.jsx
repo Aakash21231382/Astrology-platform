@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-import LogoImg from '../assets/images/logo.png';
 import '../assets/css/auth.css';
 
 export default function Register() {
@@ -49,7 +48,7 @@ export default function Register() {
       <div className="auth-card">
         <div className="auth-header">
           <Link to="/" title="Back to Home" className="auth-brand-badge">
-            <img src={LogoImg} alt="VVIP Psychics Expert" className="auth-brand-logo-img" />
+            <span className="auth-brand-text">Aakash</span>
           </Link>
           <h2>Create Account</h2>
           <p>Join thousands of seekers receiving guidance daily</p>
@@ -63,7 +62,7 @@ export default function Register() {
               name="fullName"
               required
               className="form-input"
-              placeholder="e.g. Rahul Sharma"
+              placeholder="Enter your full name"
               value={formData.fullName}
               onChange={handleChange}
             />
@@ -76,7 +75,7 @@ export default function Register() {
               name="email"
               required
               className="form-input"
-              placeholder="name@example.com"
+              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
             />
@@ -88,7 +87,7 @@ export default function Register() {
               type="tel"
               name="phoneNumber"
               className="form-input"
-              placeholder="+91 9876543210"
+              placeholder="Enter your phone number"
               value={formData.phoneNumber}
               onChange={handleChange}
             />
@@ -101,7 +100,7 @@ export default function Register() {
               name="password"
               required
               className="form-input"
-              placeholder="Minimum 6 characters"
+              placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
             />

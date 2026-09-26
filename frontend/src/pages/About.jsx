@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   IoSparkles, 
@@ -10,9 +10,22 @@ import {
   IoChatbubbleEllipsesOutline,
   IoPersonAddOutline
 } from 'react-icons/io5';
+import { publicService } from '../services/api';
 import '../assets/css/about.css';
 
 export default function About() {
+  const [cmsPage, setCmsPage] = useState(null);
+
+  useEffect(() => {
+    publicService.getCmsPage('about')
+      .then((res) => {
+        if (res.data?.data) {
+          setCmsPage(res.data.data);
+        }
+      })
+      .catch((err) => console.warn('Could not fetch live about CMS:', err));
+  }, []);
+
   return (
     <div className="about-page-container">
       {/* 1. Hero Header Banner */}
@@ -20,15 +33,15 @@ export default function About() {
         <div className="astro-container">
           <div className="about-hero-content">
             <div className="about-tag-pill">
-              <IoSparkles /> About VVIP Psychics Expert
+              <IoSparkles /> About Aakash Psychics Expert
             </div>
 
             <h1 className="about-main-title">
-              Guiding Your Life's Journey with Authentic Wisdom & Clarity
+              {cmsPage?.title || "Guiding Your Life's Journey with Authentic Wisdom & Clarity"}
             </h1>
 
             <p className="about-lead-text">
-              We are a dedicated spiritual consultation platform bringing together genuine Vedic astrologers, intuitive tarot readers, numerologists, and psychic masters to help you navigate love, career, and life's deepest crossroads.
+              {cmsPage?.metaDescription || "We are a dedicated spiritual consultation platform bringing together genuine Vedic astrologers, intuitive tarot readers, numerologists, and psychic masters to help you navigate love, career, and life's deepest crossroads."}
             </p>
 
             {/* Trust Metrics Bar */}
@@ -61,15 +74,24 @@ export default function About() {
             <div className="about-story-text">
               <span className="section-tag">Our Purpose</span>
               <h2>Restoring Integrity & Compassion to Spiritual Guidance</h2>
-              <p>
-                When facing complex decisions — whether in personal relationships, business ventures, or emotional well-being — seeking honest astrological insight should provide peace of mind, not confusion or apprehension.
-              </p>
-              <p>
-                Too often, seekers encounter unverified claims, complicated consultation processes, or unnecessary superstition. <strong>VVIP Psychics Expert</strong> was founded with a clear principle: to create a transparent, reliable sanctuary where anyone can connect with authentic, well-screened mentors directly from the comfort of their home.
-              </p>
-              <p>
-                With transparent per-minute wallet billing, real-time live chat rooms, and strictly verified profiles, you stay in complete control of your session every single second.
-              </p>
+              {cmsPage?.content ? (
+                <div 
+                  className="dynamic-about-body"
+                  dangerouslySetInnerHTML={{ __html: cmsPage.content.replace(/\n\n/g, '<p></p>').replace(/\n/g, '<br/>') }} 
+                />
+              ) : (
+                <>
+                  <p>
+                    When facing complex decisions — whether in personal relationships, business ventures, or emotional well-being — seeking honest astrological insight should provide peace of mind, not confusion or apprehension.
+                  </p>
+                  <p>
+                    Too often, seekers encounter unverified claims, complicated consultation processes, or unnecessary superstition. <strong> Psychics Expert</strong> was founded with a clear principle: to create a transparent, reliable sanctuary where anyone can connect with authentic, well-screened mentors directly from the comfort of their home.
+                  </p>
+                  <p>
+                    With transparent per-minute wallet billing, real-time live chat rooms, and strictly verified profiles, you stay in complete control of your session every single second.
+                  </p>
+                </>
+              )}
             </div>
 
             <div className="about-commitments-card">

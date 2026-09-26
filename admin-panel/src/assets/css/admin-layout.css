@@ -3,16 +3,16 @@
   min-height: 100vh;
   width: 100%;
   position: relative;
-  background-color: var(--admin-bg);
+  background-color: var(--admin-bg, #FFFDF9);
 }
 
 /* ==========================================================================
-   SIDEBAR
+   SIDEBAR (Executive Warm Gradient & Orange Flair)
    ========================================================================== */
 .admin-sidebar {
-  width: 260px;
-  background: var(--admin-sidebar-bg);
-  border-right: 1px solid var(--admin-border);
+  width: 272px;
+  background: var(--admin-sidebar-bg, #FFFFFF);
+  border-right: 1.5px solid var(--admin-border, #FED7AA);
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -21,49 +21,56 @@
   left: 0;
   z-index: 100;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 2px 0 16px rgba(249, 115, 22, 0.05);
 }
 
 .sidebar-header {
-  height: 64px;
-  padding: 0 20px;
+  height: 72px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--admin-border);
+  border-bottom: 1.5px solid var(--admin-border, #FED7AA);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFBF5 100%);
 }
 
 .admin-brand-logo-wrap {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-.admin-brand-logo {
-  height: 32px;
-  max-width: 140px;
-  object-fit: contain;
+.admin-brand-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #EA580C 0%, #F97316 60%, #FB923C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
 }
 
 .brand-badge {
   font-size: 0.65rem;
-  background: var(--admin-primary-soft);
-  color: var(--admin-primary);
-  border: 1px solid rgba(245, 196, 0, 0.3);
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: var(--radius-xs);
-  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(251, 146, 60, 0.22) 100%);
+  color: #C2410C;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs, 6px);
+  letter-spacing: 0.6px;
   text-transform: uppercase;
 }
 
 .sidebar-close-btn {
   display: none;
   background: transparent;
-  border: 1px solid var(--admin-border);
-  color: var(--text-muted);
+  border: 1px solid var(--admin-border, #FED7AA);
+  color: var(--text-muted, #64748B);
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm, 8px);
   align-items: center;
   justify-content: center;
   font-size: 1.15rem;
@@ -72,51 +79,52 @@
 }
 
 .sidebar-close-btn:hover {
-  color: #fff;
-  background: #1B2438;
+  color: #C2410C;
+  background: #FFF7ED;
 }
 
 .sidebar-nav {
-  padding: 14px 10px;
+  padding: 16px 14px;
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .nav-section-title {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--text-dim);
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #9A3412;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 16px 12px 6px 12px;
+  letter-spacing: 0.9px;
+  padding: 18px 12px 6px 12px;
+  opacity: 0.85;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding: 9px 12px;
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  font-size: 0.88rem;
-  font-weight: 500;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: var(--radius-md, 10px);
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 600;
   transition: var(--transition);
   position: relative;
 }
 
 .nav-item:hover {
-  color: var(--text-main);
-  background: var(--admin-card-hover);
+  color: #C2410C;
+  background: #FFF7ED;
 }
 
-/* Restrained Active State - NO neon glow */
+/* Polished Active Nav Item with Linear Gradient */
 .nav-item.active {
-  color: #FFFFFF;
-  background: var(--admin-surface-elevated);
-  font-weight: 600;
+  color: #C2410C;
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0.12) 0%, rgba(254, 215, 170, 0.25) 100%);
+  font-weight: 700;
 }
 
 .nav-item.active::before {
@@ -125,65 +133,68 @@
   left: 0;
   top: 6px;
   bottom: 6px;
-  width: 3px;
-  background: var(--admin-primary);
-  border-radius: 0 2px 2px 0;
+  width: 4px;
+  background: var(--admin-primary-gradient, linear-gradient(135deg, #FF6B00 0%, #F97316 100%));
+  border-radius: 0 4px 4px 0;
 }
 
 .nav-item.active .nav-item-icon {
-  color: var(--admin-primary);
+  color: #EA580C;
 }
 
 .nav-item-icon {
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   display: flex;
-  color: var(--text-dim);
+  color: #94A3B8;
   transition: color 0.18s ease;
 }
 
 .nav-item:hover .nav-item-icon {
-  color: var(--text-main);
+  color: #EA580C;
 }
 
 .nav-item-count {
   margin-left: auto;
-  background: var(--admin-danger);
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 1px 6px;
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
   border-radius: var(--radius-full);
-  min-width: 18px;
+  min-width: 22px;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
 }
 
 .sidebar-footer {
   padding: 14px;
-  border-top: 1px solid var(--admin-border);
+  border-top: 1.5px solid var(--admin-border, #FED7AA);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFBF5 100%);
 }
 
 .admin-user-card {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 10px;
-  background: var(--admin-surface-elevated);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--admin-border);
+  padding: 10px 14px;
+  background: #FFF7ED;
+  border-radius: var(--radius-md, 10px);
+  border: 1.5px solid #FED7AA;
 }
 
 .admin-avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-full);
-  background: #1E293B;
-  color: var(--admin-primary);
-  border: 1px solid rgba(245, 196, 0, 0.3);
+  background: linear-gradient(135deg, #FF6B00 0%, #F97316 100%);
+  color: #FFFFFF;
+  border: 1.5px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 0.86rem;
+  font-weight: 800;
+  font-size: 0.9rem;
   flex-shrink: 0;
 }
 
@@ -193,79 +204,82 @@
 }
 
 .admin-details .name {
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: var(--text-main);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-heading, #0F172A);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .admin-details .role {
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  letter-spacing: 0.4px;
+  font-size: 0.7rem;
+  color: #C2410C;
+  letter-spacing: 0.5px;
+  font-weight: 700;
 }
 
 .btn-logout {
-  color: var(--text-dim);
-  font-size: 1.1rem;
-  padding: 6px;
-  border-radius: var(--radius-sm);
+  color: #94A3B8;
+  font-size: 1.2rem;
+  padding: 7px;
+  border-radius: var(--radius-sm, 8px);
   display: flex;
+  cursor: pointer;
   transition: var(--transition);
 }
 
 .btn-logout:hover {
-  color: var(--admin-danger);
-  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  background: #FEE2E2;
 }
 
 /* ==========================================================================
    MAIN CONTENT CONTAINER
    ========================================================================== */
 .admin-main {
-  margin-left: 260px;
+  margin-left: 272px;
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  width: calc(100% - 260px);
+  width: calc(100% - 272px);
   transition: width 0.25s ease, margin-left 0.25s ease;
-  background: var(--admin-bg);
+  background: var(--admin-bg, #FFFDF9);
 }
 
-/* Admin Header */
+/* Admin Sticky Header */
 .admin-header {
-  height: 64px;
-  background: var(--admin-header-bg);
-  border-bottom: 1px solid var(--admin-border);
+  height: 72px;
+  background: #FFFFFF;
+  border-bottom: 1.5px solid var(--admin-border, #FED7AA);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 36px;
   position: sticky;
   top: 0;
   z-index: 90;
   gap: 16px;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.04);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   min-width: 0;
 }
 
 .admin-mobile-menu-btn {
   display: none;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  background: var(--admin-surface-elevated);
-  border: 1px solid var(--admin-border);
-  font-size: 1.25rem;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 10px);
+  color: #C2410C;
+  background: #FFF7ED;
+  border: 1.5px solid #FED7AA;
+  font-size: 1.35rem;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -274,8 +288,9 @@
 }
 
 .admin-mobile-menu-btn:hover {
-  color: var(--text-main);
-  border-color: #384660;
+  color: #9A3412;
+  border-color: #F97316;
+  background: #FFEDD5;
 }
 
 .header-title {
@@ -283,22 +298,23 @@
 }
 
 .header-title h1 {
-  font-size: 1.18rem;
-  font-weight: 600;
-  color: var(--text-main);
-  letter-spacing: -0.2px;
+  font-size: 1.32rem;
+  font-weight: 800;
+  color: var(--text-heading, #0F172A);
+  letter-spacing: -0.3px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .header-title p {
-  font-size: 0.78rem;
-  color: var(--text-dim);
+  font-size: 0.82rem;
+  color: #64748B;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 1px;
+  margin-top: 2px;
+  font-weight: 500;
 }
 
 .header-actions {
@@ -311,29 +327,32 @@
 .site-badge-link {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  padding: 6px 12px;
-  background: var(--admin-surface-elevated);
-  border: 1px solid var(--admin-border);
-  border-radius: var(--radius-md);
+  gap: 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #C2410C;
+  padding: 9px 16px;
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  border: 1.5px solid #FDBA74;
+  border-radius: var(--radius-md, 10px);
   transition: var(--transition);
   white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.08);
 }
 
 .site-badge-link:hover {
-  color: var(--admin-primary);
-  border-color: rgba(245, 196, 0, 0.4);
+  color: #FFFFFF;
+  background: var(--admin-primary-gradient);
+  border-color: #F97316;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.25);
 }
 
 .admin-content-body {
-  padding: 28px;
+  padding: 32px 36px;
   flex: 1;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Backdrop Overlay */
@@ -341,7 +360,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 14, 0.75);
+  background: rgba(194, 65, 12, 0.3);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 998;
@@ -359,15 +378,20 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 260px;
+    width: 272px;
     max-width: 86vw;
     z-index: 1000;
     transform: translateX(-100%);
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+    box-shadow: none;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .admin-sidebar.open {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: 10px 0 30px rgba(194, 65, 12, 0.15);
   }
 
   .admin-sidebar-overlay {
@@ -393,34 +417,34 @@
   }
 
   .admin-header {
-    height: 60px;
-    padding: 0 18px;
+    height: 66px;
+    padding: 0 20px;
   }
 
   .admin-content-body {
-    padding: 20px 16px;
+    padding: 24px 18px;
   }
 }
 
 @media (max-width: 640px) {
   .admin-header {
-    height: 56px;
-    padding: 0 14px;
+    height: 60px;
+    padding: 0 16px;
     gap: 10px;
   }
 
   .header-left {
-    gap: 8px;
+    gap: 10px;
   }
 
   .admin-mobile-menu-btn {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     font-size: 1.15rem;
   }
 
   .header-title h1 {
-    font-size: 1rem;
+    font-size: 1.05rem;
     max-width: 200px;
   }
 
@@ -433,33 +457,33 @@
   }
 
   .site-badge-link {
-    padding: 7px 9px;
+    padding: 7px 10px;
   }
 
   .admin-content-body {
-    padding: 14px 10px;
+    padding: 16px 12px;
   }
 }
 
 @media (max-width: 380px) {
   .admin-header {
-    height: 52px;
-    padding: 0 8px;
+    height: 56px;
+    padding: 0 10px;
   }
 
   .header-title h1 {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     max-width: 140px;
   }
 
   .admin-mobile-menu-btn {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     font-size: 1.05rem;
   }
 
   .admin-content-body {
-    padding: 10px 6px;
+    padding: 12px 8px;
   }
 
   .admin-sidebar {

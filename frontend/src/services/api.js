@@ -25,9 +25,20 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      // Clear token on 401
-      // localStorage.removeItem('astrology_token');
+    if (error.response) {
+      const status = error.response.status;
+      const message = error.response.data?.message || '';
+
+      if (
+        status === 401 ||
+        (status === 403 && (
+          message.toLowerCase().includes('token') ||
+          message.toLowerCase().includes('suspended')
+        ))
+      ) {
+        localStorage.removeItem('astrology_token');
+        localStorage.removeItem('astrology_user');
+      }
     }
     return Promise.reject(error);
   }
@@ -42,17 +53,33 @@ export const authService = {
   verifyOtp: (data) => api.post('/auth/verify-otp', data),
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
   resetPassword: (data) => api.post('/auth/reset-password', data),
+  changePassword: (data) => api.post('/auth/change-password', data),
   getMe: () => api.get('/users/me')
+};
+
+export const userService = {
+  getMe: () => api.get('/users/me'),
+  updateProfile: (data) => api.put('/users/me', data)
 };
 
 export const expertService = {
   getApprovedList: (params) => api.get('/experts', { params }),
   getPublicProfile: (id) => api.get(`/experts/${id}`),
   getMyProfile: () => api.get('/experts/profile/me'),
+  getProfile: () => api.get('/experts/profile/me'),
   updateProfile: (data) => api.put('/experts/profile', data),
   setAvailability: (data) => api.put('/experts/availability', data),
   getEarnings: () => api.get('/experts/account/earnings'),
-  requestWithdrawal: (data) => api.post('/experts/account/withdrawals', data)
+  requestWithdrawal: (data) => api.post('/experts/account/withdrawals', data),
+  getClients: () => api.get('/experts/account/clients'),
+  getMailbox: () => api.get('/experts/account/mailbox'),
+  markMailboxRead: (id) => api.patch(`/experts/account/mailbox/${id}/read`),
+  getPaymentOptions: () => api.get('/experts/account/payment-options'),
+  savePaymentOptions: (data) => api.put('/experts/account/payment-options', data),
+  requestAccountClose: (data) => api.post('/experts/account/close-request', data),
+  updateDocuments: (data) => api.post('/experts/account/documents', data),
+  getSchedule: () => api.get('/experts/schedule'),
+  updateSchedule: (data) => api.put('/experts/schedule', data)
 };
 
 export const walletService = {
@@ -74,7 +101,11 @@ export const consultationService = {
 export const publicService = {
   getBanners: (placement) => api.get('/public/banners', { params: { placement } }),
   getCategories: () => api.get('/public/categories'),
-  getCmsPage: (slug) => api.get(`/public/cms/${slug}`)
+  getCmsPage: (slug) => api.get(`/public/cms/${slug}`),
+  getProducts: (params) => api.get('/public/products', { params }),
+  getProductById: (id) => api.get(`/public/products/${id}`),
+  getPujas: (params) => api.get('/public/pujas', { params }),
+  getPujaById: (id) => api.get(`/public/pujas/${id}`)
 };
 
 export const uploadService = {

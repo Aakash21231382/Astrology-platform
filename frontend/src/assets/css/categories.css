@@ -1,22 +1,29 @@
 /* =========================================================
-   Categories Page Stylesheet
-   Theme: VVIP Psychics Discipline Discovery
+   Categories Page Stylesheet - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
    Breakpoints: 250px to 1920px+
    ========================================================= */
 
 .categories-page {
   padding: 60px 0 100px 0;
+  background: #FFFFFF;
+  min-height: calc(100vh - 140px);
+  color: #0F172A;
 }
 
 .categories-subtitle {
-  color: #64748b;
+  color: #64748B;
   margin-top: 10px;
   font-size: 15px;
 }
 
 .categories-loading-text {
   text-align: center;
-  color: #7c3aed;
+  color: #FF6B00;
   font-size: 16px;
   font-weight: 600;
   padding: 40px 0;
@@ -24,20 +31,20 @@
 
 .category-card-item {
   background: #ffffff;
-  border: 1px solid var(--border-light);
+  border: 1.5px solid #E2E8F0;
   border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.05);
 }
 
 .category-card-item:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-violet);
+  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.12);
+  border-color: #FF6B00;
 }
 
 .category-card-img {
@@ -45,6 +52,7 @@
   height: 190px;
   object-fit: cover;
   display: block;
+  background: #FFFFFF;
 }
 
 .category-card-body {
@@ -56,7 +64,7 @@
 
 .category-card-title {
   font-size: 18px;
-  color: #130a2a;
+  color: #0F172A;
   font-weight: 700;
   margin-bottom: 8px;
   line-height: 1.3;
@@ -64,26 +72,26 @@
 
 .category-card-desc {
   font-size: 13.5px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.55;
   margin: 0;
   flex: 1;
 }
 
 .category-card-arrow {
-  color: #7c3aed;
+  color: #FF6B00;
   font-weight: 700;
   font-size: 13px;
   margin-top: 14px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .category-card-item:hover .category-card-arrow {
   transform: translateX(4px);
-  color: #6d28d9;
+  color: #445734;
 }
 
 /* Responsive Media Queries */

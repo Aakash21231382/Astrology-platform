@@ -11,7 +11,6 @@ import {
   IoWalletOutline,
   IoCheckmarkCircle
 } from 'react-icons/io5';
-import LogoImg from '../assets/images/logo.png';
 import '../assets/css/footer.css';
 
 export default function Footer() {
@@ -21,8 +20,8 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Brand & Logo Column */}
           <div className="footer-brand">
-            <Link to="/" className="footer-logo-link" title="VVIP Psychics Expert">
-              <img src={LogoImg} alt="VVIP Psychics Expert" className="footer-logo-img" />
+            <Link to="/" className="footer-logo-link" title="Aakash">
+              <span className="footer-brand-text">Aakash</span>
             </Link>
             
             <p className="footer-brand-desc">
@@ -62,11 +61,15 @@ export default function Footer() {
             <ul className="footer-links">
               <li><Link to="/">Home</Link></li>
               <li><Link to="/experts">Find Astrologers</Link></li>
+              <li><Link to="/shop">Astro Remedies Store</Link></li>
+              <li><Link to="/puja">Temple Puja Booking</Link></li>
               <li><Link to="/categories">Spiritual Categories</Link></li>
               <li><Link to="/offers">Special Offers</Link></li>
               <li><Link to="/how-it-works">How It Works</Link></li>
+              <li><Link to="/faq">Frequently Asked Questions</Link></li>
             </ul>
           </div>
+
 
           {/* Column 2: Astrologer / Readers Portal */}
           <div className="footer-col">
@@ -97,7 +100,7 @@ export default function Footer() {
         {/* Footer Bottom Bar */}
         <div className="footer-bottom">
           <div className="footer-bottom-copy">
-            © {new Date().getFullYear()} <strong>VVIP Psychics Expert</strong>. All Rights Reserved.
+            © {new Date().getFullYear()} <strong>Aakash</strong>. All Rights Reserved.
           </div>
 
           <div className="footer-bottom-features">

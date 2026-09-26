@@ -1,120 +1,128 @@
-# Astrology Platform
+# 🌟 Astrotalk-Style Vedic Astrology & Consultation Platform
 
-A complete astrology consultation platform with three main components: Frontend (User App), Admin Panel, and Backend API.
+A comprehensive, full-stack **Astrology Consultation & Vedic Services Platform** built with **React**, **Node.js (Express)**, **Microsoft SQL Server (MSSQL)**, and **Socket.io / WebRTC**.
 
-## 📁 Project Structure
+---
+
+## 📁 Project Architecture
 
 ```
 Astrology/
-├── frontend/          # User-facing web application
-├── admin-panel/       # Admin dashboard
-├── backend/           # Node.js API server
-└── README.md          # This file
+├── backend/          # Node.js + Express API & Socket.io Server (MSSQL Database)
+├── frontend/         # React + Vite User & Astrologer Portal
+├── admin-panel/      # React + Vite Super Admin Management Dashboard
+└── README.md         # Documentation & Setup Guide
 ```
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
+## 🚀 Key Features
 
-- Node.js (v14 or higher)
-- MySQL database
-- npm or yarn package manager
+### 🔮 Customer Portal (Frontend)
+- **Astrologer Discovery:** Filter by Vedic categories, language, price, and ratings.
+- **Live Consultation Room:**
+  - Real-time instant messaging via Socket.io with typing indicators & unread badges.
+  - WebRTC Peer-to-Peer **Audio & Video Calling** with call timers and auto-billing.
+- **Wallet & Billing:** Automated per-minute wallet deduction, Razorpay recharge integration, and transaction history.
+- **Kundali Calculator & Matchmaking:** Instant Kundali chart calculations (Lagna, Moon, planetary positions, Dasha, Ashtakavarga).
+- **Vedic E-Commerce:**
+  - **Puja Services:** Online Pooja booking with Gotra, Sankalpa, and address details.
+  - **Gemstones & Products:** Certified gemstones and astrology products purchase flow.
+- **Customer Dashboard:** Manage profile, view active orders, appointments, chat/call history, and wallet transactions.
 
-### Installation
+### 🧘 Expert / Astrologer Portal
+- **Onboarding & Verification:** Multi-step signup with document uploads (ID proof, certification, experience).
+- **Schedule Management:** Flexible hourly availability setup, weekly schedule matrix, and instant Online/Offline status toggles.
+- **Incoming Call & Chat Modal:** Real-time ringing notifications to accept/reject incoming sessions.
+- **Consultation Workspace:** Live chat interface, user Kundali insights, review notes, and prescription/remedies sharing.
+- **Earnings & Payouts:** Real-time earnings tracker, commission breakdown, and withdrawal requests.
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd Astrology
-   ```
+### 🛡️ Admin Dashboard (Admin Panel)
+- **Analytics & Metrics:** Platform revenue, active consultations, expert performance, and user growth charts.
+- **Astrologer Management:** Review KYC documents, approve/reject astrologer registrations, and toggle verification badges.
+- **Consultations & Live Sessions:** Real-time monitor for active chats and calls.
+- **E-Commerce & Puja Management:** Add/edit products, manage Puja listings, update order delivery statuses, and upload recording URLs.
+- **Financial Controls:** Process astrologer withdrawal payouts and manage platform commission rates.
+- **CMS & Banners:** Dynamic banners, FAQ editor, and policy pages management.
 
-2. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   ```
-   
-   - Copy `.env.example` to `.env` and configure your database credentials
-   - Run database migrations:
-     ```bash
-     node database/runMigrations.js
-     ```
-   
-   - Start the backend server:
-     ```bash
-     npm start
-     ```
-
-3. **Frontend Setup**
-   ```bash
-   cd ../frontend
-   npm install
-   npm run dev
-   ```
-
-4. **Admin Panel Setup**
-   ```bash
-   cd ../admin-panel
-   npm install
-   npm run dev
-   ```
+---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- React
-- Vite
-- CSS3
+- **Frontend & Admin:** React 19 / 18, Vite, Vanilla CSS Design System, Lucide Icons, Socket.io Client.
+- **Backend Server:** Node.js, Express.js, Socket.io, WebRTC Signaling.
+- **Database:** Microsoft SQL Server (MSSQL / SQL Express) using `mssql` pool.
+- **Authentication:** JWT (JSON Web Tokens) with secure HTTP headers and role-based authorization (`customer`, `expert`, `admin`).
+- **Payments:** Razorpay Gateway integration & in-app wallet ledger.
 
-### Admin Panel
-- React
-- Vite
-- CSS3
+---
 
-### Backend
-- Node.js
-- Express.js
-- MySQL
-- Socket.io (for real-time chat)
-- JWT Authentication
+## ⚡ Quick Start Guide
 
-## 📝 Features
+### 1. Prerequisites
+- **Node.js**: v18 or higher
+- **MSSQL Server**: SQL Server 2019/2022 or SQL Server Express (with Windows Auth or SQL Auth)
 
-### User Features
-- User registration and authentication
-- Browse astrology experts
-- Book consultations
-- Real-time chat with experts
-- Wallet management
-- Payment integration
+---
 
-### Expert Features
-- Expert registration and profile management
-- Availability management
-- Consultation handling
-- Earnings tracking
-- Withdrawal requests
+### 2. Backend Setup
 
-### Admin Features
-- Dashboard with analytics
-- User management
-- Expert approval and management
-- Category management
-- Banner management
-- Withdrawal processing
-- Platform settings
+```bash
+cd backend
+npm install
+```
 
-## 🔒 Security
+1. Create your `.env` file from the example:
+   ```bash
+   cp .env.example .env
+   ```
+2. Configure database credentials in `.env`:
+   ```env
+   PORT=5000
+   DB_SERVER=.\\SQLEXPRESS
+   DB_DATABASE=AstrologyDB
+   DB_AUTH_MODE=WINDOWS
+   JWT_SECRET=your_jwt_secret_key
+   ```
+3. Initialize database schema & seed data:
+   - Run the all-in-one migration file `backend/database/all_in_one_database.sql` in **SQL Server Management Studio (SSMS)** or Azure Data Studio.
+4. Start the backend API & Socket server:
+   ```bash
+   npm start
+   ```
+   *The server will run on `http://localhost:5000`.*
 
-- JWT-based authentication
-- Role-based access control (RBAC)
-- Environment variables for sensitive data
-- Input validation and sanitization
+---
+
+### 3. Frontend Portal Setup
+
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+*User application will run on `http://localhost:5173`.*
+
+---
+
+### 4. Admin Panel Setup
+
+```bash
+cd ../admin-panel
+npm install
+npm run dev
+```
+*Admin application will run on `http://localhost:5174`.*
+
+---
+
+## 🔐 Default Admin Credentials (Seed)
+
+- **Email:** `admin@astrology.com`
+- **Password:** `Admin@123`
+
+---
 
 ## 📄 License
 
-This project is private and confidential.
-
-## 👥 Contributing
-
-Please contact the project administrator for contribution guidelines.
+This repository is maintained for Vedic Astrology Consultation Platform services. All rights reserved.

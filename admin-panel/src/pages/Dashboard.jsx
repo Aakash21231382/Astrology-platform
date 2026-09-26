@@ -9,9 +9,15 @@ import {
   MdAttachMoney,
   MdAccountBalanceWallet,
   MdArrowForward,
-  MdTrendingUp
+  MdTrendingUp,
+  MdViewCarousel,
+  MdCategory,
+  MdGroups,
+  MdCampaign,
+  MdBolt
 } from 'react-icons/md';
 import DashboardCharts from '../components/DashboardCharts';
+import ExportDropdown from '../components/ExportDropdown';
 import '../assets/css/admin-dashboard.css';
 
 export default function Dashboard() {
@@ -34,11 +40,40 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return <div style={{ color: '#fff', padding: 40 }}>Loading administrative statistics...</div>;
+    return <div style={{ color: '#64748B', padding: 40, fontWeight: 500 }}>Loading administrative statistics...</div>;
   }
+
+  const kpiExportData = [
+    { 'Metric': 'Net Platform Revenue (20%)', 'Value': `₹${stats?.totalPlatformRevenue?.toFixed(2) || '0.00'}`, 'Category': 'Financial' },
+    { 'Metric': 'Gross Consultation Volume', 'Value': `₹${stats?.totalGrossVolume?.toFixed(2) || '0.00'}`, 'Category': 'Financial' },
+    { 'Metric': 'Total Completed Consultations', 'Value': stats?.totalCompletedConsultations || 0, 'Category': 'Operations' },
+    { 'Metric': 'Approved Astrologers on Market', 'Value': stats?.totalApprovedExperts || 0, 'Category': 'Experts' },
+    { 'Metric': 'Pending Astrologer Applications', 'Value': stats?.pendingExpertApprovals || 0, 'Category': 'Verification' },
+    { 'Metric': 'Registered Customers', 'Value': stats?.totalCustomers || 0, 'Category': 'Users' },
+    { 'Metric': 'Total Disbursed Payouts', 'Value': `₹${stats?.totalDisbursedPayouts?.toFixed(2) || '0.00'}`, 'Category': 'Payouts' }
+  ];
 
   return (
     <div className="dashboard-page">
+      {/* Top Header & Export Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+        <div>
+          <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0F172A', margin: 0 }}>
+            Platform Overview & Performance
+          </h1>
+          <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: '#64748B' }}>
+            Real-time consultation revenue, active experts, and system telemetry
+          </p>
+        </div>
+        <ExportDropdown
+          data={kpiExportData}
+          fileName="Aakash_Platform_KPI_Summary"
+          sheetName="OverviewReport"
+          title="Aakash Astrology • Administrative KPI Report"
+          subtitle={`Generated on ${new Date().toLocaleDateString('en-IN')}`}
+        />
+      </div>
+
       {/* KPI Cards Grid */}
       <div className="dashboard-grid">
         <div className="kpi-card gold">
@@ -122,33 +157,163 @@ export default function Dashboard() {
       {/* Interactive Analytics Charts */}
       <DashboardCharts stats={stats} />
 
-      {/* Quick Action Navigation */}
+      {/* Executive Quick Action Command Hub */}
       <div className="quick-actions-bar">
         <div className="quick-actions-header">
-          <h3>Quick Administration Controls</h3>
-          <p>Direct shortcuts to high-priority management workflows</p>
+          <div className="title-group">
+            <h3>
+              <MdBolt style={{ color: '#EA580C', fontSize: '1.4rem' }} />
+              Quick Administration Command Hub
+            </h3>
+            <p>Direct shortcuts and management actions for high-priority operational workflows</p>
+          </div>
         </div>
 
-        <div className="action-buttons-flex">
-          <Link to="/experts/pending" className="btn-primary">
-            <span>Review Expert Approvals</span>
-            <MdArrowForward />
+        <div className="quick-actions-grid">
+          {/* Card 1: Expert Approvals */}
+          <Link to="/experts/pending" className="quick-action-card">
+            <div>
+              <div className="quick-action-top">
+                <div className="quick-action-icon" style={{ background: 'linear-gradient(135deg, #FF6B00 0%, #EA580C 100%)' }}>
+                  <MdVerifiedUser />
+                </div>
+                <span
+                  className="quick-action-pill"
+                  style={
+                    stats?.pendingVerification > 0
+                      ? { background: '#FEE2E2', color: '#DC2626', border: '1px solid #FECACA' }
+                      : { background: '#FFF7ED', color: '#EA580C', border: '1px solid #FED7AA' }
+                  }
+                >
+                  {stats?.pendingVerification ? `${stats.pendingVerification} PENDING` : 'UP TO DATE'}
+                </span>
+              </div>
+              <div className="quick-action-body">
+                <h4>Review Expert Approvals</h4>
+                <p>Audit verification KYC documents, certificates, and approve pending astrologers.</p>
+              </div>
+            </div>
+            <div className="quick-action-footer">
+              <span>Review Verification Queue</span>
+              <div className="arrow-btn"><MdArrowForward /></div>
+            </div>
           </Link>
 
-          <Link to="/experts" className="btn-secondary">
-            <span>Manage All Experts & Active State</span>
+          {/* Card 2: Manage All Experts */}
+          <Link to="/experts" className="quick-action-card">
+            <div>
+              <div className="quick-action-top">
+                <div className="quick-action-icon" style={{ background: 'linear-gradient(135deg, #F97316 0%, #FB923C 100%)' }}>
+                  <MdGroups />
+                </div>
+                <span className="quick-action-pill" style={{ background: '#FFF7ED', color: '#EA580C', border: '1px solid #FED7AA' }}>
+                  {stats?.totalExperts || 0} ASTROLOGERS
+                </span>
+              </div>
+              <div className="quick-action-body">
+                <h4>Manage All Experts</h4>
+                <p>View the full roster, toggle market listing status, rates, and active/inactive states.</p>
+              </div>
+            </div>
+            <div className="quick-action-footer">
+              <span>Manage Directory</span>
+              <div className="arrow-btn"><MdArrowForward /></div>
+            </div>
           </Link>
 
-          <Link to="/banners" className="btn-secondary">
-            <span>Upload Promotional Banners</span>
+          {/* Card 3: Upload Promotional Banners */}
+          <Link to="/banners" className="quick-action-card">
+            <div>
+              <div className="quick-action-top">
+                <div className="quick-action-icon" style={{ background: 'linear-gradient(135deg, #FB923C 0%, #F59E0B 100%)' }}>
+                  <MdViewCarousel />
+                </div>
+                <span className="quick-action-pill" style={{ background: '#FFF7ED', color: '#EA580C', border: '1px solid #FED7AA' }}>
+                  HOMEPAGE HERO
+                </span>
+              </div>
+              <div className="quick-action-body">
+                <h4>Upload Promotional Banners</h4>
+                <p>Manage live homepage slider slides, banner campaigns, and custom call-to-actions.</p>
+              </div>
+            </div>
+            <div className="quick-action-footer">
+              <span>Configure Banners</span>
+              <div className="arrow-btn"><MdArrowForward /></div>
+            </div>
           </Link>
 
-          <Link to="/categories" className="btn-secondary">
-            <span>Manage Categories</span>
+          {/* Card 4: Manage Categories */}
+          <Link to="/categories" className="quick-action-card">
+            <div>
+              <div className="quick-action-top">
+                <div className="quick-action-icon" style={{ background: 'linear-gradient(135deg, #EA580C 0%, #F97316 100%)' }}>
+                  <MdCategory />
+                </div>
+                <span className="quick-action-pill" style={{ background: '#FFF7ED', color: '#EA580C', border: '1px solid #FED7AA' }}>
+                  TAXONOMY
+                </span>
+              </div>
+              <div className="quick-action-body">
+                <h4>Manage Categories</h4>
+                <p>Create & configure Vedic, Tarot, Numerology domains and URL navigation slugs.</p>
+              </div>
+            </div>
+            <div className="quick-action-footer">
+              <span>Configure Categories</span>
+              <div className="arrow-btn"><MdArrowForward /></div>
+            </div>
           </Link>
 
-          <Link to="/withdrawals" className="btn-secondary">
-            <span>Process Withdrawals</span>
+          {/* Card 5: Process Withdrawals */}
+          <Link to="/withdrawals" className="quick-action-card">
+            <div>
+              <div className="quick-action-top">
+                <div className="quick-action-icon" style={{ background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' }}>
+                  <MdAccountBalanceWallet />
+                </div>
+                <span
+                  className="quick-action-pill"
+                  style={
+                    stats?.pendingWithdrawals > 0
+                      ? { background: '#FEE2E2', color: '#DC2626', border: '1px solid #FECACA' }
+                      : { background: '#ECFDF5', color: '#047857', border: '1px solid #A7F3D0' }
+                  }
+                >
+                  {stats?.pendingWithdrawals ? `${stats.pendingWithdrawals} TO PAY` : 'CLEARED'}
+                </span>
+              </div>
+              <div className="quick-action-body">
+                <h4>Process Withdrawals</h4>
+                <p>Review and disburse expert consultation earnings to verified Bank and UPI accounts.</p>
+              </div>
+            </div>
+            <div className="quick-action-footer">
+              <span>Disburse Payouts</span>
+              <div className="arrow-btn"><MdArrowForward /></div>
+            </div>
+          </Link>
+
+          {/* Card 6: Expert Announcements & Broadcasts */}
+          <Link to="/broadcasts" className="quick-action-card">
+            <div>
+              <div className="quick-action-top">
+                <div className="quick-action-icon" style={{ background: 'linear-gradient(135deg, #FF6B00 0%, #FB923C 100%)' }}>
+                  <MdCampaign />
+                </div>
+                <span className="quick-action-pill" style={{ background: '#FFF7ED', color: '#EA580C', border: '1px solid #FED7AA' }}>
+                  NOTIFICATIONS
+                </span>
+              </div>
+              <div className="quick-action-body">
+                <h4>Announcements & Mailbox</h4>
+                <p>Dispatch instant system broadcasts, festival commissions & alerts to astrologers.</p>
+              </div>
+            </div>
+            <div className="quick-action-footer">
+              <span>Dispatch Notice</span>
+              <div className="arrow-btn"><MdArrowForward /></div>
+            </div>
           </Link>
         </div>
       </div>

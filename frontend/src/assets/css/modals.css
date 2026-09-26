@@ -1,6 +1,11 @@
 /* =========================================================
-   Shared Modals Stylesheet
-   ConsultationConfirmModal, WalletModal, PromotionalPopup
+   Shared Modals Stylesheet - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
+   ConsultationConfirmModal, WalletModal, PromotionalPopup, IncomingCallModal
    Breakpoints: 250px to 1920px+
    ========================================================= */
 
@@ -8,7 +13,7 @@
 .modal-backdrop-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 5, 25, 0.78);
+  background: rgba(31, 43, 24, 0.65);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -21,18 +26,20 @@
 .modal-dialog-box {
   background: #ffffff;
   border-radius: 18px;
+  border: 1.5px solid #E2E8F0;
   position: relative;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 60px rgba(255, 107, 0, 0.2);
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #0F172A;
 }
 
 .modal-round-close-btn {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: #f1f5f9;
-  border: none;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 50%;
   width: 34px;
   height: 34px;
@@ -41,14 +48,14 @@
   justify-content: center;
   font-size: 18px;
   cursor: pointer;
-  color: #64748b;
+  color: #0F172A;
   transition: all 0.2s ease;
   z-index: 10;
 }
 
 .modal-round-close-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: #E2E8F0;
+  color: #FF6B00;
   transform: scale(1.05);
 }
 
@@ -72,20 +79,22 @@
   height: 64px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2.5px solid var(--primary-violet);
+  border: 2.5px solid #FF6B00;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
   flex-shrink: 0;
+  background: #FFFFFF;
 }
 
 .consult-expert-name {
   font-size: 18px;
-  color: #130a2a;
+  color: #0F172A;
   font-weight: 700;
   margin: 0;
 }
 
 .consult-expert-title {
   font-size: 13px;
-  color: #64748b;
+  color: #64748B;
   margin: 2px 0 6px 0;
 }
 
@@ -96,8 +105,9 @@
 }
 
 .consult-online-badge {
-  background: #ecfdf5;
-  color: #059669;
+  background: #FFF7ED;
+  color: #3b502d;
+  border: 1px solid #FED7AA;
   font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
@@ -107,7 +117,7 @@
 .consult-rate-text {
   font-size: 13px;
   font-weight: 700;
-  color: #1e1b4b;
+  color: #0F172A;
 }
 
 .consult-offer-banner {
@@ -117,13 +127,13 @@
 }
 
 .consult-offer-banner.free {
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-  border: 1.5px solid #6ee7b7;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF7ED 100%);
+  border: 1.5px solid #FF6B00;
 }
 
 .consult-offer-banner.paid {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border: 1.5px solid #e2e8f0;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
 }
 
 .consult-offer-heading {
@@ -136,11 +146,11 @@
 }
 
 .consult-offer-banner.free .consult-offer-heading {
-  color: #047857;
+  color: #FF6B00;
 }
 
 .consult-offer-banner.paid .consult-offer-heading {
-  color: #475569;
+  color: #0F172A;
 }
 
 .consult-offer-desc {
@@ -150,19 +160,19 @@
 }
 
 .consult-offer-banner.free .consult-offer-desc {
-  color: #065f46;
+  color: #3b502d;
 }
 
 .consult-offer-banner.paid .consult-offer-desc {
-  color: #64748b;
+  color: #64748B;
 }
 
 .consult-wallet-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #faf5ff;
-  border: 1px solid #e9d5ff;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
   padding: 12px 16px;
   margin-bottom: 20px;
@@ -175,20 +185,20 @@
 }
 
 .consult-wallet-icon {
-  color: #7c3aed;
+  color: #FF6B00;
   font-size: 20px;
 }
 
 .consult-wallet-label {
   font-size: 13.5px;
-  color: #4c1d95;
+  color: #0F172A;
   font-weight: 600;
 }
 
 .consult-wallet-balance-val {
   font-size: 16px;
   font-weight: 800;
-  color: #6d28d9;
+  color: #FF6B00;
 }
 
 .consult-status-msg {
@@ -202,15 +212,15 @@
 }
 
 .consult-status-msg.success {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-  color: #065f46;
+  background: #FFF7ED;
+  border: 1px solid #FED7AA;
+  color: #3b502d;
 }
 
 .consult-status-msg.warning {
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  color: #92400e;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #FF6B00;
   line-height: 1.45;
   font-size: 12.5px;
 }
@@ -232,13 +242,23 @@
 }
 
 .consult-action-btn.start-free {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+  background: #FF6B00;
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.35);
+}
+
+.consult-action-btn.start-free:hover {
+  background: #445734;
+  transform: translateY(-2px);
 }
 
 .consult-action-btn.recharge-start {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+  background: #FF6B00;
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.35);
+}
+
+.consult-action-btn.recharge-start:hover {
+  background: #445734;
+  transform: translateY(-2px);
 }
 
 .consult-quick-grid {
@@ -254,16 +274,16 @@
   font-weight: 700;
   font-size: 13px;
   cursor: pointer;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #E2E8F0;
   background: #ffffff;
-  color: #334155;
+  color: #0F172A;
   transition: all 0.15s ease;
 }
 
 .consult-quick-btn.active {
-  border: 2px solid #7c3aed;
-  background: #f3e8ff;
-  color: #6d28d9;
+  border: 2px solid #FF6B00;
+  background: #FFFFFF;
+  color: #FF6B00;
 }
 
 .consult-safe-note {
@@ -273,7 +293,7 @@
   justify-content: center;
   gap: 6px;
   font-size: 11.5px;
-  color: #94a3b8;
+  color: #94A3B8;
 }
 
 /* =========================================================
@@ -293,8 +313,9 @@
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: #fef3c7;
-  color: #d97706;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #FF6B00;
   font-size: 28px;
   display: flex;
   align-items: center;
@@ -304,21 +325,21 @@
 
 .wallet-modal-title {
   font-size: 22px;
-  color: #130a2a;
+  color: #0F172A;
   margin-bottom: 4px;
   font-weight: 700;
 }
 
 .wallet-modal-balance {
   font-size: 13px;
-  color: #64748b;
+  color: #64748B;
 }
 
 .wallet-field-label {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
+  color: #0F172A;
   margin-bottom: 8px;
 }
 
@@ -335,33 +356,60 @@
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #E2E8F0;
   background: #ffffff;
-  color: #334155;
+  color: #0F172A;
   transition: all 0.15s ease;
 }
 
+.wallet-amount-pill:hover {
+  border-color: #FF6B00;
+  color: #FF6B00;
+}
+
 .wallet-amount-pill.active {
-  border: 2px solid #7c3aed;
-  background: #f3e8ff;
-  color: #7c3aed;
+  border: 2px solid #FF6B00;
+  background: #FFFFFF;
+  color: #FF6B00;
 }
 
 .wallet-custom-input {
   width: 100%;
   padding: 12px 16px;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid #E2E8F0;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 700;
-  color: #130a2a;
+  color: #0F172A;
+  background: #ffffff;
   margin-bottom: 20px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.wallet-custom-input:focus {
+  border-color: #FF6B00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
 }
 
 .wallet-submit-btn {
   width: 100%;
   padding: 14px;
   font-size: 15px;
+  font-weight: 700;
+  background: #FF6B00;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.wallet-submit-btn:hover {
+  background: #445734;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 107, 0, 0.32);
 }
 
 /* =========================================================
@@ -370,11 +418,11 @@
 .promo-dialog-box {
   max-width: 560px;
   width: 100%;
-  background-color: #120b29;
+  background-color: #ffffff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 58, 237, 0.3);
-  border: 1.5px solid rgba(167, 139, 250, 0.3);
+  box-shadow: 0 25px 60px rgba(255, 107, 0, 0.25);
+  border: 2px solid #E2E8F0;
   cursor: pointer;
   position: relative;
 }
@@ -383,9 +431,9 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -400,6 +448,7 @@
 
 .promo-close-btn:hover {
   transform: scale(1.1);
+  color: #FF6B00;
 }
 
 .promo-banner-img {
@@ -411,34 +460,321 @@
 }
 
 .promo-body {
-  padding: 18px 24px;
+  padding: 20px 24px;
   text-align: center;
+  background: #FFFFFF;
 }
 
 .promo-title {
   font-size: 20px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0F172A;
   margin-bottom: 6px;
 }
 
 .promo-subtitle {
   font-size: 13.5px;
-  color: #cbd5e1;
+  color: #64748B;
   margin-bottom: 14px;
   line-height: 1.5;
 }
 
 .promo-cta-btn {
-  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  background: #FF6B00;
   color: #ffffff;
   border: none;
-  padding: 10px 24px;
+  padding: 11px 26px;
   border-radius: 10px;
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.promo-cta-btn:hover {
+  background: #445734;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   4. Incoming Call Modal (Expert Dashboard Calling Alert)
+   ========================================================= */
+.incoming-call-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 43, 24, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.incoming-call-card {
+  background: #ffffff;
+  border: 2px solid #E2E8F0;
+  border-radius: 28px;
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 28px 32px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(255, 107, 0, 0.35);
+  color: #0F172A;
+  overflow: hidden;
+}
+
+.incoming-call-sound-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.incoming-call-sound-toggle:hover {
+  background: #E2E8F0;
+  color: #FF6B00;
+}
+
+.incoming-call-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF7ED;
+  border: 1px solid #FED7AA;
+  color: #3b502d;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  margin-bottom: 24px;
+}
+
+.incoming-dot-live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FF6B00;
+  box-shadow: 0 0 8px #FF6B00;
+  animation: blinkLive 1s infinite alternate;
+}
+
+@keyframes blinkLive {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.incoming-badge-icon {
+  font-size: 14px;
+}
+
+/* Pulsing Avatar */
+.incoming-avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.incoming-caller-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #FF6B00;
+  box-shadow: 0 10px 25px rgba(255, 107, 0, 0.25);
+  position: relative;
+  z-index: 2;
+  background: #FFFFFF;
+}
+
+.incoming-pulse-ring {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 107, 0, 0.6);
+  animation: callPulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  z-index: 1;
+}
+
+.incoming-pulse-ring.ring-2 {
+  animation-delay: 0.6s;
+}
+
+.incoming-pulse-ring.ring-3 {
+  animation-delay: 1.2s;
+}
+
+@keyframes callPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.incoming-caller-details {
+  margin-bottom: 20px;
+}
+
+.incoming-caller-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 6px;
+  letter-spacing: -0.3px;
+}
+
+.incoming-caller-subtitle {
+  font-size: 13.5px;
+  color: #64748B;
+  margin: 0 0 14px;
+}
+
+.incoming-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.incoming-rate-tag {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #FF6B00;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.incoming-time-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #FF6B00;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* Audio Equalizer Bars */
+.incoming-sound-equalizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 24px;
+  margin-bottom: 28px;
+}
+
+.eq-bar {
+  width: 4px;
+  background: #FF6B00;
+  border-radius: 4px;
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+
+.eq-bar.eq-1 { height: 8px; animation-delay: 0.1s; }
+.eq-bar.eq-2 { height: 16px; animation-delay: 0.3s; }
+.eq-bar.eq-3 { height: 22px; animation-delay: 0.5s; }
+.eq-bar.eq-4 { height: 14px; animation-delay: 0.2s; }
+.eq-bar.eq-5 { height: 9px; animation-delay: 0.4s; }
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1.4); }
+}
+
+/* Action Controls */
+.incoming-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 0 10px;
+}
+
+.incoming-btn-decline,
+.incoming-btn-accept {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #0F172A;
+  font-size: 13.5px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.incoming-btn-icon-wrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #ffffff;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.incoming-btn-icon-wrap.decline-wrap {
+  background: #dc2626;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+}
+
+.incoming-btn-icon-wrap.accept-wrap {
+  background: #FF6B00;
+  box-shadow: 0 8px 25px rgba(255, 107, 0, 0.45);
+  animation: acceptPulse 1.4s infinite;
+}
+
+@keyframes acceptPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.6); }
+  70% { transform: scale(1.06); box-shadow: 0 0 0 16px rgba(255, 107, 0, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+}
+
+.incoming-btn-decline:hover .decline-wrap {
+  transform: scale(1.1) rotate(90deg);
+  background: #b91c1c;
+}
+
+.incoming-btn-accept:hover .accept-wrap {
+  transform: scale(1.12);
+  background: #445734;
+}
+
+.incoming-btn-decline:hover span {
+  color: #dc2626;
+}
+
+.incoming-btn-accept:hover span {
+  color: #FF6B00;
 }
 
 /* Responsive Media Queries */

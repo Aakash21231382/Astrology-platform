@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { IoClose, IoChatbubbleEllipses, IoWalletOutline, IoShieldCheckmark, IoGiftOutline, IoLockClosedOutline, IoCheckmarkCircleOutline } from 'react-icons/io5';
+import { 
+  IoClose, 
+  IoChatbubbleEllipses, 
+  IoCall, 
+  IoWalletOutline, 
+  IoShieldCheckmark, 
+  IoGiftOutline, 
+  IoLockClosedOutline, 
+  IoCheckmarkCircleOutline 
+} from 'react-icons/io5';
 import { useAuth } from '../context/AuthContext';
 import { processRazorpayPayment } from '../utils/razorpay';
 import { toast } from 'react-toastify';
@@ -9,10 +18,16 @@ export default function ConsultationConfirmModal({
   isOpen,
   onClose,
   expert,
+  mode = 'CALL',
   onConfirmStart
 }) {
   const { user, refreshUser } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [activeMode, setActiveMode] = useState(mode);
+
+  useEffect(() => {
+    setActiveMode(mode);
+  }, [mode, isOpen]);
 
   const rate = parseFloat(expert?.pricePerMinute || 20);
   const freeMins = parseInt(expert?.freeMinutes || 0, 10);
@@ -34,11 +49,13 @@ export default function ConsultationConfirmModal({
 
   if (!isOpen || !expert) return null;
 
+  const isAudioCall = activeMode === 'CALL';
+
   // Handle direct consultation start
   const handleStartConsultation = async () => {
     setLoading(true);
     try {
-      await onConfirmStart(expert);
+      await onConfirmStart(expert, activeMode);
       onClose();
     } catch (err) {
       console.error('Failed to start consultation:', err);
@@ -68,7 +85,7 @@ export default function ConsultationConfirmModal({
       toast.success(payRes?.message || 'Wallet recharged successfully via Razorpay!');
 
       // 3. Automatically initialize consultation
-      await onConfirmStart(expert);
+      await onConfirmStart(expert, activeMode);
       onClose();
     } catch (err) {
       if (err.message && err.message.includes('cancelled')) {
@@ -117,6 +134,55 @@ export default function ConsultationConfirmModal({
           </div>
         </div>
 
+        {/* Consultation Mode Selector (Audio Call vs Live Chat) */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
+          <button
+            type="button"
+            onClick={() => setActiveMode('CALL')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              padding: '10px 14px',
+              borderRadius: '10px',
+              border: isAudioCall ? '2px solid #FF6B00' : '1px solid #cbd5e1',
+              background: isAudioCall ? '#FFF7ED' : '#ffffff',
+              color: isAudioCall ? '#FF6B00' : '#64748b',
+              fontWeight: 700,
+              fontSize: '13.5px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            <IoCall style={{ fontSize: '16px' }} />
+            <span>Voice Call</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveMode('CHAT')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              padding: '10px 14px',
+              borderRadius: '10px',
+              border: !isAudioCall ? '2px solid #800000' : '1px solid #cbd5e1',
+              background: !isAudioCall ? '#fff5f5' : '#ffffff',
+              color: !isAudioCall ? '#800000' : '#64748b',
+              fontWeight: 700,
+              fontSize: '13.5px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            <IoChatbubbleEllipses style={{ fontSize: '16px' }} />
+            <span>Live Chat</span>
+          </button>
+        </div>
+
         {/* Offer Status Card */}
         {hasFreeMinutes ? (
           /* Free Minutes Available */
@@ -158,7 +224,7 @@ export default function ConsultationConfirmModal({
           /* Sufficient balance or free minutes: Allow direct start */
           <div>
             <div className="consult-status-msg success">
-              <IoCheckmarkCircleOutline style={{ fontSize: '18px', color: '#059669', flexShrink: 0 }} />
+              <IoCheckmarkCircleOutline style={{ fontSize: '18px', color: '#EA580C', flexShrink: 0 }} />
               <span>
                 {hasFreeMinutes 
                   ? `Promotional free time available! First ${freeMins} mins are 100% free.`
@@ -169,17 +235,24 @@ export default function ConsultationConfirmModal({
             <button
               onClick={handleStartConsultation}
               disabled={loading}
-              className="consult-action-btn start-free"
+              className={`consult-action-btn start-free ${isAudioCall ? 'start-call-btn' : ''}`}
+              style={{
+                background: isAudioCall ? 'linear-gradient(135deg, #FF6B00, #FF6B00)' : undefined
+              }}
             >
-              <IoChatbubbleEllipses style={{ fontSize: '18px' }} />
-              {loading ? 'Starting Chat...' : hasFreeMinutes ? `Start Free Chat (${freeMins} Mins)` : 'Start Chat Now (From Wallet)'}
+              {isAudioCall ? <IoCall style={{ fontSize: '18px' }} /> : <IoChatbubbleEllipses style={{ fontSize: '18px' }} />}
+              {loading 
+                ? (isAudioCall ? 'Connecting Call...' : 'Starting Chat...') 
+                : hasFreeMinutes 
+                  ? (isAudioCall ? `Start Free Call (${freeMins} Mins)` : `Start Free Chat (${freeMins} Mins)`) 
+                  : (isAudioCall ? 'Start Audio Call (From Wallet)' : 'Start Chat Now (From Wallet)')}
             </button>
           </div>
         ) : (
           /* Low Balance: User must recharge via Razorpay first */
           <div>
             <div className="consult-status-msg warning">
-              ⚠️ Minimum balance required to start chat is ₹{minRequiredBalance} (1 minute). Please recharge your wallet via <strong>Razorpay</strong> to initiate this consultation.
+              ⚠️ Minimum balance required to start {isAudioCall ? 'call' : 'chat'} is ₹{minRequiredBalance} (1 minute). Please recharge your wallet via <strong>Razorpay</strong> to initiate this consultation.
             </div>
 
             {/* Quick Amount Selector */}
@@ -201,15 +274,18 @@ export default function ConsultationConfirmModal({
               onClick={handleRechargeAndStart}
               disabled={loading}
               className="consult-action-btn recharge-start"
+              style={{
+                background: isAudioCall ? 'linear-gradient(135deg, #FF6B00, #FF6B00)' : undefined
+              }}
             >
               <IoWalletOutline style={{ fontSize: '18px' }} />
-              {loading ? 'Processing Razorpay...' : `Pay ₹${rechargeAmount} via Razorpay & Start Chat`}
+              {loading ? 'Processing Razorpay...' : `Pay ₹${rechargeAmount} via Razorpay & Start ${isAudioCall ? 'Call' : 'Chat'}`}
             </button>
           </div>
         )}
 
         <div className="consult-safe-note">
-          <IoShieldCheckmark style={{ color: '#10b981', fontSize: '14px' }} />
+          <IoShieldCheckmark style={{ color: '#FF6B00', fontSize: '14px' }} />
           <span>100% Encrypted & Safe Payment via Razorpay</span>
         </div>
       </div>

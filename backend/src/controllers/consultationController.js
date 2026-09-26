@@ -7,7 +7,8 @@ const { sendNewChatNotificationEmail } = require('../services/emailService');
  */
 async function requestConsultation(req, res, next) {
     try {
-        const { expertId } = req.body;
+        const { expertId, type } = req.body;
+        const consultationType = (type || 'CALL').toUpperCase();
 
         if (!expertId) {
             return res.status(400).json({
@@ -16,30 +17,43 @@ async function requestConsultation(req, res, next) {
             });
         }
 
+        const expIdNum = parseInt(expertId, 10);
+
+        // Pre-check target expert profile to guard against self-consultation
+        const pool = await getPool();
+        const preCheckReq = pool.request();
+        preCheckReq.input('expertId', expIdNum);
+        preCheckReq.input('customerId', req.user.id);
+        const expRes = await preCheckReq.query(`
+            SELECT 
+                ep.id, ep.userId AS expertUserId, ep.displayName AS expertName,
+                ep.pricePerMinute, ep.freeMinutes,
+                uExp.email AS expertEmail,
+                uCust.fullName AS customerName,
+                uCust.avatarUrl AS customerAvatar
+            FROM dbo.ExpertProfiles ep
+            JOIN dbo.Users uExp ON uExp.id = ep.userId
+            CROSS JOIN (SELECT fullName, avatarUrl FROM dbo.Users WHERE id = @customerId) uCust
+            WHERE ep.id = @expertId;
+        `);
+        const expertInfo = expRes.recordset[0];
+
+        if (expertInfo && expertInfo.expertUserId === req.user.id) {
+            return res.status(400).json({
+                success: false,
+                message: 'You cannot initiate a consultation with your own expert profile. Please choose another expert.'
+            });
+        }
+
         const result = await executeProcedure('dbo.sp_CreateConsultation', {
             CustomerId: req.user.id,
-            ExpertId: parseInt(expertId, 10)
+            ExpertId: expIdNum
         });
 
         const consultation = result.recordset[0];
 
-        // Fetch expert details and send real-time notification + email
+        // Send real-time notification + email to the consulted expert
         try {
-            const pool = await getPool();
-            const expReq = pool.request();
-            expReq.input('expertId', parseInt(expertId, 10));
-            expReq.input('customerId', req.user.id);
-            const expRes = await expReq.query(`
-                SELECT 
-                    ep.id, ep.userId AS expertUserId, ep.displayName AS expertName,
-                    uExp.email AS expertEmail,
-                    uCust.fullName AS customerName
-                FROM dbo.ExpertProfiles ep
-                JOIN dbo.Users uExp ON uExp.id = ep.userId
-                CROSS JOIN (SELECT fullName FROM dbo.Users WHERE id = @customerId) uCust
-                WHERE ep.id = @expertId;
-            `);
-            const expertInfo = expRes.recordset[0];
             if (expertInfo) {
                 // Async send email (won't block response)
                 sendNewChatNotificationEmail(
@@ -49,14 +63,23 @@ async function requestConsultation(req, res, next) {
                     consultation.id
                 ).catch(err => console.error('[Consultation] Email notify error:', err.message));
 
-                // Emit Socket.IO alert directly to expert
+                // Emit Socket.IO incoming call / consultation alert directly to expert
                 const io = req.app.get('io');
                 if (io) {
-                    io.to(`user:${expertInfo.expertUserId}`).emit('consultation:incoming', {
+                    const incomingPayload = {
                         consultationId: consultation.id,
                         customerName: expertInfo.customerName,
+                        customerAvatar: expertInfo.customerAvatar,
+                        type: consultationType,
+                        consultationType,
+                        ratePerMinute: expertInfo.pricePerMinute,
+                        freeMinutes: expertInfo.freeMinutes,
                         requestedAt: new Date()
-                    });
+                    };
+
+                    console.log(`[Consultation] Dispatching incoming ${consultationType} alert to user:${expertInfo.expertUserId}`);
+                    io.to(`user:${expertInfo.expertUserId}`).emit('consultation:incoming', incomingPayload);
+                    io.to(`user:${expertInfo.expertUserId}`).emit('call:incoming', incomingPayload);
                 }
             }
         } catch (notifyErr) {
@@ -66,7 +89,10 @@ async function requestConsultation(req, res, next) {
         return res.status(201).json({
             success: true,
             message: 'Consultation requested successfully.',
-            data: consultation
+            data: {
+                ...consultation,
+                type: consultationType
+            }
         });
     } catch (error) {
         next(error);
@@ -117,6 +143,7 @@ async function getConsultation(req, res, next) {
         const result = await request.query(`
             SELECT 
                 c.*,
+                ep.userId AS expertUserId,
                 ep.displayName AS expertName,
                 ep.title AS expertTitle,
                 uExpert.avatarUrl AS expertAvatar,
@@ -141,7 +168,7 @@ async function getConsultation(req, res, next) {
 
         // Check if caller is participant or admin
         const isCustomer = consultation.customerId === req.user.id;
-        const isExpert = req.user.role === 'EXPERT'; // or check expert userId
+        const isExpert = consultation.expertUserId === req.user.id;
         const isAdmin = req.user.role === 'ADMIN';
 
         if (!isCustomer && !isExpert && !isAdmin) {

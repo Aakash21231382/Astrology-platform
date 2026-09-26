@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { IoStar, IoChatbubbleEllipsesOutline, IoTimeOutline, IoLanguageOutline } from 'react-icons/io5';
+import { IoStar, IoChatbubbleEllipsesOutline, IoCallOutline, IoTimeOutline, IoLanguageOutline } from 'react-icons/io5';
 import ActiveBadge from './ActiveBadge';
 import ConsultationConfirmModal from './ConsultationConfirmModal';
 import { useAuth } from '../context/AuthContext';
@@ -10,15 +10,14 @@ import { toast } from 'react-toastify';
 export default function ExpertCard({ expert, onOpenWallet }) {
   const { isAuthenticated, isCustomer, user } = useAuth();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [consultationMode, setConsultationMode] = useState('CALL'); // 'CALL' | 'CHAT'
   const navigate = useNavigate();
 
   const isAvailable = Boolean(expert.isOnline) && (expert.isActive === undefined || Boolean(expert.isActive));
 
-  const handleStartChat = (e) => {
-    e.preventDefault();
-
+  const initiateConsultation = (mode) => {
     if (!isAvailable) {
-      toast.warning('This expert is currently Offline / Inactive. Live chat and consultations are unavailable.');
+      toast.warning('This expert is currently Offline / Inactive. Live calls and consultations are unavailable.');
       return;
     }
 
@@ -28,22 +27,34 @@ export default function ExpertCard({ expert, onOpenWallet }) {
       return;
     }
 
-    if (!isCustomer) {
-      toast.error('Only customer accounts can initiate consultations.');
+    // Prevent self-consultation if an expert clicks their own card
+    if (user && (expert.userId === user.id || expert.id === user.expertProfileId)) {
+      toast.warning('You cannot initiate a consultation with your own expert profile. Please select another expert.');
       return;
     }
 
-    // Open consultation confirmation modal (checks free minutes and Razorpay balance)
+    setConsultationMode(mode);
     setConfirmModalOpen(true);
   };
 
-  const handleConfirmStart = async (selectedExpert) => {
+  const handleStartChat = (e) => {
+    e.preventDefault();
+    initiateConsultation('CHAT');
+  };
+
+  const handleStartCall = (e) => {
+    e.preventDefault();
+    initiateConsultation('CALL');
+  };
+
+  const handleConfirmStart = async (selectedExpert, mode = 'CALL') => {
     try {
       const res = await consultationService.requestConsultation({
-        expertId: selectedExpert.id
+        expertId: selectedExpert.id,
+        type: mode
       });
-      toast.success('Consultation session initialized!');
-      navigate(`/consultation/${res.data.data.id}`);
+      toast.success(`${mode === 'CALL' ? 'Audio Call' : 'Chat'} session initialized! Connecting...`);
+      navigate(`/consultation/${res.data.data.id}?mode=${mode.toLowerCase()}`);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to start consultation.');
     }
@@ -114,13 +125,55 @@ export default function ExpertCard({ expert, onOpenWallet }) {
         </div>
 
         {isAvailable ? (
-          <button
-            onClick={handleStartChat}
-            className="btn-primary expert-chat-btn"
-          >
-            <IoChatbubbleEllipsesOutline />
-            Chat Now
-          </button>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <button
+              onClick={handleStartCall}
+              className="btn-primary expert-call-btn"
+              style={{
+                background: 'linear-gradient(135deg, #16A34A 0%, #15803D 100%)',
+                boxShadow: '0 4px 14px rgba(22, 163, 74, 0.35)',
+                border: '1px solid rgba(22, 163, 74, 0.2)',
+                color: '#FFFFFF',
+                padding: '8px 14px',
+                fontSize: '13px',
+                fontWeight: 700,
+                borderRadius: '8px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+              title="Start Audio Call Consultation"
+            >
+              <IoCallOutline style={{ fontSize: '15px' }} />
+              Call Now
+            </button>
+
+            <button
+              onClick={handleStartChat}
+              className="btn-primary expert-chat-btn"
+              style={{
+                background: 'linear-gradient(135deg, #FF6B00 0%, #EA580C 100%)',
+                boxShadow: '0 4px 14px rgba(255, 107, 0, 0.3)',
+                border: '1px solid rgba(255, 107, 0, 0.2)',
+                color: '#FFFFFF',
+                padding: '8px 14px',
+                fontSize: '13px',
+                fontWeight: 700,
+                borderRadius: '8px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+              title="Start Live Chat Consultation"
+            >
+              <IoChatbubbleEllipsesOutline style={{ fontSize: '15px' }} />
+              Chat
+            </button>
+          </div>
         ) : (
           <button
             disabled
@@ -138,6 +191,7 @@ export default function ExpertCard({ expert, onOpenWallet }) {
       isOpen={confirmModalOpen}
       onClose={() => setConfirmModalOpen(false)}
       expert={expert}
+      mode={consultationMode}
       onConfirmStart={handleConfirmStart}
     />
   </>

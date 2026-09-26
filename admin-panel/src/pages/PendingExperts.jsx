@@ -11,8 +11,10 @@ import {
   MdClose,
   MdPhone,
   MdLocationOn,
-  MdEmail
+  MdEmail,
+  MdVerifiedUser
 } from 'react-icons/md';
+import ExportDropdown from '../components/ExportDropdown';
 import '../assets/css/admin-tables.css';
 import '../assets/css/admin-modals.css';
 
@@ -79,25 +81,67 @@ export default function PendingExperts() {
 
   return (
     <div className="pending-experts-page">
+      {/* Top Stat Banner Grid */}
+      <div className="subpage-stats-grid">
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon" style={{ background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)', color: '#EA580C', border: '1.5px solid #FED7AA' }}>
+            <MdVerifiedUser />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Pending Verifications</span>
+            <span className="subpage-stat-value" style={{ color: '#EA580C' }}>{filteredExperts.length}</span>
+          </div>
+        </div>
+
+        <div className="subpage-stat-card">
+          <div className="subpage-stat-icon" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)', color: '#059669', border: '1.5px solid #A7F3D0' }}>
+            <MdCheckCircle />
+          </div>
+          <div className="subpage-stat-info">
+            <span className="subpage-stat-label">Review Status</span>
+            <span className="subpage-stat-value" style={{ color: '#059669' }}>{filteredExperts.length > 0 ? 'Action Required' : 'All Clear'}</span>
+          </div>
+        </div>
+      </div>
+
       <div className="table-container">
         <div className="table-toolbar">
           <div className="table-search-box">
             <MdSearch />
             <input
               type="text"
-              placeholder="Search pending experts by name, email, city..."
+              placeholder="Search experts..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <button className="btn-secondary" onClick={fetchPending}>
-            Refresh Queue ({filteredExperts.length})
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <ExportDropdown
+              data={filteredExperts.map((exp) => ({
+                'Expert ID': exp.id,
+                'Full Name': exp.displayName || exp.fullName || 'N/A',
+                'Screen Name': exp.screenName ? `@${exp.screenName}` : 'N/A',
+                'Email Address': exp.email || 'N/A',
+                'Phone Number': exp.phoneNumber || exp.telephone || 'N/A',
+                'Specialty Title': exp.title || 'Astrologer',
+                'Location': [exp.city, exp.state, exp.country].filter(Boolean).join(', ') || 'N/A',
+                'Registered Date': exp.createdAt ? new Date(exp.createdAt).toLocaleDateString('en-IN') : 'N/A',
+                'Verification Status': exp.approvalStatus || 'PENDING'
+              }))}
+              fileName="Aakash_Pending_Experts"
+              sheetName="PendingExperts"
+              title="Pending Astrologer Verification Queue"
+              subtitle={`Applications Awaiting Review: ${filteredExperts.length}`}
+            />
+            <button className="btn-refresh" onClick={fetchPending}>
+              Refresh Queue ({filteredExperts.length})
+            </button>
+          </div>
         </div>
 
         {loading ? (
-          <div style={{ color: '#fff', padding: 40, textAlign: 'center' }}>Loading pending applications...</div>
+          <div style={{ color: '#64748B', padding: 40, textAlign: 'center', fontWeight: 500 }}>Loading pending applications...</div>
         ) : filteredExperts.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><MdCheckCircle /></div>
@@ -142,10 +186,10 @@ export default function PendingExperts() {
 
                   <td>
                     <div>{exp.city || 'N/A'}{exp.state ? `, ${exp.state}` : ''}</div>
-                    <div style={{ fontSize: '0.78rem', color: '#6b7280' }}>{exp.country || 'India'}</div>
+                    <div style={{ fontSize: '0.78rem', color: '#64748B' }}>{exp.country || 'India'}</div>
                   </td>
 
-                  <td style={{ fontSize: '0.84rem', color: '#9ca3af' }}>
+                  <td style={{ fontSize: '0.84rem', color: '#64748B' }}>
                     {new Date(exp.createdAt).toLocaleDateString()}
                   </td>
 
@@ -295,12 +339,12 @@ export default function PendingExperts() {
 
             <form onSubmit={handleRejectSubmit}>
               <div className="modal-body">
-                <p style={{ fontSize: '0.88rem', color: '#9ca3af' }}>
+                <p style={{ fontSize: '0.88rem', color: '#475569' }}>
                   Please state why this application does not meet platform standards. This reason will be logged in the database.
                 </p>
                 <textarea
                   rows="4"
-                  placeholder="e.g. Incomplete address verification, unreadable ID documents..."
+                  placeholder="Enter rejection reason or notes"
                   value={rejectionModal.reason}
                   onChange={(e) => setRejectionModal({ ...rejectionModal, reason: e.target.value })}
                   required

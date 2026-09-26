@@ -7,11 +7,7 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
   const location = useLocation();
 
   if (loading) {
-    return (
-      <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#7c3aed', fontWeight: 600 }}>Verifying session...</p>
-      </div>
-    );
+    return null;
   }
 
   if (!isAuthenticated) {

@@ -11,7 +11,18 @@ import {
   IoSearch,
   IoFilterOutline,
   IoLanguageOutline,
-  IoSwapVertical
+  IoSwapVertical,
+  IoPlanetOutline,
+  IoCalculatorOutline,
+  IoHandLeftOutline,
+  IoCompassOutline,
+  IoEyeOutline,
+  IoHeartOutline,
+  IoBriefcaseOutline,
+  IoCardOutline,
+  IoRoseOutline,
+  IoFlameOutline,
+  IoCalendarOutline
 } from 'react-icons/io5';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -23,6 +34,38 @@ import { publicService, expertService } from '../services/api';
 import ExpertCard from '../components/ExpertCard';
 import WalletModal from '../components/WalletModal';
 import { useAuth } from '../context/AuthContext';
+
+const getCategoryIcon = (name = '', slug = '') => {
+  const n = (name + ' ' + slug).toLowerCase();
+  if (n.includes('vedic') || n.includes('astro') || n.includes('kundali') || n.includes('horoscope') || n.includes('planet')) {
+    return <IoPlanetOutline />;
+  }
+  if (n.includes('numero') || n.includes('number') || n.includes('ank')) {
+    return <IoCalculatorOutline />;
+  }
+  if (n.includes('palm') || n.includes('hath') || n.includes('hast') || n.includes('chiro')) {
+    return <IoHandLeftOutline />;
+  }
+  if (n.includes('vastu') || n.includes('vastu shastra') || n.includes('compass') || n.includes('home') || n.includes('temple')) {
+    return <IoCompassOutline />;
+  }
+  if (n.includes('psychic') || n.includes('clairvoyance') || n.includes('aura') || n.includes('third eye') || n.includes('spiritual')) {
+    return <IoEyeOutline />;
+  }
+  if (n.includes('love') || n.includes('relation') || n.includes('marriage') || n.includes('match') || n.includes('heart')) {
+    return <IoHeartOutline />;
+  }
+  if (n.includes('career') || n.includes('wealth') || n.includes('money') || n.includes('business') || n.includes('finance') || n.includes('job') || n.includes('prosperity')) {
+    return <IoBriefcaseOutline />;
+  }
+  if (n.includes('tarot') || n.includes('card')) {
+    return <IoCardOutline />;
+  }
+  if (n.includes('heal') || n.includes('meditation') || n.includes('chakra') || n.includes('puja')) {
+    return <IoRoseOutline />;
+  }
+  return <IoSparkles />;
+};
 
 const AVAILABLE_LANGUAGES = [
   'English',
@@ -300,7 +343,7 @@ export default function Home() {
             {categories.slice(0, 8).map((cat) => (
               <Link to={`/experts?category=${cat.slug}`} key={cat.id} className="category-card">
                 <div className="category-icon-box">
-                  <IoSparkles />
+                  {getCategoryIcon(cat.name, cat.slug)}
                 </div>
                 <h4>{cat.name}</h4>
                 <p>{cat.description}</p>
@@ -322,7 +365,7 @@ export default function Home() {
                 <IoSearch className="home-filter-field-icon" />
                 <input
                   type="text"
-                  placeholder="Search astrologer name..."
+                  placeholder="Search astrologers..."
                   value={searchName}
                   onChange={(e) => setSearchName(e.target.value)}
                   className="home-filter-text-input"
@@ -402,8 +445,8 @@ export default function Home() {
               <span className="section-tag">Top Ranked</span>
               <h2 className="section-title">Verified Astrologers & Psychics</h2>
             </div>
-            <Link to="/experts" className="btn-outline">
-              View All Experts <IoArrowForward />
+            <Link to="/experts" className="home-view-all-btn">
+              <span>View All Experts</span> <IoArrowForward className="view-all-arrow" />
             </Link>
           </div>
 

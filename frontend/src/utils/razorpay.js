@@ -55,16 +55,16 @@ export const processRazorpayPayment = async ({ amount, user, description = 'Wall
         key: keyId,
         amount: Math.round(numAmount * 100),
         currency: currency || 'INR',
-        name: 'VVIP Psychics',
+        name: 'Aakash Astrology',
         description: description,
         order_id: orderId,
         prefill: {
-          name: user?.fullName || 'Valued Seeker',
+          name: user?.fullName || 'Valued User',
           email: user?.email || '',
           contact: user?.phoneNumber || ''
         },
         theme: {
-          color: '#7c3aed'
+          color: '#FF6B00'
         },
         handler: async function (response) {
           try {

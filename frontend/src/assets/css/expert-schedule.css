@@ -1,0 +1,526 @@
+/* =========================================================
+   Expert Weekly Schedule & Auto-Availability Stylesheet
+   Cohesive 4-Color Forest Green Theme
+   ========================================================= */
+
+.expert-schedule-page {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #0F172A;
+}
+
+/* 1. Header Card */
+.schedule-header-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1.5px solid #E2E8F0;
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(20, 40, 22, 0.05);
+  margin-bottom: 22px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.schedule-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.schedule-icon-badge {
+  width: 52px;
+  height: 52px;
+  background: #FFF7ED;
+  color: #FF6B00;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border: 1px solid #D2E4CC;
+  flex-shrink: 0;
+}
+
+.schedule-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #9A3412;
+  margin: 0 0 6px 0;
+}
+
+.schedule-subtitle {
+  font-size: 13.5px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.schedule-current-status-box {
+  background: #FFFDF9;
+  border: 1.5px solid #EFE6D6;
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.status-label {
+  font-size: 11.5px;
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-pill.online {
+  background: #E8F5E9;
+  color: #FF6B00;
+  border: 1px solid #A5D6A7;
+}
+
+.status-pill.offline {
+  background: #F1F5F9;
+  color: #64748B;
+  border: 1px solid #CBD5E1;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-pill.online .pulse-dot {
+  background-color: #FF6B00;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.25);
+  animation: pulse-live 1.5s infinite;
+}
+
+.status-pill.offline .pulse-dot {
+  background-color: #94A3B8;
+}
+
+@keyframes pulse-live {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.auto-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #FF6B00;
+}
+
+/* 2. Master Toggle Card */
+.master-toggle-card {
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  transition: all 0.25s ease;
+  border: 1.5px solid #E2E8F0;
+}
+
+.master-toggle-card.enabled {
+  background: linear-gradient(135deg, #FFF7ED 0%, #E8F5E9 100%);
+  border-color: #FB923C;
+}
+
+.master-toggle-card.disabled {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+}
+
+.master-toggle-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.master-toggle-icon {
+  font-size: 26px;
+  color: #FF6B00;
+}
+
+.master-toggle-content h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #9A3412;
+  margin: 0 0 4px 0;
+}
+
+.master-toggle-content p {
+  font-size: 13.5px;
+  color: #475569;
+  margin: 0;
+}
+
+/* Custom Toggle Switch */
+.toggle-switch-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.toggle-switch-wrapper input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #CBD5E1;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch-wrapper input:checked + .toggle-slider {
+  background-color: #FF6B00;
+}
+
+.toggle-switch-wrapper input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* 3. Presets Toolbar */
+.presets-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.presets-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748B;
+}
+
+.preset-buttons-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #9A3412;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+  background: #FFF7ED;
+  border-color: #FF6B00;
+  color: #FF6B00;
+  transform: translateY(-1px);
+}
+
+.preset-btn.secondary {
+  background: #FFFDF9;
+  border-color: #FB923C;
+}
+
+/* 4. Timetable Table Card */
+.schedule-timetable-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1.5px solid #E2E8F0;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(20, 40, 22, 0.04);
+  margin-bottom: 22px;
+}
+
+.timetable-header {
+  display: grid;
+  grid-template-columns: 180px 140px 1fr 1fr 120px;
+  background: #F8FAF7;
+  padding: 14px 20px;
+  border-bottom: 1.5px solid #EFE6D6;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.timetable-row {
+  display: grid;
+  grid-template-columns: 180px 140px 1fr 1fr 120px;
+  padding: 16px 20px;
+  align-items: center;
+  border-bottom: 1px solid #F1F5F9;
+  transition: background 0.15s ease;
+}
+
+.timetable-row:last-child {
+  border-bottom: none;
+}
+
+.timetable-row.active-day {
+  background: #FFFFFF;
+}
+
+.timetable-row.off-day {
+  background: #FAFAFA;
+  opacity: 0.75;
+}
+
+.timetable-row:hover {
+  background: #FFFDF9;
+}
+
+/* Day Column */
+.day-name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #9A3412;
+}
+
+.day-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #FF6B00;
+}
+
+.off-day .day-dot {
+  background-color: #CBD5E1;
+}
+
+/* Status Button */
+.day-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.day-toggle-btn.enabled {
+  background: #E8F5E9;
+  color: #FF6B00;
+  border-color: #A5D6A7;
+}
+
+.day-toggle-btn.disabled {
+  background: #F1F5F9;
+  color: #94A3B8;
+  border-color: #E2E8F0;
+}
+
+/* Time Picker Input */
+.time-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 170px;
+}
+
+.input-clock-icon {
+  position: absolute;
+  left: 10px;
+  color: #64748B;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.time-picker-input {
+  width: 100%;
+  padding: 8px 10px 8px 34px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #9A3412;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.time-picker-input:focus {
+  border-color: #FF6B00;
+  outline: none;
+  background: #FFFFFF;
+}
+
+.time-picker-input:disabled {
+  background: #F1F5F9;
+  color: #94A3B8;
+  border-color: #E2E8F0;
+  cursor: not-allowed;
+}
+
+/* Duration Badge */
+.shift-duration-badge {
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #D2E4CC;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.shift-off-badge {
+  background: #F1F5F9;
+  color: #94A3B8;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 5. Bottom Actions Bar */
+.schedule-actions-bar {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(20, 40, 22, 0.05);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.action-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748B;
+  font-size: 13px;
+}
+
+.btn-save-schedule {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FF6B00;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.25);
+}
+
+.btn-save-schedule:hover {
+  background: #EA580C;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 107, 0, 0.35);
+}
+
+.btn-save-schedule:disabled {
+  background: #94A3B8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading State */
+.expert-schedule-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  color: #64748B;
+  gap: 16px;
+  font-weight: 600;
+}
+
+.schedule-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3.5px solid #E2E8F0;
+  border-top-color: #FF6B00;
+  border-radius: 50%;
+  animation: sched-spin 0.8s linear infinite;
+}
+
+@keyframes sched-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .timetable-header {
+    display: none;
+  }
+  .timetable-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .col-day {
+    grid-column: 1 / -1;
+  }
+  .time-input-group {
+    max-width: 100%;
+  }
+}

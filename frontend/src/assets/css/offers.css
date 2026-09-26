@@ -1,40 +1,48 @@
 /* =========================================================
-   Offers Page Stylesheet
-   Theme: VVIP Psychics Promotional Vouchers
+   Offers Page Stylesheet - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
    Breakpoints: 250px to 1920px+
    ========================================================= */
 
 .offers-page {
   padding: 60px 0 100px 0;
+  background: #FFFFFF;
+  min-height: calc(100vh - 140px);
+  color: #0F172A;
 }
 
 .offers-subtitle {
-  color: #64748b;
+  color: #64748B;
   margin-top: 10px;
   font-size: 15px;
 }
 
 .offer-card {
   background: #ffffff;
-  border: 1px solid var(--border-light);
+  border: 1.5px solid #E2E8F0;
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.05);
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: var(--transition);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .offer-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-violet);
+  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.12);
+  border-color: #FF6B00;
 }
 
 .offer-tag {
-  background: #fef3c7;
-  color: #b45309;
+  background: #FFF7ED;
+  color: #3b502d;
+  border: 1px solid #FED7AA;
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 11.5px;
@@ -46,7 +54,7 @@
 
 .offer-title {
   font-size: 18px;
-  color: #130a2a;
+  color: #0F172A;
   font-weight: 700;
   margin: 14px 0 10px 0;
   line-height: 1.35;
@@ -54,15 +62,15 @@
 
 .offer-desc {
   font-size: 14px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.55;
   margin-bottom: 20px;
   flex: 1;
 }
 
 .offer-code-box {
-  background: #f8fafc;
-  border: 1.5px dashed #7c3aed;
+  background: #FFFFFF;
+  border: 1.5px dashed #FF6B00;
   padding: 10px 14px;
   border-radius: 8px;
   display: flex;
@@ -75,11 +83,11 @@
 
 .offer-code-label {
   font-size: 12px;
-  color: #64748b;
+  color: #64748B;
 }
 
 .offer-code-val {
-  color: #7c3aed;
+  color: #FF6B00;
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -89,9 +97,22 @@
   width: 100%;
   padding: 11px;
   font-size: 14px;
+  font-weight: 700;
   border-radius: 8px;
   text-align: center;
   justify-content: center;
+  background: #FF6B00;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.22);
+  transition: all 0.2s ease;
+}
+
+.offer-apply-btn:hover {
+  background: #445734;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 107, 0, 0.28);
 }
 
 /* Responsive Media Queries */

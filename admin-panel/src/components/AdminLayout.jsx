@@ -14,10 +14,20 @@ import {
   MdOpenInNew,
   MdSupervisorAccount,
   MdMenu,
-  MdClose
+  MdClose,
+  MdChat,
+  MdCall,
+  MdPersonOff,
+  MdRateReview,
+  MdCampaign,
+  MdFolderShared,
+  MdForum,
+  MdShoppingBag,
+  MdInventory2,
+  MdAddCircleOutline,
+  MdTempleHindu
 } from 'react-icons/md';
 import '../assets/css/admin-layout.css';
-import LogoImg from '../assets/images/logo.png';
 
 export default function AdminLayout() {
   const { adminUser, logout } = useAdminAuth();
@@ -58,7 +68,21 @@ export default function AdminLayout() {
     if (path === '/') return 'Dashboard Overview';
     if (path === '/experts/pending') return 'Expert Verification & Approvals';
     if (path === '/experts') return 'All Experts & Live Status';
+    if (path === '/live-chat') return 'Live Chat Sessions & Transcripts';
+    if (path === '/live-call') return 'Live Call Sessions & Audio Logs';
+    if (path === '/consultations') return 'Consultations & Chat Sessions';
+    if (path === '/experts/close-requests') return 'Account Deactivation Requests';
+    if (path === '/experts/reviews') return 'Expert Reviews & Ratings';
+    if (path === '/experts/documents') return 'Expert Documents Repository';
+    if (path === '/broadcasts') return 'Expert Announcements & Mailbox';
     if (path === '/users') return 'User & Customer Directory';
+    if (path === '/orders') return 'Store & Puja Orders Directory';
+    if (path === '/ecommerce/products') return 'Astro Shop Products Catalog';
+    if (path === '/ecommerce/products/add') return 'Add New Store Product';
+    if (path.startsWith('/ecommerce/products/edit/')) return 'Edit Store Product';
+    if (path === '/ecommerce/pujas') return 'Temple Pujas & Havans Directory';
+    if (path === '/ecommerce/pujas/add') return 'Add New Temple Puja';
+    if (path.startsWith('/ecommerce/pujas/edit/')) return 'Edit Temple Puja';
     if (path === '/banners') return 'Promotional Banners';
     if (path === '/categories') return 'Astrology Categories';
     if (path === '/withdrawals') return 'Expert Withdrawal Payouts';
@@ -79,7 +103,7 @@ export default function AdminLayout() {
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <div className="admin-brand-logo-wrap">
-            <img src={LogoImg} alt="VVIP Psychics" className="admin-brand-logo" />
+            <span className="admin-brand-text">Aakash</span>
             <span className="brand-badge">ADMIN CONTROL</span>
           </div>
           <button
@@ -93,7 +117,7 @@ export default function AdminLayout() {
         </div>
 
         <nav className="sidebar-nav">
-          <div className="nav-section-title">CORE OPS</div>
+          <div className="nav-section-title">CORE OPERATIONS</div>
           <NavLink
             to="/"
             end
@@ -116,6 +140,7 @@ export default function AdminLayout() {
 
           <NavLink
             to="/experts"
+            end
             onClick={() => setSidebarOpen(false)}
             className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
           >
@@ -123,6 +148,71 @@ export default function AdminLayout() {
             <span>All Experts</span>
           </NavLink>
 
+          <NavLink
+            to="/consultations"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdForum /></span>
+            <span>Consultations</span>
+          </NavLink>
+
+          <div className="nav-section-title">EXPERT OPERATIONS</div>
+          <NavLink
+            to="/live-chat"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdChat /></span>
+            <span>Live Chat</span>
+          </NavLink>
+
+          <NavLink
+            to="/live-call"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon" style={{ color: '#16A34A' }}><MdCall /></span>
+            <span>Live Call</span>
+          </NavLink>
+
+          <NavLink
+            to="/experts/close-requests"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdPersonOff /></span>
+            <span>Close Requests</span>
+          </NavLink>
+
+          <NavLink
+            to="/experts/reviews"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdRateReview /></span>
+            <span>Reviews & Ratings</span>
+          </NavLink>
+
+          <NavLink
+            to="/experts/documents"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdFolderShared /></span>
+            <span>Expert Documents</span>
+          </NavLink>
+
+          <NavLink
+            to="/broadcasts"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdCampaign /></span>
+            <span>Broadcasts</span>
+          </NavLink>
+
+          <div className="nav-section-title">CUSTOMERS</div>
           <NavLink
             to="/users"
             onClick={() => setSidebarOpen(false)}
@@ -132,7 +222,55 @@ export default function AdminLayout() {
             <span>Users & Wallets</span>
           </NavLink>
 
-          <div className="nav-section-title">CONTENT & COMMERCE</div>
+          <div className="nav-section-title">ECOMMERCE & PUJA</div>
+          <NavLink
+            to="/orders"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdShoppingBag /></span>
+            <span>Store & Puja Orders</span>
+          </NavLink>
+
+          <NavLink
+            to="/ecommerce/products"
+            end
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdInventory2 /></span>
+            <span>All Products</span>
+          </NavLink>
+
+          <NavLink
+            to="/ecommerce/products/add"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon" style={{ color: '#EA580C' }}><MdAddCircleOutline /></span>
+            <span>Add Product</span>
+          </NavLink>
+
+          <NavLink
+            to="/ecommerce/pujas"
+            end
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon"><MdTempleHindu /></span>
+            <span>Temple Pujas</span>
+          </NavLink>
+
+          <NavLink
+            to="/ecommerce/pujas/add"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-item-icon" style={{ color: '#EA580C' }}><MdAddCircleOutline /></span>
+            <span>Add Temple Puja</span>
+          </NavLink>
+
+          <div className="nav-section-title">PORTAL & FINANCE</div>
           <NavLink
             to="/banners"
             onClick={() => setSidebarOpen(false)}

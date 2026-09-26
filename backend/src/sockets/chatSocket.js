@@ -93,6 +93,47 @@ function startSessionTimer(io, consultationId, roomName, session) {
 }
 
 /**
+ * Anti-Leak Security Filter
+ * Automatically masks phone numbers, WhatsApp links, social handles, and UPI IDs
+ */
+function maskContactLeakedInfo(text) {
+    if (!text || typeof text !== 'string') return { text, wasMasked: false };
+    
+    let sanitized = text;
+    let wasMasked = false;
+
+    // 1. Phone number patterns (Indian 10-digit and international formats)
+    const phoneRegex = /(\+?91[\-\s]?)?[6-9]\d{2}[\-\s]?\d{3}[\-\s]?\d{4}\b|\b\d{5}[\-\s]?\d{5}\b|\b\d{10}\b/g;
+    if (phoneRegex.test(sanitized)) {
+        sanitized = sanitized.replace(phoneRegex, '[Protected Contact: Number sharing is prohibited]');
+        wasMasked = true;
+    }
+
+    // 2. WhatsApp links and keywords
+    const waRegex = /(wa\.me\/\S+|whatsapp[:\s]+\+?\d+)/gi;
+    if (waRegex.test(sanitized)) {
+        sanitized = sanitized.replace(waRegex, '[WhatsApp Contact Blocked by System]');
+        wasMasked = true;
+    }
+
+    // 3. Social Media handles (Instagram, Telegram)
+    const socialRegex = /(instagram\.com\/\S+|t\.me\/\S+|ig[:\s]+@?[a-zA-Z0-9._]+|insta[:\s]+@?[a-zA-Z0-9._]+)/gi;
+    if (socialRegex.test(sanitized)) {
+        sanitized = sanitized.replace(socialRegex, '[Social Handle Blocked by System]');
+        wasMasked = true;
+    }
+
+    // 4. UPI Handles
+    const upiRegex = /[a-zA-Z0-9.\-_]{2,256}@(okhdfcbank|okaxis|oksbi|okicici|upi|ybl|paytm|apl|axl|ibl)/gi;
+    if (upiRegex.test(sanitized)) {
+        sanitized = sanitized.replace(upiRegex, '[UPI Payment ID Blocked by System]');
+        wasMasked = true;
+    }
+
+    return { text: sanitized, wasMasked };
+}
+
+/**
  * Handle initial greeting message from AI Astrologer when room is first joined
  */
 async function handleAiAstrologerGreeting(io, consultationId, roomName, session) {
@@ -268,18 +309,22 @@ function initChatSockets(io) {
         });
 
         // Join Consultation Room
-        socket.on('consultation:join', async ({ consultationId }) => {
+        socket.on('consultation:join', async ({ consultationId, mode }) => {
             const cid = parseInt(consultationId, 10);
             const roomName = `consultation:${cid}`;
             socket.join(roomName);
-            console.log(`[Socket] User ${user.email} (${user.role}) joined room: ${roomName}`);
-            io.to(roomName).emit('consultation:user_joined', {
-                userId: user.id,
-                role: user.role
-            });
 
             try {
                 const session = await getConsultationSessionDetails(cid);
+                const isCall = (mode || '').toUpperCase() === 'CALL' || (session?.consultationType || '').toUpperCase() === 'CALL';
+                const effectiveMode = isCall ? 'CALL' : 'CHAT';
+                console.log(`[Socket] User ${user.email} (${user.role}) joined room: ${roomName} [mode: ${effectiveMode}]`);
+                io.to(roomName).emit('consultation:user_joined', {
+                    userId: user.id,
+                    role: user.role,
+                    mode: effectiveMode
+                });
+
                 if (session && session.status !== 'COMPLETED' && session.status !== 'REJECTED') {
                     // If consultation was in REQUESTED state, activate it automatically for live consultation
                     if (session.status === 'REQUESTED') {
@@ -288,11 +333,13 @@ function initChatSockets(io) {
                             NewStatus: 'ACTIVE'
                         });
                         session.status = 'ACTIVE';
-                        io.to(roomName).emit('consultation:accepted', {
+                        const acceptPayload = {
                             consultationId,
                             status: 'ACTIVE',
                             startedAt: new Date()
-                        });
+                        };
+                        io.to(roomName).emit('consultation:accepted', acceptPayload);
+                        io.to(roomName).emit('call:accepted', acceptPayload);
                     }
 
                     // Start authoritative timer ticker
@@ -307,8 +354,9 @@ function initChatSockets(io) {
                     `);
                     const totalMsgs = msgRes.recordset[0]?.totalMsgs || 0;
 
-                    // If brand new consultation (0 messages) and Customer joined, trigger initial AI greeting
-                    if (totalMsgs === 0 && user.role === 'CUSTOMER') {
+                    // If brand new CHAT consultation (0 messages) and Customer joined, trigger initial AI greeting
+                    // DO NOT trigger chat greeting for voice calls!
+                    if (!isCall && totalMsgs === 0 && user.role === 'CUSTOMER') {
                         setTimeout(async () => {
                             await handleAiAstrologerGreeting(io, consultationId, roomName, session);
                         }, 1000);
@@ -319,8 +367,17 @@ function initChatSockets(io) {
             }
         });
 
-        // Accept Consultation (Expert Manual)
-        socket.on('consultation:accept', async ({ consultationId }) => {
+        // WebRTC Voice Call Signaling (for real-time in-browser audio voice calls)
+        socket.on('webrtc:signal', ({ consultationId, signal }) => {
+            const cid = parseInt(consultationId, 10);
+            socket.to(`consultation:${cid}`).emit('webrtc:signal', {
+                senderId: user.id,
+                signal
+            });
+        });
+
+        // Accept Consultation / Call (Expert Manual)
+        const handleAcceptConsultation = async ({ consultationId }) => {
             try {
                 const roomName = `consultation:${consultationId}`;
                 await executeProcedure('dbo.sp_UpdateConsultationStatus', {
@@ -333,18 +390,30 @@ function initChatSockets(io) {
                     startSessionTimer(io, consultationId, roomName, session);
                 }
 
-                io.to(roomName).emit('consultation:accepted', {
+                const acceptPayload = {
                     consultationId,
                     status: 'ACTIVE',
                     startedAt: new Date()
-                });
+                };
+
+                io.to(roomName).emit('consultation:accepted', acceptPayload);
+                io.to(roomName).emit('call:accepted', acceptPayload);
+
+                // If customer is in personal room, alert them directly
+                if (session?.customerId) {
+                    io.to(`user:${session.customerId}`).emit('consultation:accepted', acceptPayload);
+                    io.to(`user:${session.customerId}`).emit('call:accepted', acceptPayload);
+                }
             } catch (err) {
                 console.error('[Socket] consultation:accept error:', err.message);
             }
-        });
+        };
 
-        // Reject Consultation (Expert)
-        socket.on('consultation:reject', async ({ consultationId, reason }) => {
+        socket.on('consultation:accept', handleAcceptConsultation);
+        socket.on('call:accept', handleAcceptConsultation);
+
+        // Reject Consultation / Call (Expert)
+        const handleRejectConsultation = async ({ consultationId, reason }) => {
             try {
                 const roomName = `consultation:${consultationId}`;
                 await executeProcedure('dbo.sp_UpdateConsultationStatus', {
@@ -353,14 +422,27 @@ function initChatSockets(io) {
                     EndReason: reason || 'EXPERT_DECLINED'
                 });
 
-                io.to(roomName).emit('consultation:rejected', {
+                const session = await getConsultationSessionDetails(consultationId);
+
+                const rejectPayload = {
                     consultationId,
                     reason: reason || 'Expert is currently unavailable.'
-                });
+                };
+
+                io.to(roomName).emit('consultation:rejected', rejectPayload);
+                io.to(roomName).emit('call:rejected', rejectPayload);
+
+                if (session?.customerId) {
+                    io.to(`user:${session.customerId}`).emit('consultation:rejected', rejectPayload);
+                    io.to(`user:${session.customerId}`).emit('call:rejected', rejectPayload);
+                }
             } catch (err) {
                 console.error('[Socket] consultation:reject error:', err.message);
             }
-        });
+        };
+
+        socket.on('consultation:reject', handleRejectConsultation);
+        socket.on('call:reject', handleRejectConsultation);
 
         // Chat Message
         socket.on('consultation:message', async ({ consultationId, content, messageType = 'TEXT', fileUrl = null }) => {
@@ -368,13 +450,25 @@ function initChatSockets(io) {
                 const cid = parseInt(consultationId, 10);
                 const roomName = `consultation:${cid}`;
 
+                // Anti-Leak Security Filter
+                let effectiveContent = content;
+                if (messageType === 'TEXT' && content) {
+                    const check = maskContactLeakedInfo(content);
+                    if (check.wasMasked) {
+                        effectiveContent = check.text;
+                        socket.emit('consultation:security_warning', {
+                            warning: 'Contact Sharing Blocked: Sharing phone numbers, WhatsApp, social media, or direct payment handles is strictly prohibited on Aakash Astrology.'
+                        });
+                    }
+                }
+
                 // Persist in MS SQL
                 const result = await executeProcedure('dbo.sp_SaveChatMessage', {
                     ConsultationId: cid,
                     SenderId: user.id,
                     SenderRole: user.role,
                     MessageType: messageType,
-                    Content: content,
+                    Content: effectiveContent,
                     FileUrl: fileUrl
                 });
 
@@ -386,7 +480,7 @@ function initChatSockets(io) {
                     senderId: user.id,
                     senderRole: user.role,
                     messageType,
-                    content,
+                    content: effectiveContent,
                     fileUrl,
                     status: 'DELIVERED',
                     sentAt: savedMsg.sentAt

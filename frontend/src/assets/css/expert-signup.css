@@ -1,17 +1,19 @@
 /* =========================================================
-   VVIP Psychics - Expert Registration Stylesheet
-   Clean, Elegant & Modern Form
+   Expert Registration Stylesheet - Cohesive 4-Color Theme
+   Colors:
+   - Primary: #FF6B00 (Forest Sage)
+   - Secondary: #FB923C (Muted Olive)
+   - Accent / Border: #E2E8F0 (Warm Sand)
+   - Canvas / Surface: #FFFFFF (Warm Cream)
    Font: 'Inter', sans-serif
    ========================================================= */
 
 .expert-signup-page {
   min-height: 100vh;
-  background: radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.12) 0%, transparent 45%),
-              radial-gradient(circle at 85% 75%, rgba(245, 158, 11, 0.1) 0%, transparent 40%),
-              linear-gradient(180deg, #070e24 0%, #0c1433 50%, #060a1a 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #f6ebd8 100%);
   padding: 36px 20px 70px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #0f172a;
+  color: #0F172A;
   position: relative;
   overflow-x: hidden;
 }
@@ -36,40 +38,40 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #cbd5e1;
+  color: #0F172A;
   font-size: 13.5px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 8px 16px;
+  background: #ffffff;
+  padding: 8px 18px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.06);
   transition: all 0.25s ease;
-  backdrop-filter: blur(8px);
 }
 
 .signup-back-link:hover {
-  color: #f59e0b;
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(245, 158, 11, 0.4);
+  color: #FF6B00;
+  border-color: #FF6B00;
+  background: #FFFFFF;
   transform: translateX(-3px);
 }
 
 .signup-login-prompt {
   font-size: 13.5px;
-  color: #94a3b8;
+  color: #64748B;
 }
 
 .signup-login-prompt a {
-  color: #f59e0b;
-  font-weight: 600;
+  color: #FF6B00;
+  font-weight: 700;
   text-decoration: none;
   margin-left: 6px;
   transition: color 0.2s ease;
 }
 
 .signup-login-prompt a:hover {
-  color: #fbbf24;
+  color: #445734;
   text-decoration: underline;
 }
 
@@ -83,17 +85,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #091330 0%, #152252 100%);
+  background: #FF6B00;
   padding: 8px 24px;
   border-radius: 36px;
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.22);
   margin-bottom: 14px;
   transition: transform 0.25s ease;
 }
 
 .signup-logo-wrapper:hover {
   transform: translateY(-2px);
+}
+
+.signup-brand-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  color: #FFFFFF;
+  display: inline-block;
+  line-height: 1;
 }
 
 .signup-logo-img {
@@ -104,7 +116,7 @@
 .expert-signup-title {
   font-size: 26px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0F172A;
   letter-spacing: 0.5px;
   margin-bottom: 6px;
   text-transform: uppercase;
@@ -112,7 +124,7 @@
 
 .expert-signup-desc {
   font-size: 14px;
-  color: #cbd5e1;
+  color: #64748B;
   max-width: 520px;
   margin: 0 auto;
 }
@@ -120,10 +132,16 @@
 /* Main Form Card */
 .expert-signup-card {
   background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1.5px solid #E2E8F0;
+  border-radius: 18px;
+  box-shadow: 0 16px 40px rgba(255, 107, 0, 0.12);
   padding: 36px 40px;
   position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.expert-signup-card:hover {
+  box-shadow: 0 20px 48px rgba(255, 107, 0, 0.15);
 }
 
 /* Profile Photo Uploader */
@@ -131,8 +149,8 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: #f8fafc;
-  border: 1.5px dashed #cbd5e1;
+  background: #FFFFFF;
+  border: 1.5px dashed #E2E8F0;
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 24px;
@@ -140,8 +158,8 @@
 }
 
 .expert-avatar-upload-section:hover {
-  border-color: #7c3aed;
-  background: #faf5ff;
+  border-color: #FF6B00;
+  background: #fdf6e6;
 }
 
 .avatar-preview-wrapper {
@@ -157,22 +175,22 @@
   height: 74px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2.5px solid #7c3aed;
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
-  background: #ede9fe;
+  border: 2.5px solid #FF6B00;
+  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
+  background: #ffffff;
 }
 
 .avatar-placeholder-circle {
   width: 74px;
   height: 74px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #7c3aed;
+  color: #FF6B00;
   font-size: 24px;
-  border: 1.5px dashed #a78bfa;
+  border: 1.5px dashed #E2E8F0;
 }
 
 .avatar-camera-badge {
@@ -182,13 +200,13 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #7c3aed;
+  background: #FF6B00;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(255, 107, 0, 0.3);
   border: 2px solid #ffffff;
 }
 
@@ -199,13 +217,13 @@
 .avatar-upload-title {
   font-size: 14px;
   font-weight: 700;
-  color: #1e1b4b;
+  color: #0F172A;
   margin-bottom: 2px;
 }
 
 .avatar-upload-sub {
   font-size: 12px;
-  color: #64748b;
+  color: #64748B;
   line-height: 1.4;
   margin-bottom: 8px;
 }
@@ -214,9 +232,9 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: #f5f3ff;
-  color: #7c3aed;
-  border: 1.5px solid #d8b4fe;
+  background: #ffffff;
+  color: #FF6B00;
+  border: 1.5px solid #E2E8F0;
   font-size: 12.5px;
   font-weight: 600;
   padding: 6px 14px;
@@ -226,10 +244,10 @@
 }
 
 .avatar-choose-btn:hover {
-  background: #7c3aed;
+  background: #FF6B00;
   color: #ffffff;
-  border-color: #7c3aed;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+  border-color: #FF6B00;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.25);
 }
 
 /* Grid Layouts for inputs */
@@ -254,7 +272,7 @@
 .signup-input-label {
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
+  color: #0F172A;
   margin-bottom: 5px;
   display: flex;
   align-items: center;
@@ -262,7 +280,7 @@
 }
 
 .signup-input-label .required-star {
-  color: #ef4444;
+  color: #c53030;
   font-weight: 700;
 }
 
@@ -275,7 +293,7 @@
 .signup-input-icon {
   position: absolute;
   left: 14px;
-  color: #94a3b8;
+  color: #94A3B8;
   font-size: 15px;
   pointer-events: none;
   transition: color 0.2s ease;
@@ -286,29 +304,29 @@
   width: 100%;
   height: 42px;
   padding: 8px 14px 8px 40px;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid #E2E8F0;
   border-radius: 8px;
   background: #ffffff;
   font-size: 13.5px;
-  color: #0f172a;
+  color: #0F172A;
   transition: all 0.2s ease;
   font-family: 'Inter', sans-serif;
 }
 
 .signup-text-input:focus,
 .signup-select-input:focus {
-  border-color: #7c3aed;
+  border-color: #FF6B00;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
   background: #ffffff;
 }
 
 .signup-input-wrapper:focus-within .signup-input-icon {
-  color: #7c3aed;
+  color: #FF6B00;
 }
 
 .signup-text-input::placeholder {
-  color: #94a3b8;
+  color: #94A3B8;
   font-size: 13px;
 }
 
@@ -318,7 +336,7 @@
   right: 12px;
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: #94A3B8;
   font-size: 16px;
   cursor: pointer;
   padding: 6px;
@@ -329,13 +347,13 @@
 }
 
 .password-toggle-btn:hover {
-  color: #7c3aed;
+  color: #FF6B00;
 }
 
 /* Terms and Conditions Card */
 .terms-agreement-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
   padding: 14px 18px;
   margin: 20px 0;
@@ -347,27 +365,27 @@
 .terms-agreement-card input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #7c3aed;
+  accent-color: #FF6B00;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .terms-text-label {
   font-size: 13px;
-  color: #334155;
+  color: #0F172A;
   line-height: 1.5;
   cursor: pointer;
 }
 
 .terms-text-label a {
-  color: #7c3aed;
+  color: #FF6B00;
   font-weight: 600;
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .terms-text-label a:hover {
-  color: #6d28d9;
+  color: #445734;
 }
 
 /* Submit Action Button */
@@ -380,7 +398,7 @@
   height: 50px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #4f46e5 100%);
+  background: #FF6B00;
   color: #ffffff;
   font-size: 15.5px;
   font-weight: 700;
@@ -390,7 +408,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.38);
+  box-shadow: 0 4px 18px rgba(255, 107, 0, 0.28);
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
@@ -412,8 +430,8 @@
 }
 
 .expert-submit-btn-modern:hover:not(:disabled) {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6366f1 100%);
-  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.48);
+  background: #445734;
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.35);
   transform: translateY(-2px);
 }
 
@@ -427,6 +445,7 @@
 
 .expert-submit-btn-modern:disabled {
   opacity: 0.65;
+  background: #FB923C;
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -457,9 +476,9 @@
   text-align: center;
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid #E2E8F0;
   font-size: 14px;
-  color: #64748b;
+  color: #64748B;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -467,14 +486,14 @@
 }
 
 .signup-login-link {
-  color: #f59e0b;
+  color: #FF6B00;
   font-weight: 700;
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 .signup-login-link:hover {
-  color: #d97706;
+  color: #445734;
   text-decoration: underline;
 }
 

@@ -9,12 +9,13 @@ import {
   IoChevronDown, 
   IoSparkles,
   IoGridOutline,
-  IoPersonCircleOutline
+  IoPersonCircleOutline,
+  IoCallOutline,
+  IoChatbubblesOutline
 } from 'react-icons/io5';
 import { useAuth } from '../context/AuthContext';
 import { publicService } from '../services/api';
 import WalletModal from './WalletModal';
-import LogoImg from '../assets/images/logo.png';
 
 // All categories from database with default seed values
 const INITIAL_CATEGORIES = [
@@ -36,11 +37,10 @@ export default function Navbar() {
   const [categories, setCategories] = useState(INITIAL_CATEGORIES);
   const [readersDropdownOpen, setReadersDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const [scrolledUserDropdownOpen, setScrolledUserDropdownOpen] = useState(false);
   const [mobileReadersOpen, setMobileReadersOpen] = useState(false);
+  
   const dropdownRef = useRef(null);
   const userDropdownRef = useRef(null);
-  const scrolledUserDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,7 +55,7 @@ export default function Navbar() {
     });
   }, []);
 
-  // Format category display names exactly matching reference screenshot
+  // Format category display names
   const formatCategoryName = (name) => {
     const n = (name || '').trim().toLowerCase();
     if (n.includes('love')) return 'LOVE & RELATIONSHIPS';
@@ -69,7 +69,7 @@ export default function Navbar() {
     return name.toUpperCase();
   };
 
-  // Sort categories prioritizing Love & Relationships, Psychic, Tarot, Vedic, followed by all others
+  // Sort categories prioritizing Love, Psychic, Tarot, Vedic
   const sortedCategories = React.useMemo(() => {
     const list = categories && categories.length > 0 ? categories : INITIAL_CATEGORIES;
     const priority = ['love', 'psychic', 'tarot', 'vedic', 'numerology', 'palmistry', 'vastu', 'career'];
@@ -84,11 +84,10 @@ export default function Navbar() {
     });
   }, [categories]);
 
-  // Handle scroll listener
+  // Handle sticky scroll state
   useEffect(() => {
     const handleScroll = () => {
-      // Topbar height is approx 80px - when scrolled past, lock main navbar to top: 0
-      if (window.scrollY > 80) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -103,7 +102,6 @@ export default function Navbar() {
   useEffect(() => {
     setReadersDropdownOpen(false);
     setUserDropdownOpen(false);
-    setScrolledUserDropdownOpen(false);
     setMobileMenuOpen(false);
     setMobileReadersOpen(false);
   }, [location.pathname, location.search]);
@@ -116,9 +114,6 @@ export default function Navbar() {
       }
       if (userDropdownRef.current && !userDropdownRef.current.contains(e.target)) {
         setUserDropdownOpen(false);
-      }
-      if (scrolledUserDropdownRef.current && !scrolledUserDropdownRef.current.contains(e.target)) {
-        setScrolledUserDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleOutsideClick);
@@ -151,11 +146,11 @@ export default function Navbar() {
         aria-hidden="true"
       />
 
-      {/* Mobile Off-canvas Side Drawer (Slides in from Left, exactly like Admin Panel) */}
+      {/* Mobile Off-canvas Side Drawer */}
       <aside className={`nav-mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-header">
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="mobile-drawer-brand">
-            <img src={LogoImg} alt="VVIP Psychics Expert" className="mobile-drawer-logo" />
+            <span className="mobile-drawer-brand-text">Aakash</span>
           </Link>
           <button 
             type="button" 
@@ -171,11 +166,15 @@ export default function Navbar() {
           <div className="mobile-drawer-user-card">
             <div className="drawer-user-info-left">
               <span className="drawer-user-avatar">
-                {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                {user?.avatarUrl ? (
+                  <img src={user.avatarUrl} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                ) : (
+                  user?.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'
+                )}
               </span>
               <div className="drawer-user-text">
-                <span className="drawer-user-name">{user?.name}</span>
-                <span className="drawer-user-role">{isExpert ? 'Verified Expert' : 'Customer'}</span>
+                <span className="drawer-user-name">{user?.fullName || 'User'}</span>
+                <span className="drawer-user-role">{isExpert ? 'Verified Astrologer' : 'Seeker Account'}</span>
               </div>
             </div>
             {isCustomer && (
@@ -189,7 +188,7 @@ export default function Navbar() {
                 title="Recharge Wallet"
               >
                 <IoWalletOutline />
-                <span>₹{parseFloat(user?.walletBalance || user?.wallet_balance || 0).toFixed(2)}</span>
+                <span>₹{parseFloat(user?.walletBalance || 0).toFixed(2)}</span>
               </button>
             )}
           </div>
@@ -237,6 +236,16 @@ export default function Navbar() {
             </li>
 
             <li>
+              <NavLink to="/shop" onClick={() => setMobileMenuOpen(false)}>
+                SHOPPING
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/puja" onClick={() => setMobileMenuOpen(false)}>
+                PUJA
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/offers" onClick={() => setMobileMenuOpen(false)}>
                 OFFERS
               </NavLink>
@@ -244,6 +253,11 @@ export default function Navbar() {
             <li>
               <NavLink to="/how-it-works" onClick={() => setMobileMenuOpen(false)}>
                 HOW IT WORKS
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/faq" onClick={() => setMobileMenuOpen(false)}>
+                FAQ
               </NavLink>
             </li>
           </ul>
@@ -258,7 +272,7 @@ export default function Navbar() {
                   onClick={() => setMobileMenuOpen(false)} 
                   className="mobile-btn mobile-btn-primary"
                 >
-                  <IoPerson className="btn-icon" /> {isExpert ? 'EXPERT PORTAL' : 'MY ACCOUNT'}
+                  <IoPerson className="btn-icon" /> {isExpert ? 'EXPERT DASHBOARD' : 'MY DASHBOARD'}
                 </Link>
               )}
               <button 
@@ -288,206 +302,40 @@ export default function Navbar() {
         </div>
       </aside>
 
-      <header className="astro-navbar-wrapper">
-        {/* 1. Top Bar (Dark Navy #041639) - scrolls naturally with the page */}
-        <div className="astro-topbar">
-          <div className="container astro-container topbar-content">
-            {/* Topbar Logo - large and clear */}
-            <Link to="/" className="topbar-logo-link" title="VVIP Psychics Expert">
-              <img src={LogoImg} alt="VVIP Psychics Expert" className="topbar-logo-img" />
+      {/* Unified Single Navbar */}
+      <header className={`astro-unified-navbar ${isScrolled ? 'is-scrolled' : ''}`}>
+        <div className="container astro-container unified-nav-inner">
+          
+          {/* 1. Left Brand Logo */}
+          <div className="unified-nav-brand">
+            <Link to="/" className="unified-logo-link" title="Aakash Astrology">
+              <span className="unified-brand-text">Aakash</span>
             </Link>
-
-            {/* Topbar Action Buttons (LOG IN, SIGN UP, SIGN UP EXPERT) */}
-            <div className="topbar-actions">
-              {isAuthenticated ? (
-                <>
-                  {isCustomer && (
-                    <button 
-                      onClick={() => setWalletModalOpen(true)}
-                      className="nav-wallet-badge"
-                      title="Recharge Wallet"
-                    >
-                      <IoWalletOutline style={{ fontSize: '16px' }} />
-                      <span>₹{parseFloat(user?.walletBalance || 0).toFixed(2)}</span>
-                    </button>
-                  )}
-
-                  {/* Interactive Profile Dropdown (Replaces separate portal & logout buttons) */}
-                  <div className="topbar-user-dropdown-wrap" ref={userDropdownRef}>
-                    <button 
-                      type="button"
-                      className={`topbar-user-pill clickable ${userDropdownOpen ? 'active' : ''}`}
-                      onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                      aria-expanded={userDropdownOpen}
-                      title="User Profile Menu"
-                    >
-                      <div className="topbar-user-avatar">
-                        {user?.avatarUrl ? (
-                          <img src={user.avatarUrl} alt="Avatar" />
-                        ) : (
-                          <IoPerson />
-                        )}
-                      </div>
-                      <span className="topbar-user-name">
-                        {user?.fullName?.split(' ')[0] || user?.email?.split('@')[0]}
-                      </span>
-                      {isExpert && (
-                        <span className="topbar-role-badge">EXPERT</span>
-                      )}
-                      <IoChevronDown className={`topbar-pill-chevron ${userDropdownOpen ? 'rotated' : ''}`} />
-                    </button>
-
-                    {/* Profile Dropdown Menu */}
-                    {userDropdownOpen && (
-                      <div className="topbar-user-dropdown-menu">
-                        <div className="dropdown-user-header">
-                          <div className="header-user-avatar">
-                            {user?.avatarUrl ? (
-                              <img src={user.avatarUrl} alt="Avatar" />
-                            ) : (
-                              <IoPerson />
-                            )}
-                          </div>
-                          <div className="header-user-info">
-                            <div className="header-name">{user?.fullName || 'User'}</div>
-                            <div className="header-email">{user?.email}</div>
-                            <span className={`header-role-tag ${isExpert ? 'expert' : 'seeker'}`}>
-                              {isExpert ? '⭐ Verified Expert Reader' : 'Seeker Account'}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="dropdown-user-links">
-                          {isExpert && (
-                            <>
-                              <Link 
-                                to="/expert/dashboard" 
-                                className="user-dropdown-item"
-                                onClick={() => setUserDropdownOpen(false)}
-                              >
-                                <IoGridOutline />
-                                <span>Expert Dashboard</span>
-                              </Link>
-                              {user?.expertProfileId && (
-                                <Link 
-                                  to={`/expert/${user.expertProfileId}`} 
-                                  className="user-dropdown-item"
-                                  onClick={() => setUserDropdownOpen(false)}
-                                >
-                                  <IoPersonCircleOutline />
-                                  <span>Public Profile Preview</span>
-                                </Link>
-                              )}
-                            </>
-                          )}
-
-                          {isCustomer && (
-                            <>
-                              <Link 
-                                to="/dashboard" 
-                                className="user-dropdown-item"
-                                onClick={() => setUserDropdownOpen(false)}
-                              >
-                                <IoGridOutline />
-                                <span>My Account & Orders</span>
-                              </Link>
-                              <button 
-                                type="button" 
-                                className="user-dropdown-item"
-                                onClick={() => {
-                                  setUserDropdownOpen(false);
-                                  setWalletModalOpen(true);
-                                }}
-                              >
-                                <IoWalletOutline />
-                                <span>Recharge Wallet (₹{parseFloat(user?.walletBalance || 0).toFixed(2)})</span>
-                              </button>
-                            </>
-                          )}
-
-                          <div className="user-dropdown-divider"></div>
-
-                          <button 
-                            type="button"
-                            onClick={() => {
-                              setUserDropdownOpen(false);
-                              handleLogout();
-                            }}
-                            className="user-dropdown-item logout-item"
-                          >
-                            <IoLogOutOutline />
-                            <span>Log Out</span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" className="topbar-btn">
-                    <IoPerson /> LOG IN
-                  </Link>
-                  <Link to="/register" className="topbar-btn">
-                    <IoPerson /> SIGN UP
-                  </Link>
-                  <Link to="/expert/signup" className="topbar-btn btn-expert">
-                    <IoPerson /> SIGN UP EXPERT
-                  </Link>
-                </>
-              )}
-
-              {/* Mobile Hamburger Toggle (Visible on mobile/tablet) */}
-              <button 
-                className="topbar-mobile-toggle" 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle Navigation"
-              >
-                {mobileMenuOpen ? <IoClose /> : <IoMenu />}
-              </button>
-            </div>
           </div>
-        </div>
 
-        {/* 2. Main Navigation Bar (Lavender / Light Lilac #ecdcfc) - STICKY TOP: 0 */}
-        <nav className={`astro-main-navbar ${isScrolled ? 'is-scrolled' : ''}`}>
-          <div className="container astro-container main-nav-content">
-            
-            {/* Left Brand Area:
-                - When unscrolled: Big circled text "PSYCHIC READING / LIFT YOUR LIFE. INSTANT ADVICE"
-                - When scrolled: The circled text DISAPPEARS and the LOGO moves down inside high-contrast badge!
-            */}
-            <div className="nav-brand-left">
-              {isScrolled ? (
-                <Link to="/" className="scrolled-nav-logo-link" title="Home">
-                  <img src={LogoImg} alt="VVIP Psychics Expert" className="scrolled-nav-logo-img" />
-                </Link>
-              ) : (
-                <Link to="/" className="nav-title-box" title="Psychic Reading">
-                  <span className="nav-title-main">PSYCHIC READING</span>
-                  <span className="nav-title-sub">LIFT YOUR LIFE. INSTANT ADVICE</span>
-                </Link>
-              )}
-            </div>
-
-            {/* Center Navigation Links (white-space: nowrap to prevent 2-line wraps) */}
-            <ul className="nav-menu-links">
-              <li className="nav-menu-item">
-                <NavLink to="/" end>HOME</NavLink>
+          {/* 2. Center Nav Menu Links */}
+          <nav className="unified-nav-center">
+            <ul className="unified-menu-links">
+              <li className="unified-menu-item">
+                <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
+                  HOME
+                </NavLink>
               </li>
-              <li className="nav-menu-item">
-                <NavLink to="/about">ABOUT US</NavLink>
+              <li className="unified-menu-item">
+                <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>
+                  ABOUT US
+                </NavLink>
               </li>
 
-              {/* READERS WITH CATEGORY DROPDOWN (Matches exact user screenshot) */}
+              {/* Readers Dropdown */}
               <li 
-                className={`nav-menu-item dropdown-parent ${readersDropdownOpen ? 'open' : ''}`}
+                className={`unified-menu-item dropdown-parent ${readersDropdownOpen ? 'open' : ''}`}
                 ref={dropdownRef}
                 onMouseEnter={() => setReadersDropdownOpen(true)}
                 onMouseLeave={() => setReadersDropdownOpen(false)}
               >
                 <div 
-                  className="readers-nav-trigger"
+                  className="unified-readers-trigger"
                   onClick={() => setReadersDropdownOpen(!readersDropdownOpen)}
                 >
                   <NavLink to="/experts" className={({ isActive }) => (isActive ? 'active' : '')}>
@@ -496,11 +344,11 @@ export default function Navbar() {
                   <IoChevronDown className={`dropdown-arrow ${readersDropdownOpen ? 'rotated' : ''}`} />
                 </div>
 
-                {/* Categories Dropdown Menu - Sleek Column Select Menu */}
+                {/* Categories Dropdown Menu */}
                 {readersDropdownOpen && (
                   <div className="nav-dropdown-menu readers-select-menu">
                     <div className="readers-dropdown-header">
-                      <span>Browse by Category</span>
+                      <span>Browse by Specialty</span>
                     </div>
 
                     <div className="readers-dropdown-list">
@@ -534,164 +382,178 @@ export default function Navbar() {
                 )}
               </li>
 
-              {/* Note: CATEGORIES item was removed as requested and merged into READERS dropdown */}
-              <li className="nav-menu-item">
-                <NavLink to="/offers">OFFERS</NavLink>
+              <li className="unified-menu-item">
+                <NavLink to="/shop" className={({ isActive }) => (isActive ? 'active' : '')}>
+                  SHOPPING
+                </NavLink>
               </li>
-              <li className="nav-menu-item">
-                <NavLink to="/how-it-works">HOW IT WORKS</NavLink>
+              <li className="unified-menu-item">
+                <NavLink to="/puja" className={({ isActive }) => (isActive ? 'active' : '')}>
+                  PUJA
+                </NavLink>
+              </li>
+              <li className="unified-menu-item">
+                <NavLink to="/offers" className={({ isActive }) => (isActive ? 'active' : '')}>
+                  OFFERS
+                </NavLink>
               </li>
             </ul>
+          </nav>
 
-            {/* Right Section: When scrolled, the action buttons move down here! */}
-            {isScrolled && (
-              <div className="scrolled-nav-actions">
-                {isAuthenticated ? (
-                  <>
-                    {isCustomer && (
-                      <button 
-                        onClick={() => setWalletModalOpen(true)}
-                        className="scrolled-wallet-btn"
-                        title="Recharge Wallet"
-                      >
-                        <IoWalletOutline />
-                        <span>₹{parseFloat(user?.walletBalance || 0).toFixed(2)}</span>
-                      </button>
+          {/* 3. Right Action Items */}
+          <div className="unified-nav-right">
+            {isAuthenticated ? (
+              <div className="unified-user-actions">
+                {isCustomer && (
+                  <button 
+                    onClick={() => setWalletModalOpen(true)}
+                    className="unified-wallet-btn"
+                    title="Recharge Wallet"
+                  >
+                    <IoWalletOutline style={{ fontSize: '16px' }} />
+                    <span>₹{parseFloat(user?.walletBalance || 0).toFixed(2)}</span>
+                  </button>
+                )}
+
+                {/* User Profile Pill & Dropdown */}
+                <div className="unified-user-dropdown-wrap" ref={userDropdownRef}>
+                  <button 
+                    type="button"
+                    className={`unified-user-pill ${userDropdownOpen ? 'active' : ''}`}
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    aria-expanded={userDropdownOpen}
+                    title="User Profile Menu"
+                  >
+                    <div className="unified-avatar-circle">
+                      {user?.avatarUrl ? (
+                        <img src={user.avatarUrl} alt="Avatar" />
+                      ) : (
+                        <IoPerson />
+                      )}
+                    </div>
+                    <span className="unified-user-name">
+                      {user?.fullName?.split(' ')[0] || user?.email?.split('@')[0] || 'User'}
+                    </span>
+                    {isExpert && (
+                      <span className="unified-role-tag">EXPERT</span>
                     )}
-                    {/* Scrolled Interactive Profile Dropdown */}
-                    <div className="topbar-user-dropdown-wrap" ref={scrolledUserDropdownRef}>
-                      <button 
-                        type="button"
-                        className={`scrolled-user-pill ${scrolledUserDropdownOpen ? 'active' : ''}`}
-                        onClick={() => setScrolledUserDropdownOpen(!scrolledUserDropdownOpen)}
-                        aria-expanded={scrolledUserDropdownOpen}
-                        title="User Profile Menu"
-                      >
-                        <div className="topbar-user-avatar">
+                    <IoChevronDown className={`unified-chevron ${userDropdownOpen ? 'rotated' : ''}`} />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {userDropdownOpen && (
+                    <div className="unified-dropdown-card">
+                      <div className="unified-dropdown-header">
+                        <div className="unified-avatar-large">
                           {user?.avatarUrl ? (
                             <img src={user.avatarUrl} alt="Avatar" />
                           ) : (
                             <IoPerson />
                           )}
                         </div>
-                        <span className="topbar-user-name">
-                          {user?.fullName?.split(' ')[0] || user?.email?.split('@')[0]}
-                        </span>
-                        {isExpert && (
-                          <span className="topbar-role-badge">EXPERT</span>
-                        )}
-                        <IoChevronDown className={`topbar-pill-chevron ${scrolledUserDropdownOpen ? 'rotated' : ''}`} />
-                      </button>
-
-                      {/* Scrolled Profile Dropdown Menu */}
-                      {scrolledUserDropdownOpen && (
-                        <div className="topbar-user-dropdown-menu">
-                          <div className="dropdown-user-header">
-                            <div className="header-user-avatar">
-                              {user?.avatarUrl ? (
-                                <img src={user.avatarUrl} alt="Avatar" />
-                              ) : (
-                                <IoPerson />
-                              )}
-                            </div>
-                            <div className="header-user-info">
-                              <div className="header-name">{user?.fullName || 'User'}</div>
-                              <div className="header-email">{user?.email}</div>
-                              <span className={`header-role-tag ${isExpert ? 'expert' : 'seeker'}`}>
-                                {isExpert ? '⭐ Verified Expert Reader' : 'Seeker Account'}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="dropdown-user-links">
-                            {isExpert && (
-                              <>
-                                <Link 
-                                  to="/expert/dashboard" 
-                                  className="user-dropdown-item"
-                                  onClick={() => setScrolledUserDropdownOpen(false)}
-                                >
-                                  <IoGridOutline />
-                                  <span>Expert Dashboard</span>
-                                </Link>
-                                {user?.expertProfileId && (
-                                  <Link 
-                                    to={`/expert/${user.expertProfileId}`} 
-                                    className="user-dropdown-item"
-                                    onClick={() => setScrolledUserDropdownOpen(false)}
-                                  >
-                                    <IoPersonCircleOutline />
-                                    <span>Public Profile Preview</span>
-                                  </Link>
-                                )}
-                              </>
-                            )}
-
-                            {isCustomer && (
-                              <>
-                                <Link 
-                                  to="/dashboard" 
-                                  className="user-dropdown-item"
-                                  onClick={() => setScrolledUserDropdownOpen(false)}
-                                >
-                                  <IoGridOutline />
-                                  <span>My Account & Orders</span>
-                                </Link>
-                                <button 
-                                  type="button" 
-                                  className="user-dropdown-item"
-                                  onClick={() => {
-                                    setScrolledUserDropdownOpen(false);
-                                    setWalletModalOpen(true);
-                                  }}
-                                >
-                                  <IoWalletOutline />
-                                  <span>Recharge Wallet (₹{parseFloat(user?.walletBalance || 0).toFixed(2)})</span>
-                                </button>
-                              </>
-                            )}
-
-                            <div className="user-dropdown-divider"></div>
-
-                            <button 
-                              type="button"
-                              onClick={() => {
-                                setScrolledUserDropdownOpen(false);
-                                handleLogout();
-                              }}
-                              className="user-dropdown-item logout-item"
-                            >
-                              <IoLogOutOutline />
-                              <span>Log Out</span>
-                            </button>
-                          </div>
+                        <div className="unified-dropdown-meta">
+                          <div className="unified-drop-name">{user?.fullName || 'User'}</div>
+                          <div className="unified-drop-email">{user?.email}</div>
+                          <span className={`unified-drop-role ${isExpert ? 'expert' : 'seeker'}`}>
+                            {isExpert ? '⭐ Verified Astrologer' : 'Seeker Account'}
+                          </span>
                         </div>
-                      )}
+                      </div>
+
+                      <div className="unified-dropdown-links">
+                        {isExpert && (
+                          <>
+                            <Link 
+                              to="/expert/dashboard" 
+                              className="unified-drop-link"
+                              onClick={() => setUserDropdownOpen(false)}
+                            >
+                              <IoGridOutline />
+                              <span>Expert Dashboard</span>
+                            </Link>
+                            {user?.expertProfileId && (
+                              <Link 
+                                to={`/expert/${user.expertProfileId}`} 
+                                className="unified-drop-link"
+                                onClick={() => setUserDropdownOpen(false)}
+                              >
+                                <IoPersonCircleOutline />
+                                <span>Public Profile Preview</span>
+                              </Link>
+                            )}
+                          </>
+                        )}
+
+                        {isCustomer && (
+                          <>
+                            <Link 
+                              to="/dashboard" 
+                              className="unified-drop-link"
+                              onClick={() => setUserDropdownOpen(false)}
+                            >
+                              <IoGridOutline />
+                              <span>My Dashboard & Orders</span>
+                            </Link>
+                            <button 
+                              type="button" 
+                              className="unified-drop-link"
+                              onClick={() => {
+                                setUserDropdownOpen(false);
+                                setWalletModalOpen(true);
+                              }}
+                            >
+                              <IoWalletOutline />
+                              <span>Recharge Wallet (₹{parseFloat(user?.walletBalance || 0).toFixed(2)})</span>
+                            </button>
+                          </>
+                        )}
+
+                        <div className="unified-drop-divider"></div>
+
+                        <button 
+                          type="button" 
+                          onClick={() => {
+                            setUserDropdownOpen(false);
+                            handleLogout();
+                          }} 
+                          className="unified-drop-link logout"
+                        >
+                          <IoLogOutOutline />
+                          <span>Log Out</span>
+                        </button>
+                      </div>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <Link to="/login" className="scrolled-action-btn">
-                      <IoPerson /> LOG IN
-                    </Link>
-                    <Link to="/register" className="scrolled-action-btn">
-                      <IoPerson /> SIGN UP
-                    </Link>
-                    <Link to="/expert/signup" className="scrolled-action-btn btn-expert">
-                      <IoPerson /> SIGN UP EXPERT
-                    </Link>
-                  </>
-                )}
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="unified-auth-buttons">
+                <Link to="/login" className="unified-btn unified-btn-outline">
+                  <IoPerson /> LOG IN
+                </Link>
+                <Link to="/register" className="unified-btn unified-btn-outline">
+                  <IoPerson /> SIGN UP
+                </Link>
+                <Link to="/expert/signup" className="unified-btn unified-btn-gold">
+                  <IoSparkles /> SIGN UP EXPERT
+                </Link>
               </div>
             )}
-          </div>
-        </nav>
 
-        {/* When main navbar is fixed at top: 0, placeholder preserves natural layout flow so page doesn't jump */}
-        {isScrolled && <div className="astro-navbar-placeholder" />}
+            {/* Mobile Hamburger Toggle */}
+            <button 
+              className="unified-mobile-toggle" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Navigation"
+            >
+              {mobileMenuOpen ? <IoClose /> : <IoMenu />}
+            </button>
+          </div>
+
+        </div>
       </header>
 
-      {/* Wallet Modal */}
+      {/* Wallet Recharge Modal */}
       <WalletModal 
         isOpen={walletModalOpen} 
         onClose={() => setWalletModalOpen(false)}

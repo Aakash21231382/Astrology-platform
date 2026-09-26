@@ -1,9 +1,10 @@
 /* Expert Profile Page Styles */
 .profile-page-header {
-  background: linear-gradient(135deg, #180e36 0%, #2e1065 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, #202B18 0%, #FF6B00 100%);
+  color: #FFFFFF;
   padding: 50px 0;
   margin-bottom: 40px;
+  border-bottom: 2px solid #E2E8F0;
 }
 
 .profile-header-grid {
@@ -18,19 +19,19 @@
   height: 140px;
   border-radius: 24px;
   object-fit: cover;
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border: 4px solid #E2E8F0;
+  box-shadow: 0 10px 25px rgba(255, 107, 0, 0.25);
 }
 
 .profile-header-info h1 {
-  color: #ffffff;
+  color: #FFFFFF;
   font-family: var(--font-heading);
   font-size: 32px;
   margin-bottom: 6px;
 }
 
 .profile-header-title {
-  color: #fbbf24;
+  color: #E2E8F0;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 12px;
@@ -42,7 +43,7 @@
   flex-wrap: wrap;
   gap: 20px;
   font-size: 14px;
-  color: #cbd5e1;
+  color: rgba(255, 248, 236, 0.85);
 }
 
 .profile-header-meta span {
@@ -54,18 +55,20 @@
 .profile-cta-card {
   background: #ffffff;
   border-radius: var(--radius-lg);
+  border: 1.5px solid #E2E8F0;
   padding: 24px;
-  color: #0f172a;
+  color: #0F172A;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  min-width: min(240px, 100%);
+  box-shadow: 0 10px 30px rgba(255, 107, 0, 0.12);
+  min-width: 320px;
+  max-width: 380px;
   width: 100%;
 }
 
 .profile-price-tag {
   font-size: 28px;
   font-weight: 800;
-  color: var(--primary-deep);
+  color: #FF6B00;
   margin-bottom: 4px;
 }
 
@@ -78,11 +81,17 @@
 
 .profile-section-card {
   background: #ffffff;
-  border: 1px solid var(--border-light);
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-lg);
   padding: 30px;
   margin-bottom: 24px;
   box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.profile-section-card:hover {
+  box-shadow: 0 10px 24px rgba(255, 107, 0, 0.1);
+  border-color: #FB923C;
 }
 
 .profile-section-card h3 {
@@ -91,7 +100,76 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--primary-deep);
+  color: #0F172A;
+}
+
+/* Schedule Card Layout */
+.schedule-days-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.schedule-day-box {
+  background: #FFFDF9;
+  border: 1.5px solid #EFE6D6;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.schedule-day-box.today {
+  background: #FFF7ED;
+  border-color: #FB923C;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.1);
+}
+
+.schedule-day-box.off {
+  background: #FAFAFA;
+  border-color: #E2E8F0;
+  opacity: 0.75;
+}
+
+.schedule-day-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #9A3412;
+}
+
+.schedule-time-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FF6B00;
+  background: #FFFFFF;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid #D2E4CC;
+}
+
+.schedule-off-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94A3B8;
+  background: #F1F5F9;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.schedule-today-tag {
+  background: #FF6B00;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
 }
 
 .bio-paragraph {
@@ -101,32 +179,144 @@
   white-space: pre-line;
 }
 
-.review-card {
-  border-bottom: 1px solid var(--border-light);
-  padding: 18px 0;
+/* Reviews Modern Feed Styles */
+.reviews-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.review-card:last-child {
-  border-bottom: none;
+.review-card-modern {
+  background: #FFFDF9;
+  border: 1.5px solid #EFE6D6;
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: all 0.2s ease;
 }
 
-.review-author {
-  font-weight: 700;
+.review-card-modern:hover {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 6px 18px rgba(20, 40, 22, 0.05);
+}
+
+.review-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.review-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-avatar-initials {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B00 0%, #9A3412 100%);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2);
+}
+
+.review-author-name {
+  font-weight: 800;
   font-size: 15px;
-  color: #1e293b;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.review-verified-tag {
+  font-size: 11px;
+  font-weight: 700;
+  background: #E8F5E9;
+  color: #FF6B00;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #A5D6A7;
+}
+
+.review-stars-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
 }
 
 .review-stars {
-  color: #f59e0b;
+  color: #F59E0B; /* Bright Warm Golden-Orange */
   display: flex;
   gap: 3px;
-  margin: 4px 0 8px 0;
+  font-size: 15px;
+  filter: drop-shadow(0 1px 2px rgba(245, 158, 11, 0.25));
 }
 
-.review-comment {
-  font-size: 14px;
-  color: #475569;
-  line-height: 1.5;
+.review-rating-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: #854D0E;
+  background: #FEF9C3;
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+.review-date-tag {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 500;
+  background: #F8FAFC;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.review-comment-modern {
+  font-size: 14.5px;
+  color: #0F172A;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+  background: #FFFFFF;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 3px solid #F59E0B;
+}
+
+.review-empty-state {
+  text-align: center;
+  padding: 36px 20px;
+  color: #64748B;
+}
+
+.review-empty-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.review-empty-state h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #9A3412;
+  margin: 0 0 6px 0;
+}
+
+.review-empty-state p {
+  font-size: 13.5px;
+  color: #64748B;
+  margin: 0;
 }
 
 @media (max-width: 868px) {

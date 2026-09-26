@@ -66,7 +66,7 @@ async function sendNewChatNotificationEmail(toEmail, expertName, customerName, c
     const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 540px; margin: 0 auto; padding: 24px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
             <div style="background: #041639; padding: 16px 20px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
-                <h2 style="color: #ffd700; margin: 0; font-size: 20px; letter-spacing: 0.5px;">VVIP Psychics & Astrology</h2>
+                <h2 style="color: #ffd700; margin: 0; font-size: 20px; letter-spacing: 0.5px;">Aakash Psychics & Astrology</h2>
                 <p style="color: #e2e8f0; margin: 4px 0 0 0; font-size: 12px;">Live Consultation Alert</p>
             </div>
             <p style="font-size: 15px; color: #1e293b;">Dear <strong>${expertName || 'Expert'}</strong>,</p>
@@ -94,7 +94,7 @@ async function sendNewChatNotificationEmail(toEmail, expertName, customerName, c
     if (transporter) {
         try {
             await transporter.sendMail({
-                from: process.env.MAIL_FROM || '"VVIP Psychics Alert" <noreply@astrology.com>',
+                from: process.env.MAIL_FROM || '" Psychics Alert" <noreply@astrology.com>',
                 to: toEmail,
                 subject,
                 html

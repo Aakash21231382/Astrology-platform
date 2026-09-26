@@ -10,15 +10,24 @@ export function AdminAuthProvider({ children }) {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('astrology_admin_user');
-    if (savedUser && token) {
+    const savedToken = localStorage.getItem('astrology_admin_token');
+    if (savedUser && savedToken) {
       try {
-        setAdminUser(JSON.parse(savedUser));
+        const parsed = JSON.parse(savedUser);
+        if (parsed?.role === 'ADMIN') {
+          setAdminUser(parsed);
+          setToken(savedToken);
+        } else {
+          logout();
+        }
       } catch (e) {
         logout();
       }
+    } else {
+      logout();
     }
     setLoading(false);
-  }, [token]);
+  }, []);
 
   const login = async (email, password) => {
     const response = await adminApi.login(email, password);

@@ -33,7 +33,7 @@ export default function AdminLogin() {
           <div className="login-badge-shield">
             <MdStars />
           </div>
-          <h1>ASTROLOGY</h1>
+          <h1>AAKASH</h1>
           <p>Master Administration Control Console</p>
         </div>
 
@@ -46,7 +46,7 @@ export default function AdminLogin() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@astrology.com"
+                placeholder="Enter your email"
                 required
               />
             </div>
@@ -60,7 +60,7 @@ export default function AdminLogin() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter admin password"
+                placeholder="Enter your password"
                 required
               />
             </div>

@@ -3,6 +3,7 @@ const { Server } = require('socket.io');
 const app = require('./app');
 const { getPool } = require('./config/db');
 const { initChatSockets } = require('./sockets/chatSocket');
+const { startScheduleRunner } = require('./services/scheduleRunner');
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,6 +20,7 @@ const io = new Server(server, {
 app.set('io', io);
 
 initChatSockets(io);
+startScheduleRunner(io);
 
 // Connect to Database and start server
 async function startServer() {

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { IoMailOutline, IoLockClosedOutline, IoClose, IoKeyOutline } from 'react-icons/io5';
+import { IoMailOutline, IoLockClosedOutline, IoClose, IoKeyOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import { authService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-import LogoImg from '../assets/images/logo.png';
 import '../assets/css/auth.css';
 
 export default function Login() {
@@ -22,6 +21,10 @@ export default function Login() {
   const [forgotOtp, setForgotOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [forgotPasswordState, setForgotPasswordState] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showForgotNewPassword, setShowForgotNewPassword] = useState(false);
+  const [showForgotConfirmPassword, setShowForgotConfirmPassword] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
 
   const handleLogin = async (e) => {
@@ -108,7 +111,7 @@ export default function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <Link to="/" title="Back to Home" className="auth-brand-badge">
-            <img src={LogoImg} alt="VVIP Psychics Expert" className="auth-brand-logo-img" />
+            <span className="auth-brand-text">Aakash</span>
           </Link>
           <h2>Welcome Back</h2>
           <p>Login to your account to connect with astrologers</p>
@@ -122,7 +125,7 @@ export default function Login() {
                 type="email"
                 required
                 className="form-input"
-                placeholder="name@example.com"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -144,14 +147,25 @@ export default function Login() {
                 Forgot Password?
               </button>
             </div>
-            <input
-              type="password"
-              required
-              className="form-input"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="auth-password-wrapper">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                className="form-input auth-password-input"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="auth-password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                title={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+              </button>
+            </div>
           </div>
 
           <button
@@ -202,7 +216,7 @@ export default function Login() {
                     type="email"
                     required
                     className="form-input"
-                    placeholder="name@example.com"
+                    placeholder="Enter your email"
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
                   />
@@ -225,7 +239,7 @@ export default function Login() {
                     required
                     maxLength={6}
                     className="form-input auth-otp-input"
-                    placeholder="Enter 6-digit OTP"
+                    placeholder="Enter OTP"
                     value={forgotOtp}
                     onChange={(e) => setForgotOtp(e.target.value)}
                   />
@@ -233,28 +247,50 @@ export default function Login() {
 
                 <div className="form-group" style={{ marginBottom: '14px' }}>
                   <label className="form-label">New Password</label>
-                  <input
-                    type="password"
-                    required
-                    minLength={6}
-                    className="form-input"
-                    placeholder="At least 6 characters"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
+                  <div className="auth-password-wrapper">
+                    <input
+                      type={showForgotNewPassword ? 'text' : 'password'}
+                      required
+                      minLength={6}
+                      className="form-input auth-password-input"
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="auth-password-toggle-btn"
+                      onClick={() => setShowForgotNewPassword(!showForgotNewPassword)}
+                      aria-label={showForgotNewPassword ? 'Hide password' : 'Show password'}
+                      title={showForgotNewPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showForgotNewPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="form-group" style={{ marginBottom: '20px' }}>
                   <label className="form-label">Confirm New Password</label>
-                  <input
-                    type="password"
-                    required
-                    minLength={6}
-                    className="form-input"
-                    placeholder="Re-enter password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
+                  <div className="auth-password-wrapper">
+                    <input
+                      type={showForgotConfirmPassword ? 'text' : 'password'}
+                      required
+                      minLength={6}
+                      className="form-input auth-password-input"
+                      placeholder="Confirm new password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="auth-password-toggle-btn"
+                      onClick={() => setShowForgotConfirmPassword(!showForgotConfirmPassword)}
+                      aria-label={showForgotConfirmPassword ? 'Hide password' : 'Show password'}
+                      title={showForgotConfirmPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showForgotConfirmPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="auth-modal-btn-row">

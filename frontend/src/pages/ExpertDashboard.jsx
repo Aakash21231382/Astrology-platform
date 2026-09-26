@@ -17,10 +17,12 @@ import {
   IoEyeOutline,
   IoEyeOffOutline,
   IoShieldCheckmarkOutline,
-  IoCheckmark
+  IoCheckmark,
+  IoKeyOutline,
+  IoLockClosedOutline
 } from 'react-icons/io5';
 import { useAuth } from '../context/AuthContext';
-import { expertService, consultationService, uploadService, publicService } from '../services/api';
+import { expertService, consultationService, uploadService, publicService, authService } from '../services/api';
 import { connectSocket } from '../services/socket';
 import { toast } from 'react-toastify';
 import '../assets/css/expert-dashboard.css';
@@ -68,7 +70,7 @@ export default function ExpertDashboard() {
   const fileInputRef = useRef(null);
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState('profile'); // 'profile' | 'rates' | 'history' | 'payout'
+  const [activeTab, setActiveTab] = useState('profile'); // 'profile' | 'rates' | 'history' | 'payout' | 'security'
 
   // Loading States
   const [loading, setLoading] = useState(true);
@@ -115,6 +117,17 @@ export default function ExpertDashboard() {
   const [payoutUpi, setPayoutUpi] = useState('');
   const [submittingPayout, setSubmittingPayout] = useState(false);
 
+  // Change Password State
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
+
   // Initial Data Fetch
   useEffect(() => {
     loadAllExpertData();
@@ -154,7 +167,7 @@ export default function ExpertDashboard() {
         // silent polling failure
       }
     }, 15000);
-
+    
     return () => {
       if (socket) {
         socket.off('consultation:incoming', handleIncomingConsultation);
@@ -385,6 +398,45 @@ export default function ExpertDashboard() {
     }
   };
 
+  // Handle Change Password
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+      toast.error('All password fields are required.');
+      return;
+    }
+    if (passwordData.newPassword.length < 6) {
+      toast.error('New password must be at least 6 characters long.');
+      return;
+    }
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error('New password and confirm password do not match.');
+      return;
+    }
+    if (passwordData.currentPassword === passwordData.newPassword) {
+      toast.error('New password cannot be the same as your current password.');
+      return;
+    }
+
+    setChangingPassword(true);
+    try {
+      const res = await authService.changePassword({
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
+      toast.success(res.data?.message || 'Password changed successfully!');
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to change password. Please check your current password.');
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+
   return (
     <div className="expert-dashboard-wrap">
       <div className="astro-container">
@@ -425,7 +477,7 @@ export default function ExpertDashboard() {
               <h1>
                 {profile.fullName || 'Astrologer / Reader'}
                 {profile.isVerified && (
-                  <IoShieldCheckmarkOutline style={{ color: '#059669', fontSize: '20px' }} title="Verified Expert" />
+                  <IoShieldCheckmarkOutline style={{ color: '#EA580C', fontSize: '20px' }} title="Verified Expert" />
                 )}
               </h1>
               <p className="expert-title-sub">{profile.title || 'Expert Reader & Astrologer'}</p>
@@ -465,7 +517,7 @@ export default function ExpertDashboard() {
                     width: '8px', 
                     height: '8px', 
                     borderRadius: '50%', 
-                    background: profile.isOnline ? '#10b981' : '#94a3b8',
+                    background: profile.isOnline ? '#FF6B00' : '#94a3b8',
                     display: 'inline-block'
                   }}></span>
                   Live Chat: {profile.isOnline ? 'ONLINE' : 'OFFLINE'}
@@ -579,7 +631,7 @@ export default function ExpertDashboard() {
                 style={{ 
                   background: 'transparent', 
                   border: 'none', 
-                  color: '#059669', 
+                  color: '#EA580C', 
                   fontWeight: 700, 
                   fontSize: '12px', 
                   marginTop: '6px', 
@@ -666,6 +718,12 @@ export default function ExpertDashboard() {
           >
             <IoCashOutline /> Payouts & Earnings
           </button>
+          <button 
+            className={`expert-tab-btn ${activeTab === 'security' ? 'active' : ''}`}
+            onClick={() => setActiveTab('security')}
+          >
+            <IoKeyOutline /> Change Password
+          </button>
         </div>
 
         {/* ===================================================================
@@ -691,7 +749,7 @@ export default function ExpertDashboard() {
                     required 
                     value={profile.fullName} 
                     onChange={e => setProfile({ ...profile, fullName: e.target.value })} 
-                    placeholder="e.g. Acharya Raman Sharma"
+                    placeholder="Enter full name"
                   />
                 </div>
 
@@ -703,7 +761,7 @@ export default function ExpertDashboard() {
                     required 
                     value={profile.title} 
                     onChange={e => setProfile({ ...profile, title: e.target.value })} 
-                    placeholder="e.g. Vedic Astrologer, Tarot & Vastu Expert"
+                    placeholder="Enter title or specialization"
                   />
                 </div>
 
@@ -728,7 +786,7 @@ export default function ExpertDashboard() {
                     required 
                     value={profile.languages} 
                     onChange={e => setProfile({ ...profile, languages: e.target.value })} 
-                    placeholder="e.g. English, Hindi, Punjabi, Gujarati"
+                    placeholder="Enter languages spoken"
                   />
                 </div>
 
@@ -739,7 +797,7 @@ export default function ExpertDashboard() {
                     type="text" 
                     value={profile.phone} 
                     onChange={e => setProfile({ ...profile, phone: e.target.value })} 
-                    placeholder="e.g. +91 9876543210"
+                    placeholder="Enter phone number"
                   />
                 </div>
 
@@ -750,7 +808,7 @@ export default function ExpertDashboard() {
                     type="text" 
                     value={profile.location} 
                     onChange={e => setProfile({ ...profile, location: e.target.value })} 
-                    placeholder="e.g. New Delhi, India"
+                    placeholder="Enter location or city"
                   />
                 </div>
 
@@ -762,7 +820,7 @@ export default function ExpertDashboard() {
                       type="url" 
                       value={profile.avatarUrl} 
                       onChange={e => setProfile({ ...profile, avatarUrl: e.target.value })} 
-                      placeholder="https://example.com/photo.jpg"
+                      placeholder="Enter image URL"
                     />
                     <button 
                       type="button" 
@@ -804,7 +862,7 @@ export default function ExpertDashboard() {
                     required 
                     value={profile.bio} 
                     onChange={e => setProfile({ ...profile, bio: e.target.value })} 
-                    placeholder="Share your spiritual lineage, areas of mastery, and how you assist clients in navigating love, career, and life decisions..."
+                    placeholder="Enter your bio and experience..."
                   />
                 </div>
 
@@ -921,7 +979,7 @@ export default function ExpertDashboard() {
                         <td>{Math.round((c.totalDurationSeconds || 0) / 60)} mins</td>
                         <td>₹{c.grossAmount || 0}</td>
                         <td style={{ color: '#64748b' }}>₹{c.platformCommission || 0}</td>
-                        <td style={{ fontWeight: 700, color: '#047857' }}>₹{c.expertEarning || 0}</td>
+                        <td style={{ fontWeight: 700, color: '#C2410C' }}>₹{c.expertEarning || 0}</td>
                         <td>
                           <span className={`status-tag ${c.status === 'COMPLETED' ? 'success' : 'pending'}`}>
                             {c.status}
@@ -964,7 +1022,7 @@ export default function ExpertDashboard() {
               <button 
                 onClick={() => setPayoutModalOpen(true)}
                 className="expert-btn-save"
-                style={{ background: '#059669' }}
+                style={{ background: '#EA580C' }}
               >
                 <IoArrowUpCircleOutline style={{ fontSize: '18px' }} /> Request Payout
               </button>
@@ -974,7 +1032,7 @@ export default function ExpertDashboard() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
                 <div>
                   <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 600 }}>AVAILABLE FOR WITHDRAWAL</span>
-                  <div style={{ fontSize: '24px', fontWeight: 800, color: '#059669' }}>
+                  <div style={{ fontSize: '24px', fontWeight: 800, color: '#EA580C' }}>
                     ₹{parseFloat(earnings?.summary?.availableForWithdrawal || 0).toFixed(2)}
                   </div>
                 </div>
@@ -1029,6 +1087,113 @@ export default function ExpertDashboard() {
           </div>
         )}
 
+        {/* ===================================================================
+            8. TAB 5: CHANGE PASSWORD & SECURITY
+           =================================================================== */}
+        {activeTab === 'security' && (
+          <div className="expert-panel-card">
+            <h3 className="panel-header-title">
+              <IoKeyOutline style={{ color: '#7c3aed' }} /> Change Account Password
+            </h3>
+            <p className="panel-header-desc">
+              Ensure your astrologer account stays secure by using a strong password. You will need your current password to set a new one.
+            </p>
+
+            <form onSubmit={handleChangePassword} style={{ maxWidth: '640px', marginTop: '24px' }}>
+              <div className="expert-security-form-group">
+                <label className="security-label">Current Password *</label>
+                <div className="security-input-wrapper">
+                  <input
+                    type={showCurrentPassword ? 'text' : 'password'}
+                    required
+                    placeholder="Enter current password"
+                    value={passwordData.currentPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                    className="security-input"
+                  />
+                  <button
+                    type="button"
+                    className="security-eye-toggle"
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                    title={showCurrentPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showCurrentPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="expert-security-form-group">
+                <label className="security-label">New Password *</label>
+                <div className="security-input-wrapper">
+                  <input
+                    type={showNewPassword ? 'text' : 'password'}
+                    required
+                    minLength={6}
+                    placeholder="Enter new password"
+                    value={passwordData.newPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                    className="security-input"
+                  />
+                  <button
+                    type="button"
+                    className="security-eye-toggle"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    title={showNewPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showNewPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="expert-security-form-group">
+                <label className="security-label">Confirm New Password *</label>
+                <div className="security-input-wrapper">
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    required
+                    minLength={6}
+                    placeholder="Confirm new password"
+                    value={passwordData.confirmPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                    className="security-input"
+                  />
+                  <button
+                    type="button"
+                    className="security-eye-toggle"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    title={showConfirmPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showConfirmPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Security Guidelines */}
+              <div className="security-tips-box">
+                <div className="security-tips-title">
+                  <IoShieldCheckmarkOutline /> Password Security Guidelines:
+                </div>
+                <ul className="security-tips-list">
+                  <li>At least <strong>6 characters</strong> long.</li>
+                  <li>Use a combination of uppercase, lowercase letters, numbers, and symbols.</li>
+                  <li>Never share your password or OTP code with anyone.</li>
+                </ul>
+              </div>
+
+              <div style={{ marginTop: '28px' }}>
+                <button
+                  type="submit"
+                  disabled={changingPassword}
+                  className="expert-btn-save"
+                >
+                  <IoKeyOutline style={{ fontSize: '18px' }} />
+                  {changingPassword ? 'Updating Password...' : 'Update Password'}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
       </div>
 
       {/* =====================================================================
@@ -1045,7 +1210,7 @@ export default function ExpertDashboard() {
               Request Payout Withdrawal
             </h3>
             <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '20px' }}>
-              Available Balance: <strong style={{ color: '#059669' }}>₹{parseFloat(earnings?.summary?.availableForWithdrawal || 0).toFixed(2)}</strong>
+              Available Balance: <strong style={{ color: '#EA580C' }}>₹{parseFloat(earnings?.summary?.availableForWithdrawal || 0).toFixed(2)}</strong>
             </p>
 
             <form onSubmit={handleRequestPayout}>
@@ -1067,7 +1232,7 @@ export default function ExpertDashboard() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. expertname@okhdfcbank"
+                  placeholder="Enter UPI ID or bank details"
                   value={payoutUpi}
                   onChange={(e) => setPayoutUpi(e.target.value)}
                 />
@@ -1086,7 +1251,7 @@ export default function ExpertDashboard() {
                   type="submit"
                   disabled={submittingPayout}
                   className="expert-btn-save"
-                  style={{ flex: 1, justifyContent: 'center', background: '#059669' }}
+                  style={{ flex: 1, justifyContent: 'center', background: '#EA580C' }}
                 >
                   {submittingPayout ? 'Submitting...' : 'Submit Request'}
                 </button>
